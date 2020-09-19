@@ -1,0 +1,44 @@
+.sidebar-title {
+  color: #9a2577;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.sidebar-label {
+  color: #1869a9;
+  font-size: 0.5em;
+  font-weight: bold;
+  margin: 1em 0 0 0;
+}
+
+.selected-sectors {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sector-filter-tag, .key-sector-selector, .all-sector-selector {
+  font-size: 0.5em;
+  height: 1.5em;
+  align-items: center;
+  display: flex;
+}
+
+.sector-filter-tag svg, .key-sector-selector svg, .all-sector-selector svg {
+  cursor: pointer;
+}
+
+.sector-filter-tag {
+  width: 100px;
+}
+
+.sector-filter-tag svg {
+  padding: 0 0.25em 0 0;
+}
+
+.key-sector-selector {
+  font-size: 0.5em;
+}
+
+.all-sector-selector {
+  font-size: 0.5em;
+}
