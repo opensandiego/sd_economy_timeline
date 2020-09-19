@@ -1,0 +1,94 @@
+:root {
+  --scenePerspective: 1;
+  --scenePerspectiveOriginX: 600;
+  --scenePerspectiveOriginY: 100;
+  --itemZ: 2;
+  --cameraSpeed: 150; // Where 1 is the fastest
+  --cameraZ: 0;
+  --viewportHeight: 0;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+// Set 3D scene
+
+.viewport {
+  height: calc(var(--viewportHeight) * 1px);
+  position: absolute;
+  // height: 100%;
+  width: 100%;
+
+  .scene3D-container {
+    position: fixed;
+    // top: 0;
+    // left: 0;
+    // width: 100%;
+    // height: 100%;
+    perspective: calc(var(--scenePerspective) * var(--cameraSpeed) * 1px);
+    perspective-origin: calc(var(--scenePerspectiveOriginX) * 1%)
+      calc(var(--scenePerspectiveOriginY) * 1%);
+    will-change: perspective-origin;
+    transform: translate3d(0, 0, 0); //Allow Hardware-Accelerated CSS
+    // overflow: auto;
+
+    .scene3D {
+      position: absolute;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      transform-style: preserve-3d;
+      transform: translateZ(calc(var(--cameraZ) * 1px));
+      will-change: transform;
+
+      > div {
+        position: absolute;
+        display: block;
+        width: 100%;
+        top: 40%;
+
+        @media only screen and (min-width: 600px) {
+          width: 200px;
+        }
+
+        &:nth-child(2n) {
+          left: 0;
+        }
+
+        &:nth-child(2n + 1) {
+          right: 0;
+        }
+
+        @for $i from 0 through 25 {
+          &:nth-child(#{$i}) {
+            transform: translate3D(
+              random(50) - 25 * 1%,
+              random(100) - 50 * 1%,
+              calc(var(--itemZ) * var(--cameraSpeed) * #{$i} * -1px)
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+.scene3D {
+  > div {
+    padding: 2rem;
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    @for $i from 0 through 25 {
+      &:nth-child(#{$i}) {
+        background-color: hsl(-30 + ($i * 30), 100%, 88%);
+      }
+    }
+  }
+}

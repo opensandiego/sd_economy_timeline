@@ -38,6 +38,7 @@
   align-items: stretch;
   flex: 1;
   height: auto;
+  width: 100%;
 }
 
 .row.fixed-100 {
