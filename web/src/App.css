@@ -11,6 +11,11 @@
   align-self: flex-start;
 }
 
+.header {
+  border-bottom: 14px solid #1869a9;
+  margin: 0 0 10px 0;
+}
+
 .content {
   align-items: stretch;
   font-size: calc(10px + 2vmin);
