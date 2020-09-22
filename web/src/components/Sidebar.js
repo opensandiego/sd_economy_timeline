@@ -50,7 +50,9 @@ const Sidebar = () => {
       <div className='active-sectors'>
         {selectedSectors.map(sector => (
           <div className='key-sector-selector' key={sector}>
-            <BsCheckBox />{sector}<BsInfoCircle />
+            <BsCheckBox />
+            <span className='key-sector-selector-item'>{sector}</span>
+            <BsInfoCircle />
           </div>
         ))}
       </div>
@@ -61,7 +63,9 @@ const Sidebar = () => {
       <div className='all-sectors'>
         {allSectors.map(sector => (
           <div className='all-sector-selector' key={sector}>
-            <BsSquare />{sector}<BsInfoCircle />
+            <BsSquare />
+            <span className='all-sector-selector-item'>{sector}</span>
+            <BsInfoCircle />
           </div>
         ))}
       </div>
