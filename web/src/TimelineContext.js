@@ -6,10 +6,15 @@ const TimelineContext = React.createContext({
 	selectedSectors: [],
 	keySectors: [],
 	allSectors: [],
+	showKSector: null, 
+	showASector: null,
   updateDec: () => {},
 	updateSelectedSectors: () => {},
 	handleCheckbox: () => {},
-	removeSector: () => {}
+	removeSector: () => {},
+	clearFilter: () => {},
+	toggleShowASector: () => {},
+	toggleShowKSector: () => {}
 });
 
 export default TimelineContext;
@@ -39,7 +44,9 @@ export class TimelineContextProvider extends Component {
 			'Tribal',
 			'Crossborder',
 			'Landuse'
-		]
+		],
+		showKSector: true, 
+		showASector: false, 
   };
 
   updateDec = (selectedDec) => {
@@ -66,12 +73,27 @@ export class TimelineContextProvider extends Component {
 	removeSector = (sector) => {
 		console.log('REMOVING', sector)
 		let index = this.state.selectedSectors.indexOf(sector)
-		console.log("this is the index",index)
 		let newSelected = this.state.selectedSectors;
 		newSelected.splice(index, 1);
 		this.setState({
 			selectedSectors: newSelected
 		})
+	}
+
+	clearFilter = () => {
+		this.setState({selectedSectors: []})
+	}
+
+	toggleShowASector = () => {
+		this.setState((prevState => ({
+			showASector: !prevState.showASector
+		})))
+	}
+
+	toggleShowKSector = () => {
+		this.setState((prevState => ({
+			showKSector: !prevState.showKSector
+		})))
 	}
 
   render() {
@@ -81,10 +103,15 @@ export class TimelineContextProvider extends Component {
 			selectedSectors: this.state.selectedSectors,
 			keySectors: this.state.keySectors,
 			allSectors: this.state.allSectors,
+			showKSector: this.state.showKSector,
+			showASector: this.state.showASector,
       updateDec: this.updateDec,
 			updateSelectedSectors: this.updateSelectedSectors,
 			handleCheckbox: this.handleCheckbox,
-			removeSector: this.removeSector
+			removeSector: this.removeSector,
+			clearFilter:this.clearFilter,
+			toggleShowASector: this.toggleShowASector,
+			toggleShowKSector: this.toggleShowKSector,
     };
 
     return (
