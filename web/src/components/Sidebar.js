@@ -62,9 +62,10 @@ const Sidebar = () => {
         clearFilter,
         toggleShowKSector,
         toggleShowASector,
+        toggleShowFilter
       }) => (
         <div className="sidebar">
-          <div className="close"><VscChromeClose /></div>
+          <div className="close"><button onClick={toggleShowFilter}><VscChromeClose /></button></div>
           {/* <div className="sidebar-title">A History of San Diego</div> */}
 
           <div className="sidebar-label">

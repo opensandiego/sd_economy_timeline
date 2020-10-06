@@ -8,13 +8,15 @@ const TimelineContext = React.createContext({
 	allSectors: [],
 	showKSector: null, 
 	showASector: null,
+	showFilter: false,
   updateDec: () => {},
 	updateSelectedSectors: () => {},
 	handleCheckbox: () => {},
 	removeSector: () => {},
 	clearFilter: () => {},
 	toggleShowASector: () => {},
-	toggleShowKSector: () => {}
+	toggleShowKSector: () => {},
+	toggleShowFilter: () => {}
 });
 
 export default TimelineContext;
@@ -47,6 +49,7 @@ export class TimelineContextProvider extends Component {
 		],
 		showKSector: true, 
 		showASector: false, 
+		showFilter: false,
   };
 
   updateDec = (selectedDec) => {
@@ -96,6 +99,12 @@ export class TimelineContextProvider extends Component {
 		})))
 	}
 
+	toggleShowFilter = () => {
+		this.setState((prevState => ({
+			showFilter: !prevState.showFilter
+		})))
+	}
+
   render() {
     const value = {
       stageResults: this.state.stageResults,
@@ -105,6 +114,7 @@ export class TimelineContextProvider extends Component {
 			allSectors: this.state.allSectors,
 			showKSector: this.state.showKSector,
 			showASector: this.state.showASector,
+			showFilter: this.state.showFilter,
       updateDec: this.updateDec,
 			updateSelectedSectors: this.updateSelectedSectors,
 			handleCheckbox: this.handleCheckbox,
@@ -112,6 +122,7 @@ export class TimelineContextProvider extends Component {
 			clearFilter:this.clearFilter,
 			toggleShowASector: this.toggleShowASector,
 			toggleShowKSector: this.toggleShowKSector,
+			toggleShowFilter:this.toggleShowFilter
     };
 
     return (

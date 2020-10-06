@@ -1,6 +1,8 @@
 .sidebar{
   padding: 0px 70px 20px 15px;
   position: relative;
+  background-color: white;
+  height: 100%;
 }
 
 .close{
@@ -87,4 +89,8 @@ top: 26px;
   color: #9a2577;
 
 }
+
+/* .selected-sectors::after {
+  content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' width='181' height='1' viewBox='0 0 181 1'><defs><style>.a{fill:none;stroke:rgba(43,43,43,0.4);stroke-linecap:round;}</style></defs><line class='a' x1='180' transform='translate(0.5 0.5)'/></svg>");
+} */
 
