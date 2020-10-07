@@ -4,13 +4,25 @@ import React, {
 } from 'react'
 import './stage.scss'
 
+const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
+const width = 600
+const height = 600
+const rectSide = 10
+let rects = []
+const x = width / 2 - rectSide / 2
+const y = height/ 2 - rectSide / 2 - 250
+for (let i = 1; i < 10; i++) {
+  const rectY = y + (i * rectSide * 5)
+  rects.push({
+    x,
+    y: rectY
+  })
+}
+
 const Stage = props => {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
-  const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
-  const width = 600
-  const height = 600
   const canvasStyle = {
     width: `${width}px`,
     height: `${height}px`
@@ -58,54 +70,57 @@ const Stage = props => {
     canvasContext.clearRect(0, 0, width, height)
     canvasContext.scale(deviceScale, deviceScale)
 
-    const numCols = 1
-    for (var endPt = 0; endPt <= numCols; endPt++) {
-      var end = timelineToScreen({
-        x: endPt / numCols,
-        y: timeline3DLength
-      })
-      console.log('end', end)
-      canvasContext.beginPath();
-      var gradient = canvasContext.createLinearGradient(vanishingPoint.x, vanishingPoint.y, end.x, end.y);
-      gradient.addColorStop(0, `${timelineGradColor},0)`)
-      gradient.addColorStop(0.06, `${timelineGradColor},0)`)
-      gradient.addColorStop(0.8, `${timelineGradColor},1)`)
-      gradient.addColorStop(1, `${timelineGradColor},1)`)
-      canvasContext.strokeStyle = gradient;
-      canvasContext.moveTo(vanishingPoint.x, vanishingPoint.y)
-      canvasContext.lineTo(end.x, end.y)
-      canvasContext.closePath()
-      canvasContext.stroke()
+    const drawBoundaries = () => {
+      const numCols = 1
+      for (var endPt = 0; endPt <= numCols; endPt++) {
+        var end = timelineToScreen({
+          x: endPt / numCols,
+          y: timeline3DLength
+        })
+        // console.log('end', end)
+        canvasContext.beginPath();
+        var gradient = canvasContext.createLinearGradient(vanishingPoint.x, vanishingPoint.y, end.x, end.y);
+        gradient.addColorStop(0, `${timelineGradColor},0)`)
+        gradient.addColorStop(0.06, `${timelineGradColor},0)`)
+        gradient.addColorStop(0.8, `${timelineGradColor},1)`)
+        gradient.addColorStop(1, `${timelineGradColor},1)`)
+        canvasContext.strokeStyle = gradient;
+        canvasContext.moveTo(vanishingPoint.x, vanishingPoint.y)
+        canvasContext.lineTo(end.x, end.y)
+        canvasContext.closePath()
+        canvasContext.stroke()
+      }
     }
 
+    // rects on the canvas
+    const drawRects = (change = 0) => {
+      console.log('drawRect change...', change)
+      const nextRects = rects.map(rect => ({
+        x: rect.x,
+        // y: rect.y - (-change * 25) // <-- flip scroll direction
+        y: rect.y - (change * 25)
+      }))
+      nextRects.forEach((rect, i) => {
+        canvasContext.fillStyle = `rgb(0, ${Math.floor(255 - 42.5 * i)}, ${Math.floor(255 - 42.5 * i)})`;
+        canvasContext.fillRect(rect.x, rect.y, rectSide, rectSide)
+      })
+      rects = nextRects
+    }
+
+    drawBoundaries()
+    drawRects()
+
     const handler = function (event) {
-      // const orgEvent = event || window.event
-        // , args = [].slice.call(arguments, 1)
       let delta = 0
-        // , deltaX = 0
-        // , deltaY = 0;
-      // event = $.event.fix(orgEvent);
-      // event.type = 'mousewheel'
       if (event.wheelDelta) {
           delta = event.wheelDelta / 120;
       }
       if (event.detail) {
           delta = -event.detail / 3;
       }
-      // deltaY = delta;
-      // if (orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
-      //     deltaY = 0;
-      //     deltaX = -1 * delta;
-      // }
-      // if (orgEvent.wheelDeltaY !== undefined) {
-      //     deltaY = orgEvent.wheelDeltaY / 120;
-      // }
-      // if (orgEvent.wheelDeltaX !== undefined) {
-      //     deltaX = -1 * orgEvent.wheelDeltaX / 120;
-      // }
-      // args.unshift(event, delta, deltaX, deltaY);
-      console.log('wheel...', delta)
-      // return $.event.handle.apply(this, args);
+      canvasContext.clearRect(0, 0, width, height)
+      drawBoundaries()
+      drawRects(delta)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
@@ -116,7 +131,7 @@ const Stage = props => {
     }
   }, [])
 
-  console.log('refs', containerRef, sceneRef)
+  // console.log('refs', containerRef, sceneRef)
 
   return (
     <div className='stage' ref={containerRef}>
