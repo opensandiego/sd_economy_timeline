@@ -23,9 +23,9 @@ const Stage = props => {
     const endToScreenRatio = 1.40833
     const viewOffset = 0
     const vanishTop = 0.2016
-    var screenWidth = width
-    var screenHeight = Math.round(height * timelinePaddingExpansion);
-    var pos = {
+    const screenWidth = width
+    const screenHeight = Math.round(height * timelinePaddingExpansion);
+    const pos = {
         top: screenHeight * vanishTop,
         topLeft: screenWidth * 0.5,
         topRight: screenWidth * 0.5,
@@ -33,16 +33,16 @@ const Stage = props => {
         bottomLeft: -screenWidth * .25 * timelinePaddingExpansion,
         bottomRight: screenWidth * endToScreenRatio * timelinePaddingExpansion
     }
-    var distance = position.y;
-    var hOffset = position.x;
-    var itemWidth = pos.bottomRight - pos.bottomLeft;
-    var vanishingHeight = pos.bottom - pos.top;
-    var maxDistance = timeline3DLength;
-    var k = 0.006;
-    var widthOnScreen = itemWidth * Math.pow(Math.E, -k * (maxDistance - distance));
-    var xPos = (width - widthOnScreen) / 2 + hOffset * widthOnScreen;
-    var yPos = pos.top + (widthOnScreen / itemWidth) * vanishingHeight;
-    var offset = Math.min(widthOnScreen / itemWidth * viewOffset);
+    const distance = position.y;
+    const hOffset = position.x;
+    const itemWidth = pos.bottomRight - pos.bottomLeft;
+    const vanishingHeight = pos.bottom - pos.top;
+    const maxDistance = timeline3DLength;
+    const k = 0.006;
+    const widthOnScreen = itemWidth * Math.pow(Math.E, -k * (maxDistance - distance));
+    const xPos = (width - widthOnScreen) / 2 + hOffset * widthOnScreen;
+    const yPos = pos.top + (widthOnScreen / itemWidth) * vanishingHeight;
+    const offset = Math.min(widthOnScreen / itemWidth * viewOffset);
     return {
         x: xPos + offset,
         y: yPos - 10,
@@ -76,6 +76,43 @@ const Stage = props => {
       canvasContext.lineTo(end.x, end.y)
       canvasContext.closePath()
       canvasContext.stroke()
+    }
+
+    const handler = function (event) {
+      // const orgEvent = event || window.event
+        // , args = [].slice.call(arguments, 1)
+      let delta = 0
+        // , deltaX = 0
+        // , deltaY = 0;
+      // event = $.event.fix(orgEvent);
+      // event.type = 'mousewheel'
+      if (event.wheelDelta) {
+          delta = event.wheelDelta / 120;
+      }
+      if (event.detail) {
+          delta = -event.detail / 3;
+      }
+      // deltaY = delta;
+      // if (orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
+      //     deltaY = 0;
+      //     deltaX = -1 * delta;
+      // }
+      // if (orgEvent.wheelDeltaY !== undefined) {
+      //     deltaY = orgEvent.wheelDeltaY / 120;
+      // }
+      // if (orgEvent.wheelDeltaX !== undefined) {
+      //     deltaX = -1 * orgEvent.wheelDeltaX / 120;
+      // }
+      // args.unshift(event, delta, deltaX, deltaY);
+      console.log('wheel...', delta)
+      // return $.event.handle.apply(this, args);
+    }
+    containerRef.current.addEventListener('mousewheel', handler, {
+      passive: false
+    })
+
+    return () => {
+      containerRef.current.removeEventListener('mousewheel', handler, false)
     }
   }, [])
 
