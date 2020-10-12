@@ -1,6 +1,7 @@
 import React, {
   useRef,
-  useEffect
+  useEffect,
+  useState
 } from 'react'
 import './stage.scss'
 import backgroudImagePath from './beach.jpg'
@@ -9,9 +10,9 @@ const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
 const endToScreenRatio = 1.1
 const vanishTop = 0.2016
-const width = 600
-const height = 600
-const maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
+let width = 600
+let height = 600
+let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
 const timeline3DLength = 600
@@ -25,7 +26,6 @@ for (let i = 0; i < rectCount; i++) {
     x: i % 2 ? x + 0.5 : x,
     y: rectY
   }
-  console.log('nextRect', nextRect)
   rects.push(nextRect)
 }
 
@@ -34,16 +34,22 @@ const Stage = props => {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
-  const canvasStyle = {
-    width: `${width}px`,
-    height: `${height}px`
-  }
+  // const canvasStyle = useRef({
+  //   width: `${width}px`,
+  //   height: `${height}px`
+  // })
+  const [sceneSizeEstablished, setSceneSizeEstablished] = useState(false)
+  const [sceneSize, setSceneSize] = useState({
+    width,
+    height
+  })
   const timelineGradColor = 'rgb(24,105,169' // sdforward blue...
 
   const timelineToScreen = position => {
     const viewOffset = 0
-    const screenWidth = width
-    const screenHeight = Math.round(height * timelinePaddingExpansion);
+    const screenWidth = sceneSize.width
+    const screenHeight = Math.round(sceneSize.height * timelinePaddingExpansion);
+    console.log('screenWidth', screenWidth, 'screenHeight', screenHeight)
     const pos = {
         top: screenHeight * vanishTop,
         topLeft: screenWidth * 0.5,
@@ -59,8 +65,8 @@ const Stage = props => {
     const maxDistance = timeline3DLength;
     const k = 0.006;
     const widthOnScreen = itemWidth * Math.pow(Math.E, -k * (maxDistance - distance));
-    const xPos = (width - widthOnScreen) / 2 + hOffset * widthOnScreen;
-    console.log('xpos', xPos)
+    const xPos = (sceneSize.width - widthOnScreen) / 2 + hOffset * widthOnScreen;
+    // console.log('xpos', xPos)
     const yPos = pos.top + (widthOnScreen / itemWidth) * vanishingHeight;
     const offset = Math.min(widthOnScreen / itemWidth * viewOffset);
     return {
@@ -72,6 +78,26 @@ const Stage = props => {
   }
 
   useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
+    const {
+      width: sceneWidth,
+      height: sceneHeight
+    } = sceneRef.current.getBoundingClientRect()
+    width = sceneWidth
+    height = sceneHeight
+    maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
+    console.log('useEffect...width and height', width, height)
+    setSceneSize({
+      width,
+      height
+    })
+    setSceneSizeEstablished(true)
+
+    if (!sceneSizeEstablished) return
+
     const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
     const canvasContext = canvasRef.current.getContext('2d')
     canvasContext.clearRect(0, 0, width, height)
@@ -118,9 +144,9 @@ const Stage = props => {
       }))
       nextRects.forEach((rect, i) => {
         const screenPosition = timelineToScreen(rect)
-        console.log('screenPosition', screenPosition.x, screenPosition.y)
+        // console.log('screenPosition', screenPosition.x, screenPosition.y)
         const scaleFactor = screenPosition.sliceWidth / cardSize
-        console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
+        // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
         const cardWidth = 400 * scaleFactor
         if (cardWidth < 3) {
           return
@@ -144,7 +170,7 @@ const Stage = props => {
         if (screenPosition.y > fadeOutLimit) {
             opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
             opacity = opacity < 0 ? 0 : opacity
-            console.log('over fade out limit', opacity)
+            // console.log('over fade out limit', opacity)
             // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
         } else {
             opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
@@ -227,14 +253,16 @@ const Stage = props => {
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
     })
+    const containerElement = containerRef.current
 
     return () => {
-      containerRef.current.removeEventListener('mousewheel', handler, false)
+      containerElement.removeEventListener('mousewheel', handler, false)
     }
-  }, [])
+  }, [sceneSizeEstablished])
 
   // console.log('refs', containerRef, sceneRef)
 
+  console.log('rendering...width and height', width, height)
   return (
     <div className='stage' ref={containerRef}>
       <div className='viewport'>
@@ -248,9 +276,12 @@ const Stage = props => {
           <div className='scene3D' ref={sceneRef}>
             <canvas
               ref={canvasRef}
-              style={canvasStyle}
-              width={`${width * deviceScale}`}
-              height={`${height * deviceScale}`}
+              style={{
+                width: `${sceneSize.width}px`,
+                height: `${sceneSize.height}px`
+              }}
+              width={`${sceneSize.width * deviceScale}`}
+              height={`${sceneSize.height * deviceScale}`}
             ></canvas>
           </div>
         </div>

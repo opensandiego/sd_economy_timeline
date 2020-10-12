@@ -18,14 +18,12 @@ function App() {
         <div className="container flex">
           <Header />
           <div className="content flex">
-            <img src={backgroundLandscape} alt="san diego landscape" />
-            <img src={road} alt="stage" />
-            <div className="column fixed-300">
-              <button className="categories button" onClick={toggleShowFilter}> <IoIosPin/>categories</button>
-              {showFilter ? <Sidebar /> : null}
-            </div>
+            {/* <img src={backgroundLandscape} alt="san diego landscape" />
+            <img src={road} alt="stage" /> */}
+            <button className="categories button" onClick={toggleShowFilter}> <IoIosPin/>categories</button>
             <div className="column flex">
               <div className="row">
+                {showFilter ? <Sidebar /> : null}
                 <Stage />
               </div>
               <div className="row fixed-100">
