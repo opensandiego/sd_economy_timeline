@@ -15,13 +15,13 @@ const maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 const cardSize = 720
 const timeline3DLength = 600
 let rects = []
-const rectCount = 10
-const x = width / 2
+const rectCount = 5
+const x = 0.25
 const yIncrement = timeline3DLength / rectCount
 for (let i = 0; i < rectCount; i++) {
   const rectY = timeline3DLength - (yIncrement + (i * yIncrement))
   const nextRect = {
-    x,
+    x: i % 2 ? x + 0.5 : x,
     y: rectY
   }
   console.log('nextRect', nextRect)
@@ -137,6 +137,7 @@ const Stage = props => {
       }))
       nextRects.forEach((rect, i) => {
         const screenPosition = timelineToScreen(rect)
+        console.log('screenPosition', screenPosition.x, screenPosition.y)
         const scaleFactor = screenPosition.sliceWidth / cardSize
         console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
         const cardWidth = 600 * scaleFactor
@@ -160,8 +161,8 @@ const Stage = props => {
         let opacity = 1
         const fadeOutLimit = timeline3DLength - (0.05 / (0.05 + 1) * timeline3DLength)
         // console.log('fadeOutLimit', fadeOutLimit)
-        if (rect.y > fadeOutLimit) {
-            opacity = 1 - (rect.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
+        if (screenPosition.y > fadeOutLimit) {
+            opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
             opacity = opacity < 0 ? 0 : opacity
             console.log('over fade out limit', opacity)
             // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
@@ -172,8 +173,8 @@ const Stage = props => {
         // canvasContext.fillStyle = panelColor;
         canvasContext.fillStyle = `rgba(255,255,255,${opacity})`
         let startPos = {
-            x: rect.x,
-            y: rect.y - vShift
+            x: screenPosition.x,
+            y: screenPosition.y - vShift
         }
         // main card panel with beak
         canvasContext.beginPath();
@@ -191,16 +192,16 @@ const Stage = props => {
         canvasContext.lineTo(startPos.x, startPos.y);
         startPos.x -= (cardWidth / 2 - arrowWidth / 2);
         canvasContext.lineTo(startPos.x, startPos.y);
-        canvasContext.lineTo(rect.x, rect.y - vShift);
+        canvasContext.lineTo(screenPosition.x, screenPosition.y - vShift);
         canvasContext.closePath();
         canvasContext.fill();
         // reflection
         startPos = {
-          x: rect.x,
-          y: rect.y + vShift
+          x: screenPosition.x,
+          y: screenPosition.y + vShift
         }
         // console.log('shadowBlockHeight', shadowBlockHeight, '; arrowHeight', arrowHeight)
-        const grad = canvasContext.createLinearGradient(rect.x, rect.y, rect.x, rect.y + shadowBlockHeight + arrowWidth);
+        const grad = canvasContext.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
         grad.addColorStop(0, gradColor + "0.5)");
         grad.addColorStop(0.3, gradColor + "0.2)");
         grad.addColorStop(0.7, gradColor + "0.05)");
@@ -221,7 +222,7 @@ const Stage = props => {
         canvasContext.lineTo(startPos.x, startPos.y);
         startPos.x += (cardWidth / 2 - arrowWidth / 2);
         canvasContext.lineTo(startPos.x, startPos.y);
-        canvasContext.lineTo(rect.x, rect.y + vShift);
+        canvasContext.lineTo(screenPosition.x, screenPosition.y + vShift);
         canvasContext.closePath();
         canvasContext.fill();
         canvasContext.globalAlpha = 1
