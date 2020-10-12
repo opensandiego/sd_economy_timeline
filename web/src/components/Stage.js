@@ -114,7 +114,6 @@ const Stage = props => {
           x: (endPt + 1) / numCols,
           y: timeline3DLength
         })
-        console.log('blPos and brPos', blPos, brPos)
         const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
         gradient.addColorStop(0, `${timelineGradColor},0)`)
         gradient.addColorStop(0.06, `${timelineGradColor},0)`)
@@ -160,12 +159,11 @@ const Stage = props => {
         const textPadding = cardWidth / 30
         const vShift = 0
         let opacity = 1
-        const fadeOutLimit = timeline3DLength - (0.05 / (0.05 + 1) * timeline3DLength)
-        // console.log('fadeOutLimit', fadeOutLimit)
+        const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
         if (screenPosition.y > fadeOutLimit) {
             opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
             opacity = opacity < 0 ? 0 : opacity
-            // console.log('over fade out limit', opacity)
+            // console.log('over fade out limit', opacity, screenPosition.y)
             // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
         } else {
             opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
