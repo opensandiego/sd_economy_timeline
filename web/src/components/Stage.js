@@ -15,7 +15,7 @@ let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
-const timeline3DLength = 600
+const timeline3DLength = 1000
 let rects = []
 const rectCount = 10
 const x = 0.25
@@ -29,15 +29,10 @@ for (let i = 0; i < rectCount; i++) {
   rects.push(nextRect)
 }
 
-
 const Stage = props => {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
-  // const canvasStyle = useRef({
-  //   width: `${width}px`,
-  //   height: `${height}px`
-  // })
   const [sceneSizeEstablished, setSceneSizeEstablished] = useState(false)
   const [sceneSize, setSceneSize] = useState({
     width,
@@ -46,6 +41,7 @@ const Stage = props => {
   const timelineGradColor = 'rgb(24,105,169' // sdforward blue...
 
   const timelineToScreen = position => {
+    console.log('timelineToScreen', width)
     const viewOffset = 0
     const screenWidth = sceneSize.width
     const screenHeight = Math.round(sceneSize.height * timelinePaddingExpansion);
@@ -76,10 +72,6 @@ const Stage = props => {
         offset: offset
     }
   }
-
-  useEffect(() => {
-
-  }, [])
 
   useEffect(() => {
     const {
@@ -119,6 +111,7 @@ const Stage = props => {
           x: (endPt + 1) / numCols,
           y: timeline3DLength
         })
+        console.log('blPos and brPos', blPos, brPos)
         const gradient = canvasContext.createLinearGradient(0, height * vanishTop, 0, height);
         gradient.addColorStop(0, `${timelineGradColor},0)`)
         gradient.addColorStop(0.06, `${timelineGradColor},0)`)
@@ -236,7 +229,7 @@ const Stage = props => {
     }
 
     drawBoundaries()
-    drawEvents()
+    // drawEvents()
 
     const handler = function (event) {
       let delta = 0
@@ -246,9 +239,10 @@ const Stage = props => {
       if (event.detail) {
           delta = -event.detail / 3;
       }
+      console.log('handler w, h', width, height)
       canvasContext.clearRect(0, 0, width, height)
       drawBoundaries()
-      drawEvents(delta)
+      // drawEvents(delta)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
@@ -258,7 +252,9 @@ const Stage = props => {
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
     }
-  }, [sceneSizeEstablished])
+  }, [
+    sceneSizeEstablished
+  ])
 
   // console.log('refs', containerRef, sceneRef)
 
