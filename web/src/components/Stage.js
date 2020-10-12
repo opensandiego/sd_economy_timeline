@@ -33,6 +33,7 @@ const Stage = props => {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
+  const contextRef = useRef(null)
   const [sceneSizeEstablished, setSceneSizeEstablished] = useState(false)
   const [sceneSize, setSceneSize] = useState({
     width,
@@ -41,18 +42,18 @@ const Stage = props => {
   const timelineGradColor = 'rgb(24,105,169' // sdforward blue...
 
   const timelineToScreen = position => {
-    console.log('timelineToScreen', width)
+    // console.log('timelineToScreen', width)
     const viewOffset = 0
     const screenWidth = sceneSize.width
     const screenHeight = Math.round(sceneSize.height * timelinePaddingExpansion);
-    console.log('screenWidth', screenWidth, 'screenHeight', screenHeight)
+    // console.log('screenWidth', screenWidth, 'screenHeight', screenHeight)
     const pos = {
-        top: screenHeight * vanishTop,
-        topLeft: screenWidth * 0.5,
-        topRight: screenWidth * 0.5,
-        bottom: screenHeight * 1,
-        bottomLeft: -screenWidth * .25 * timelinePaddingExpansion,
-        bottomRight: screenWidth * endToScreenRatio * timelinePaddingExpansion
+      top: screenHeight * vanishTop,
+      topLeft: screenWidth * 0.5,
+      topRight: screenWidth * 0.5,
+      bottom: screenHeight * 1,
+      bottomLeft: -screenWidth * .25 * timelinePaddingExpansion,
+      bottomRight: screenWidth * endToScreenRatio * timelinePaddingExpansion
     }
     const distance = position.y;
     const hOffset = position.x;
@@ -81,22 +82,24 @@ const Stage = props => {
     width = sceneWidth
     height = sceneHeight
     maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
-    console.log('useEffect...width and height', width, height)
+    // console.log('useEffect...width and height', width, height)
     setSceneSize({
       width,
       height
     })
     setSceneSizeEstablished(true)
+  }, [])
 
-    if (!sceneSizeEstablished) return
+  useEffect(() => {
+    // if (!sceneSizeEstablished) return
+    contextRef.current = canvasRef.current.getContext('2d')
+    contextRef.current.scale(deviceScale, deviceScale)
 
     const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
-    const canvasContext = canvasRef.current.getContext('2d')
-    canvasContext.clearRect(0, 0, width, height)
-    canvasContext.scale(deviceScale, deviceScale) // necessary? check if other one does this
+    contextRef.current.clearRect(0, 0, width * 2, height)
 
-    canvasContext.fillStyle = 'rgba(0,0,0,0)'
-    canvasContext.fillRect(0, 0, width, height)
+    contextRef.current.fillStyle = 'rgba(0,0,0,0)'
+    contextRef.current.fillRect(0, 0, width, height)
 
     const drawBoundaries = () => {
       const numCols = 1
@@ -112,24 +115,23 @@ const Stage = props => {
           y: timeline3DLength
         })
         console.log('blPos and brPos', blPos, brPos)
-        const gradient = canvasContext.createLinearGradient(0, height * vanishTop, 0, height);
+        const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
         gradient.addColorStop(0, `${timelineGradColor},0)`)
         gradient.addColorStop(0.06, `${timelineGradColor},0)`)
         gradient.addColorStop(0.8, `${timelineGradColor},1)`)
         gradient.addColorStop(1, `${timelineGradColor},1)`)
-        canvasContext.fillStyle = gradient
-        canvasContext.beginPath()
-        canvasContext.moveTo(vanishingPoint.x, vanishingPoint.y);
-        canvasContext.lineTo(blPos.x, blPos.y);
-        canvasContext.lineTo(brPos.x, brPos.y);
-        canvasContext.moveTo(vanishingPoint.x, vanishingPoint.y);
-        canvasContext.closePath();
-        canvasContext.fill();
+        contextRef.current.fillStyle = gradient
+        contextRef.current.beginPath()
+        contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
+        contextRef.current.lineTo(blPos.x, blPos.y);
+        contextRef.current.lineTo(brPos.x, brPos.y);
+        contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
+        contextRef.current.closePath();
+        contextRef.current.fill();
       }
     }
 
     const drawEvents = (change = 0) => {
-      // console.log('drawRect change...', change)
       const nextRects = rects.map(rect => ({
         x: rect.x,
         y: rect.y - (-change * 25) // <-- flip scroll direction
@@ -168,68 +170,68 @@ const Stage = props => {
         } else {
             opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
         }
-        canvasContext.globalAlpha = opacity;
-        // canvasContext.fillStyle = panelColor;
-        canvasContext.fillStyle = `rgba(255,255,255,${opacity})`
+        contextRef.current.globalAlpha = opacity;
+        // contextRef.current.fillStyle = panelColor;
+        contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
         let startPos = {
             x: screenPosition.x,
             y: screenPosition.y - vShift
         }
         // main card panel with beak
-        canvasContext.beginPath();
-        canvasContext.moveTo(startPos.x, startPos.y);
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(startPos.x, startPos.y);
         startPos.x -= arrowWidth / 2;
         startPos.y -= arrowHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.y -= textHolderHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x += cardWidth;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.y += textHolderHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-        canvasContext.lineTo(startPos.x, startPos.y);
-        canvasContext.lineTo(screenPosition.x, screenPosition.y - vShift);
-        canvasContext.closePath();
-        canvasContext.fill();
+        contextRef.current.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
+        contextRef.current.closePath();
+        contextRef.current.fill();
         // reflection
         startPos = {
           x: screenPosition.x,
           y: screenPosition.y + vShift
         }
-        const grad = canvasContext.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
+        const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
         grad.addColorStop(0, gradColor + "0.5)");
         grad.addColorStop(0.3, gradColor + "0.2)");
         grad.addColorStop(0.7, gradColor + "0.05)");
         grad.addColorStop(1, gradColor + "0)");
-        canvasContext.fillStyle = grad;
-        canvasContext.beginPath();
-        canvasContext.moveTo(startPos.x, startPos.y);
+        contextRef.current.fillStyle = grad;
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(startPos.x, startPos.y);
         startPos.x += arrowWidth / 2;
         startPos.y += arrowHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x += (cardWidth / 2 - arrowWidth / 2);
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.y += shadowBlockHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x -= cardWidth;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.y -= shadowBlockHeight;
-        canvasContext.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(startPos.x, startPos.y);
         startPos.x += (cardWidth / 2 - arrowWidth / 2);
-        canvasContext.lineTo(startPos.x, startPos.y);
-        canvasContext.lineTo(screenPosition.x, screenPosition.y + vShift);
-        canvasContext.closePath();
-        canvasContext.fill();
-        canvasContext.globalAlpha = 1
+        contextRef.current.lineTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
+        contextRef.current.closePath();
+        contextRef.current.fill();
+        contextRef.current.globalAlpha = 1
       })
       rects = nextRects
     }
 
     drawBoundaries()
-    // drawEvents()
+    drawEvents()
 
     const handler = function (event) {
       let delta = 0
@@ -239,10 +241,9 @@ const Stage = props => {
       if (event.detail) {
           delta = -event.detail / 3;
       }
-      console.log('handler w, h', width, height)
-      canvasContext.clearRect(0, 0, width, height)
+      contextRef.current.clearRect(0, 0, width, height)
       drawBoundaries()
-      // drawEvents(delta)
+      drawEvents(delta)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
@@ -256,9 +257,6 @@ const Stage = props => {
     sceneSizeEstablished
   ])
 
-  // console.log('refs', containerRef, sceneRef)
-
-  console.log('rendering...width and height', width, height)
   return (
     <div className='stage' ref={containerRef}>
       <div className='viewport'>
