@@ -5,7 +5,7 @@ import React, {
 import './stage.scss'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
-const timelinePaddingExpansion = 1.1
+const timelinePaddingExpansion = 1.2
 const endToScreenRatio = 1.1
 const vanishTop = 0.2016
 const width = 600
@@ -15,7 +15,7 @@ const maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 const cardSize = 720
 const timeline3DLength = 600
 let rects = []
-const rectCount = 5
+const rectCount = 10
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
 for (let i = 0; i < rectCount; i++) {
@@ -57,7 +57,6 @@ const Stage = props => {
     const vanishingHeight = pos.bottom - pos.top;
     const maxDistance = timeline3DLength;
     const k = 0.006;
-    // console.log('E exponent', -k * (maxDistance - distance))
     const widthOnScreen = itemWidth * Math.pow(Math.E, -k * (maxDistance - distance));
     const xPos = (width - widthOnScreen) / 2 + hOffset * widthOnScreen;
     console.log('xpos', xPos)
@@ -73,33 +72,12 @@ const Stage = props => {
 
   useEffect(() => {
     const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
-    console.log('vanishing point', vanishingPoint)
     const canvasContext = canvasRef.current.getContext('2d')
     canvasContext.clearRect(0, 0, width, height)
     canvasContext.scale(deviceScale, deviceScale) // necessary? check if other one does this
 
     const drawBoundaries = () => {
       const numCols = 1
-      // lines on surface boundaries
-      // for (let endPt = 0; endPt <= numCols; endPt++) {
-      //   const end = timelineToScreen({
-      //     x: endPt / numCols,
-      //     y: timeline3DLength
-      //   })
-      //   // console.log('end', end)
-
-      //   canvasContext.beginPath();
-      //   const gradient = canvasContext.createLinearGradient(vanishingPoint.x, vanishingPoint.y, end.x, end.y);
-      //   gradient.addColorStop(0, `${timelineGradColor},0)`)
-      //   gradient.addColorStop(0.06, `${timelineGradColor},0)`)
-      //   gradient.addColorStop(0.8, `${timelineGradColor},1)`)
-      //   gradient.addColorStop(1, `${timelineGradColor},1)`)
-      //   canvasContext.strokeStyle = gradient;
-      //   canvasContext.moveTo(vanishingPoint.x, vanishingPoint.y)
-      //   canvasContext.lineTo(end.x, end.y)
-      //   canvasContext.closePath()
-      //   canvasContext.stroke()
-      // }
 
       // filled surface
       for (let endPt = 0; endPt < numCols; endPt++) {
@@ -127,8 +105,7 @@ const Stage = props => {
       }
     }
 
-    // rects on the canvas
-    const drawRects = (change = 0) => {
+    const drawEvents = (change = 0) => {
       // console.log('drawRect change...', change)
       const nextRects = rects.map(rect => ({
         x: rect.x,
@@ -140,14 +117,13 @@ const Stage = props => {
         console.log('screenPosition', screenPosition.x, screenPosition.y)
         const scaleFactor = screenPosition.sliceWidth / cardSize
         console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-        const cardWidth = 600 * scaleFactor
-        // console.log('cardWidth', cardWidth, rect.x, rect.y)
+        const cardWidth = 400 * scaleFactor
         if (cardWidth < 3) {
           return
         }
         const gradColor = "rgba(255,255,255,";
         // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
-        const numTextLines = 4
+        const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
         const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
         const textHolderHeight = 60 * scaleFactor + vTextAdjust;
         const shadowBlockHeight = 60 * scaleFactor
@@ -200,7 +176,6 @@ const Stage = props => {
           x: screenPosition.x,
           y: screenPosition.y + vShift
         }
-        // console.log('shadowBlockHeight', shadowBlockHeight, '; arrowHeight', arrowHeight)
         const grad = canvasContext.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
         grad.addColorStop(0, gradColor + "0.5)");
         grad.addColorStop(0.3, gradColor + "0.2)");
@@ -231,7 +206,7 @@ const Stage = props => {
     }
 
     drawBoundaries()
-    drawRects()
+    drawEvents()
 
     const handler = function (event) {
       let delta = 0
@@ -243,7 +218,7 @@ const Stage = props => {
       }
       canvasContext.clearRect(0, 0, width, height)
       drawBoundaries()
-      drawRects(delta)
+      drawEvents(delta)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
