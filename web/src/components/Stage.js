@@ -3,6 +3,7 @@ import React, {
   useEffect
 } from 'react'
 import './stage.scss'
+import backgroudImagePath from './beach.jpg'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
@@ -75,6 +76,9 @@ const Stage = props => {
     const canvasContext = canvasRef.current.getContext('2d')
     canvasContext.clearRect(0, 0, width, height)
     canvasContext.scale(deviceScale, deviceScale) // necessary? check if other one does this
+
+    canvasContext.fillStyle = 'rgba(0,0,0,0)'
+    canvasContext.fillRect(0, 0, width, height)
 
     const drawBoundaries = () => {
       const numCols = 1
@@ -235,8 +239,13 @@ const Stage = props => {
     <div className='stage' ref={containerRef}>
       <div className='viewport'>
         <div className='scene3D-container'>
+          <img
+            alt='San Diego sunset as background for timeline '
+            src={backgroudImagePath}
+            width={width}
+            height={height}
+          />
           <div className='scene3D' ref={sceneRef}>
-            <h2>Timeline events...</h2>
             <canvas
               ref={canvasRef}
               style={canvasStyle}
