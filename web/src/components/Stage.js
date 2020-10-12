@@ -256,7 +256,7 @@ const Stage = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Stage

@@ -7,7 +7,8 @@
   flex-direction: column;
 }
 
-.container img { /* sd forward logo */
+.container img {
+  /* sd forward logo */
   align-self: flex-start;
 }
 
@@ -32,6 +33,8 @@
 .column.fixed-300 {
   width: 300px;
   max-width: 300px;
+  /* position: fixed; */
+  z-index: 1;
 }
 
 .row {
@@ -49,3 +52,94 @@
 body {
   overscroll-behavior-y: none;
 }
+
+button {
+  background: none;
+  border: 0;
+}
+
+/* --------------- Nancy P. stage background -------------- */
+.content {
+  position: relative;
+  height: 700px;
+}
+.content img:nth-of-type(1),
+img:nth-of-type(2) {
+  position: absolute;
+  /* height: 100%;
+  width: auto; */
+  overflow: hidden;
+  z-index: -999;
+}
+@media (min-width: 768px) {
+  .content img:nth-of-type(1),
+  img:nth-of-type(2) {
+    width: 720px;
+  }
+  /* .container {
+      margin-right: auto;
+      margin-left: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+  } */
+}
+
+@media only screen and (min-width: 1025px) {
+  .content img:nth-of-type(1),
+  img:nth-of-type(2) {
+    max-width: 994px;
+  }
+
+  img:nth-of-type(2) {
+    bottom: -69px;
+    left: 2px;
+  }
+}
+
+@media (min-width: 992px) {
+  .content img:nth-of-type(1),
+  img:nth-of-type(2) {
+    width: 940px;
+  }
+  img:nth-of-type(2) {
+    bottom: 147px;
+    left: 2px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content img:nth-of-type(1),
+  img:nth-of-type(2) {
+    width: 1140px;
+  }
+  img:nth-of-type(2) {
+    bottom: 115px;
+  }
+}
+
+/* --------------- Nancy P. stage background -------------- */
+
+.categories {
+  position: fixed;
+  width: 144px;
+  height: 46px;
+  background: transparent
+    linear-gradient(180deg, #fa68a6 0%, #e04d8b 50%, #98345e 100%) 0% 0%
+    no-repeat padding-box;
+  box-shadow: 0px 2px 5px #00000072;
+  border: 0;
+  border-radius: 50px;
+  color: white;
+  font-size: 19px;
+  font-weight: 600;
+  margin: 20px 0 0 41px;
+  cursor: pointer;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.categories svg {
+  margin-right: 3px;
+}
+
