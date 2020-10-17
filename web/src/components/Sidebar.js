@@ -3,7 +3,6 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
-import TimelineService from "../timelineService";
 import TimelineContext from "../TimelineContext";
 
 // const selectedSectors = [
@@ -47,7 +46,6 @@ function handleCheckbox(e) {
 
 const Sidebar = () => {
   console.log("in sidebar");
-  TimelineService.readCSV();
 
   return (
     <TimelineContext.Consumer>

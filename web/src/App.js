@@ -11,6 +11,8 @@ import backgroundLandscape from "./backgroundLandscape.png"
 import road from "./road.svg"
 import { IoIosPin } from "react-icons/io"
 
+import { EventDataProvider } from './EventDataContext'
+
 function App() {
   return (
     <TimelineContext.Consumer>
@@ -24,7 +26,9 @@ function App() {
             <div className="column flex">
               <div className="row">
                 {showFilter ? <Sidebar /> : null}
-                <Stage />
+                <EventDataProvider>
+                  <Stage />
+                </EventDataProvider>
               </div>
               <div className="row fixed-100">
                 <YearSelector />
