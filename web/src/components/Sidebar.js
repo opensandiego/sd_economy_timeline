@@ -6,48 +6,15 @@ import "./sidebar.css";
 import TimelineService from "../timelineService";
 import TimelineContext from "../TimelineContext";
 
-// const selectedSectors = [
-//   { label: "Civic", checked: true },
-//   { label: "Mobility", checked: true },
-//   { label: "Military", checked: true },
-//   { label: "Political", checked: true },
-//   { label: "Tourism", checked: true },
-// ];
 
-const keySectors = [
-  { label: "Civic", checked: true },
-  { label: "Mobility", checked: true },
-  { label: "Military", checked: true },
-  { label: "Political", checked: true },
-  { label: "Tourism", checked: true },
-];
 
-// const allSectors = [
-//   // ...keySectors,
-//   { label: "Healthcare", checked: false },
-//   { label: "Tech", checked: false },
-//   { label: "Manufacturing", checked: false },
-//   { label: "Goods Movement", checked: false },
-//   { label: "Tribal", checked: false },
-//   { label: "Crossborder", checked: false },
-//   { label: "Landuse", checked: false },
-// ];
+const Sidebar = (props) => {
 
-// // const selectedSectors = [
-// //   {label: 'Civic', checked: true},
-// //   {label: 'Mobility', checked: true},
-// //   {label: 'Military', checked: true},
-// //   {label: 'Political', checked: true},
-// //   {label: 'Tourism', checked: true},
-// // ]
 
-function handleCheckbox(e) {
-  console.log("HANDLING CHECK", e.target.value, e.target.checked);
-}
+  let results = TimelineService.readCSV(props.selectedDec, props.selectedSectors);
+  // console.log("IN SIDEBAR function", results)
+  props.updateResults(results)
 
-const Sidebar = () => {
-  console.log("in sidebar");
-  TimelineService.readCSV();
 
   return (
     <TimelineContext.Consumer>
@@ -55,18 +22,17 @@ const Sidebar = () => {
         selectedSectors,
         keySectors,
         allSectors,
-        showKSector,
         showASector,
+        showFilter,
         handleCheckbox,
         removeSector,
         clearFilter,
-        toggleShowKSector,
         toggleShowASector,
         toggleShowFilter
       }) => (
-        <div className="column fixed-300">
-          <div className="sidebar">
-            <div className="close"><button onClick={toggleShowFilter}><VscChromeClose /></button></div>
+        <div className={showFilter ? "column fixed-270 show" : "column fixed-270 hide"}>
+          <div id="sidebar">
+            <div className="close"><button onClick={toggleShowFilter}><VscChromeClose size={18}/></button></div>
             {/* <div className="sidebar-title">A History of San Diego</div> */}
 
             <div className="sidebar-label">
@@ -92,19 +58,20 @@ const Sidebar = () => {
             )}
 
             <div className="sidebar-label">
-              <p>Key Sectors</p>
-              {showKSector ? (
-                <p onClick={toggleShowKSector}>
-                  <BiMinus />
-                </p>
+              <p>All Sectors</p>
+
+              {showASector ? (
+                <button onClick={toggleShowASector}>
+                  <BiMinus size={15}/>
+                </button>
               ) : (
-                <p onClick={toggleShowKSector}>
-                  <BiPlus />
-                </p>
+                <button onClick={toggleShowASector}>
+                  <BiPlus size={15}/>
+                </button>
               )}
             </div>
-            {showKSector ? (
-              <div className="active-sectors">
+            {showASector ? (
+              <div className="all-sectors">
                 {keySectors.map((sector) => (
                   <div className="key-sector-selector" key={sector}>
                     <input
@@ -118,23 +85,6 @@ const Sidebar = () => {
                     <BsInfoCircle />
                   </div>
                 ))}
-              </div>
-            ) : null}
-
-            <div className="sidebar-label">
-              <p>All Sectors</p>
-              {showASector ? (
-                <p onClick={toggleShowASector}>
-                  <BiMinus />
-                </p>
-              ) : (
-                <p onClick={toggleShowASector}>
-                  <BiPlus />
-                </p>
-              )}
-            </div>
-            {showASector ? (
-              <div className="all-sectors">
                 {allSectors.map((sector) => (
                   <div className="all-sector-selector" key={sector}>
                     <input

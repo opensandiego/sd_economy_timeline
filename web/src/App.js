@@ -6,24 +6,33 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
-import TimelineContext from "./TimelineContext"
-import backgroundLandscape from "./backgroundLandscape.png"
-import road from "./road.svg"
-import { IoIosPin } from "react-icons/io"
+import TimelineContext from "./TimelineContext";
+import backgroundLandscape from "./backgroundLandscape.png";
+import road from "./road.svg";
+import { IoIosPin } from "react-icons/io";
 
 function App() {
   return (
     <TimelineContext.Consumer>
-      {({ showFilter, toggleShowFilter}) => (
+      {({ toggleShowFilter, selectedDec, selectedSectors,updateResults }) => (
         <div className="container flex">
           <Header />
           <div className="content flex">
             {/* <img src={backgroundLandscape} alt="san diego landscape" />
             <img src={road} alt="stage" /> */}
-            <button className="categories button" onClick={toggleShowFilter}> <IoIosPin/>categories</button>
+            <button className="categories button" onClick={toggleShowFilter}>
+              {" "}
+              <IoIosPin />
+              categories
+            </button>
             <div className="column flex">
               <div className="row">
-                {showFilter ? <Sidebar /> : null}
+                {/* {showFilter ? <Sidebar /> : null} */}
+                <Sidebar
+                  selectedDec={selectedDec}
+                  selectedSectors={selectedSectors}
+                  updateResults={updateResults}
+                />
                 <Stage />
               </div>
               <div className="row fixed-100">
