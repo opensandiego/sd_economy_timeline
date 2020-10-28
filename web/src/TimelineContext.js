@@ -37,8 +37,13 @@ export class TimelineContextProvider extends Component {
       "Landuse",
     ],
     showASector: true,
-    showFilter: false,
+    showFilter: true,
   };
+
+  async componentDidMount () {
+    const stageResults = await TimelineService.readCSV()
+    this.setState({ stageResults })
+  }
 
   updateDec = (selectedDec) => {
     console.log("changing decade");
@@ -47,12 +52,28 @@ export class TimelineContextProvider extends Component {
     });
   };
 
-  handleCheckbox = (e) => {
-    if (e.target.checked & (this.state.selectedSectors.length < 5)) {
+  handleCheckbox = (e, sector) => {
+    console.log('handle checkbox', e.target.checked, sector)
+    const { checked } = e.target
+    if (checked) {
+      if (this.state.selectedSectors.length === 5) {
+        // TODO:  shows a message in the UI for this
+        console.log("you can only select 5 sectors at a time");
+        return
+      } else {
+        this.setState({
+          selectedSectors: [...this.state.selectedSectors, e.target.value],
+        });
+      }
+    }
+    if (!checked) {
+      const nextSectors = [ ...this.state.selectedSectors ]
+      const sectorToRemove = nextSectors.indexOf(sector)
+      nextSectors.splice(sectorToRemove, 1)
       this.setState({
-        selectedSectors: [...this.state.selectedSectors, e.target.value],
-      });
-    } else console.log("you can only select 5 sectors at a time");
+        selectedSectors: nextSectors
+      })
+    }
   };
 
   removeSector = (sector) => {

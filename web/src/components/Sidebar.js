@@ -3,19 +3,11 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
-import TimelineService from "../timelineService";
 import TimelineContext from "../TimelineContext";
 
 
 
 const Sidebar = (props) => {
-
-
-  let results = TimelineService.readCSV(props.selectedDec, props.selectedSectors);
-  // console.log("IN SIDEBAR function", results)
-  props.updateResults(results)
-
-
   return (
     <TimelineContext.Consumer>
       {({
@@ -58,7 +50,7 @@ const Sidebar = (props) => {
             )}
 
             <div className="sidebar-label">
-              <p>All Sectors</p>
+              <p>All Sectors<br/>(max of five)</p>
 
               {showASector ? (
                 <button onClick={toggleShowASector}>
@@ -78,8 +70,10 @@ const Sidebar = (props) => {
                       type="checkbox"
                       checked={selectedSectors.includes(sector)}
                       value={sector}
-                      disabled={selectedSectors.length < 5 ? false : true}
-                      onChange={(e) => handleCheckbox(e)}
+                      // disabled={selectedSectors.length < 5 ? false : true}
+                      onChange={(e) => {
+                        handleCheckbox(e, sector)
+                      }}
                     />
                     <span className="key-sector-selector-item">{sector}</span>
                     <BsInfoCircle />
@@ -91,8 +85,11 @@ const Sidebar = (props) => {
                       type="checkbox"
                       value={sector}
                       checked={selectedSectors.includes(sector)}
-                      disabled={selectedSectors.length < 5 ? false : true}
-                      onChange={(e) => handleCheckbox(e)}
+                      // disabled={selectedSectors.length < 5 ? false : true}
+                      onChange={(e) => {
+                        console.log('check change', e, sector)
+                        handleCheckbox(e, sector)
+                      }}
                     />
                     <span className="all-sector-selector-item">{sector}</span>
                     <BsInfoCircle />

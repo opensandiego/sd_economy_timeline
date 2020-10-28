@@ -7,8 +7,6 @@ import Sidebar from "./components/Sidebar";
 import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
 import TimelineContext from "./TimelineContext";
-import backgroundLandscape from "./backgroundLandscape.png";
-import road from "./road.svg";
 import { IoIosPin } from "react-icons/io";
 
 function App() {
