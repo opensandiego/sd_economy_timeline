@@ -29,7 +29,10 @@ for (let i = 0; i < rectCount; i++) {
   rects.push(nextRect)
 }
 
-const Stage = props => {
+const Stage = ({ events, selectedSectors }) => {
+  const selectedEvents = events.filter(event => selectedSectors.includes(event.Category))
+  console.log('selected events', selectedEvents)
+
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)

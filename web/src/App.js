@@ -12,7 +12,7 @@ import { IoIosPin } from "react-icons/io";
 function App() {
   return (
     <TimelineContext.Consumer>
-      {({ toggleShowFilter, selectedDec, selectedSectors,updateResults }) => (
+      {({ toggleShowFilter, selectedDec, selectedSectors, updateResults, stageResults }) => (
         <div className="container flex">
           <Header />
           <div className="content flex">
@@ -31,7 +31,10 @@ function App() {
                   selectedSectors={selectedSectors}
                   updateResults={updateResults}
                 />
-                <Stage />
+                <Stage
+                  selectedSectors={selectedSectors}
+                  events={stageResults}
+                />
               </div>
               <div className="row fixed-100">
                 <YearSelector />

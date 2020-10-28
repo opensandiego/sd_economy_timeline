@@ -53,7 +53,6 @@ export class TimelineContextProvider extends Component {
   };
 
   handleCheckbox = (e, sector) => {
-    console.log('handle checkbox', e.target.checked, sector)
     const { checked } = e.target
     if (checked) {
       if (this.state.selectedSectors.length === 5) {

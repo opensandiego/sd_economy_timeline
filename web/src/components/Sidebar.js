@@ -87,7 +87,6 @@ const Sidebar = (props) => {
                       checked={selectedSectors.includes(sector)}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        console.log('check change', e, sector)
                         handleCheckbox(e, sector)
                       }}
                     />
