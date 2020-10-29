@@ -5,12 +5,12 @@ import React, {
 } from 'react'
 import EventDataContext from '../EventDataContext'
 import './stage.scss'
-import backgroudImagePath from './beach.jpg'
+import backgroudImagePath from './sd.png'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
 const endToScreenRatio = 1.1
-const vanishTop = 0.2016
+const vanishTop = 0.3
 let width = 600
 let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
@@ -72,7 +72,7 @@ const Stage = props => {
     const offset = Math.min(widthOnScreen / itemWidth * viewOffset);
     return {
         x: xPos + offset,
-        y: yPos - 10,
+        y: yPos,
         sliceWidth: widthOnScreen,
         offset: offset
     }
