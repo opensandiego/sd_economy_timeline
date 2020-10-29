@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import TimelineContext from '../TimelineContext'
 import './stage.scss'
 import backgroudImagePath from './sd.png'
 
@@ -30,7 +29,9 @@ for (let i = 0; i < rectCount; i++) {
   rects.push(nextRect)
 }
 
-const Stage = props => {
+const Stage = ({data, selectedSectors})=> {
+  const selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
+  console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
@@ -75,6 +76,133 @@ const Stage = props => {
     }
   }
 
+  const drawBoundaries = vanishingPoint => {
+    const numCols = 1
+
+    // filled surface
+    for (let endPt = 0; endPt < numCols; endPt++) {
+      const blPos = timelineToScreen({
+        x: endPt / numCols,
+        y: timeline3DLength
+      })
+      var brPos = timelineToScreen({
+        x: (endPt + 1) / numCols,
+        y: timeline3DLength
+      })
+      const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
+      gradient.addColorStop(0, `${timelineGradColor},0)`)
+      gradient.addColorStop(0.06, `${timelineGradColor},0)`)
+      gradient.addColorStop(0.8, `${timelineGradColor},1)`)
+      gradient.addColorStop(1, `${timelineGradColor},1)`)
+      contextRef.current.fillStyle = gradient
+      contextRef.current.beginPath()
+      contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
+      contextRef.current.lineTo(blPos.x, blPos.y);
+      contextRef.current.lineTo(brPos.x, brPos.y);
+      contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
+      contextRef.current.closePath();
+      contextRef.current.fill();
+    }
+  }
+
+  const drawEvents = (change = 0) => {
+    const nextRects = rects.map(rect => ({
+      x: rect.x,
+      y: rect.y - (-change * 25) // <-- flip scroll direction
+      // y: rect.y - (change * 25)
+    }))
+    nextRects.forEach((rect, i) => {
+      const screenPosition = timelineToScreen(rect)
+      // console.log('screenPosition', screenPosition.x, screenPosition.y)
+      const scaleFactor = screenPosition.sliceWidth / cardSize
+      // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
+      const cardWidth = 400 * scaleFactor
+      if (cardWidth < 3) {
+        return
+      }
+      const gradColor = "rgba(255,255,255,";
+      // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
+      const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
+      const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
+      const textHolderHeight = 60 * scaleFactor + vTextAdjust;
+      const shadowBlockHeight = 60 * scaleFactor
+      const imageBoxHeight = 150 * scaleFactor
+      const arrowHeight = 50 * scaleFactor
+      const arrowWidth = 100 * scaleFactor
+      const itemHeight = textHolderHeight + imageBoxHeight + arrowHeight
+      const itemHeightNoImage = textHolderHeight + arrowHeight
+      const textPadding = cardWidth / 30
+      const vShift = 0
+      let opacity = 1
+      const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
+      if (screenPosition.y > fadeOutLimit) {
+          opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
+          opacity = opacity < 0 ? 0 : opacity
+          // console.log('over fade out limit', opacity, screenPosition.y)
+          // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
+      } else {
+          opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
+      }
+      contextRef.current.globalAlpha = opacity;
+      // contextRef.current.fillStyle = panelColor;
+      contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
+      let startPos = {
+          x: screenPosition.x,
+          y: screenPosition.y - vShift
+      }
+      // main card panel with beak
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(startPos.x, startPos.y);
+      startPos.x -= arrowWidth / 2;
+      startPos.y -= arrowHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x -= (cardWidth / 2 - arrowWidth / 2);
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.y -= textHolderHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x += cardWidth;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.y += textHolderHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x -= (cardWidth / 2 - arrowWidth / 2);
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
+      contextRef.current.closePath();
+      contextRef.current.fill();
+      // reflection
+      startPos = {
+        x: screenPosition.x,
+        y: screenPosition.y + vShift
+      }
+      const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
+      grad.addColorStop(0, gradColor + "0.5)");
+      grad.addColorStop(0.3, gradColor + "0.2)");
+      grad.addColorStop(0.7, gradColor + "0.05)");
+      grad.addColorStop(1, gradColor + "0)");
+      contextRef.current.fillStyle = grad;
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(startPos.x, startPos.y);
+      startPos.x += arrowWidth / 2;
+      startPos.y += arrowHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x += (cardWidth / 2 - arrowWidth / 2);
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.y += shadowBlockHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x -= cardWidth;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.y -= shadowBlockHeight;
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      startPos.x += (cardWidth / 2 - arrowWidth / 2);
+      contextRef.current.lineTo(startPos.x, startPos.y);
+      contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
+      contextRef.current.closePath();
+      contextRef.current.fill();
+      contextRef.current.globalAlpha = 1
+    })
+    rects = nextRects
+  }
+
   useEffect(() => {
     const {
       width: sceneWidth,
@@ -102,134 +230,7 @@ const Stage = props => {
     contextRef.current.fillStyle = 'rgba(0,0,0,0)'
     contextRef.current.fillRect(0, 0, width, height)
 
-    const drawBoundaries = () => {
-      const numCols = 1
-
-      // filled surface
-      for (let endPt = 0; endPt < numCols; endPt++) {
-        const blPos = timelineToScreen({
-          x: endPt / numCols,
-          y: timeline3DLength
-        })
-        var brPos = timelineToScreen({
-          x: (endPt + 1) / numCols,
-          y: timeline3DLength
-        })
-        const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
-        gradient.addColorStop(0, `${timelineGradColor},0)`)
-        gradient.addColorStop(0.06, `${timelineGradColor},0)`)
-        gradient.addColorStop(0.8, `${timelineGradColor},1)`)
-        gradient.addColorStop(1, `${timelineGradColor},1)`)
-        contextRef.current.fillStyle = gradient
-        contextRef.current.beginPath()
-        contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
-        contextRef.current.lineTo(blPos.x, blPos.y);
-        contextRef.current.lineTo(brPos.x, brPos.y);
-        contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
-        contextRef.current.closePath();
-        contextRef.current.fill();
-      }
-    }
-
-    const drawEvents = (change = 0) => {
-      const nextRects = rects.map(rect => ({
-        x: rect.x,
-        y: rect.y - (-change * 25) // <-- flip scroll direction
-        // y: rect.y - (change * 25)
-      }))
-      nextRects.forEach((rect, i) => {
-        const screenPosition = timelineToScreen(rect)
-        // console.log('screenPosition', screenPosition.x, screenPosition.y)
-        const scaleFactor = screenPosition.sliceWidth / cardSize
-        // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-        const cardWidth = 400 * scaleFactor
-        if (cardWidth < 3) {
-          return
-        }
-        const gradColor = "rgba(255,255,255,";
-        // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
-        const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
-        const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
-        const textHolderHeight = 60 * scaleFactor + vTextAdjust;
-        const shadowBlockHeight = 60 * scaleFactor
-        const imageBoxHeight = 150 * scaleFactor
-        const arrowHeight = 50 * scaleFactor
-        const arrowWidth = 100 * scaleFactor
-        const itemHeight = textHolderHeight + imageBoxHeight + arrowHeight
-        const itemHeightNoImage = textHolderHeight + arrowHeight
-        const textPadding = cardWidth / 30
-        const vShift = 0
-        let opacity = 1
-        const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
-        if (screenPosition.y > fadeOutLimit) {
-            opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
-            opacity = opacity < 0 ? 0 : opacity
-            // console.log('over fade out limit', opacity, screenPosition.y)
-            // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
-        } else {
-            opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
-        }
-        contextRef.current.globalAlpha = opacity;
-        // contextRef.current.fillStyle = panelColor;
-        contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
-        let startPos = {
-            x: screenPosition.x,
-            y: screenPosition.y - vShift
-        }
-        // main card panel with beak
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(startPos.x, startPos.y);
-        startPos.x -= arrowWidth / 2;
-        startPos.y -= arrowHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.y -= textHolderHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x += cardWidth;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.y += textHolderHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
-        contextRef.current.closePath();
-        contextRef.current.fill();
-        // reflection
-        startPos = {
-          x: screenPosition.x,
-          y: screenPosition.y + vShift
-        }
-        const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
-        grad.addColorStop(0, gradColor + "0.5)");
-        grad.addColorStop(0.3, gradColor + "0.2)");
-        grad.addColorStop(0.7, gradColor + "0.05)");
-        grad.addColorStop(1, gradColor + "0)");
-        contextRef.current.fillStyle = grad;
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(startPos.x, startPos.y);
-        startPos.x += arrowWidth / 2;
-        startPos.y += arrowHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x += (cardWidth / 2 - arrowWidth / 2);
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.y += shadowBlockHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x -= cardWidth;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.y -= shadowBlockHeight;
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        startPos.x += (cardWidth / 2 - arrowWidth / 2);
-        contextRef.current.lineTo(startPos.x, startPos.y);
-        contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
-        contextRef.current.closePath();
-        contextRef.current.fill();
-        contextRef.current.globalAlpha = 1
-      })
-      rects = nextRects
-    }
-
-    drawBoundaries()
+    drawBoundaries(vanishingPoint)
     drawEvents()
 
     const handler = function (event) {
@@ -241,7 +242,7 @@ const Stage = props => {
           delta = -event.detail / 3;
       }
       contextRef.current.clearRect(0, 0, width, height)
-      drawBoundaries()
+      drawBoundaries(vanishingPoint)
       drawEvents(delta)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
@@ -256,39 +257,37 @@ const Stage = props => {
     sceneSizeEstablished
   ])
 
-  const renderStage = context => {
-    return (
-      <div className='stage' ref={containerRef}>
-        <div className='viewport'>
-          <div className='scene3D-container'>
-            <img
-              alt='San Diego sunset as background for timeline '
-              src={backgroudImagePath}
-              width={width}
-              height={height}
-            />
-            <div className='scene3D' ref={sceneRef}>
-              <canvas
-                ref={canvasRef}
-                style={{
-                  width: `${sceneSize.width}px`,
-                  height: `${sceneSize.height}px`
-                }}
-                width={`${sceneSize.width * deviceScale}`}
-                height={`${sceneSize.height * deviceScale}`}
-              ></canvas>
-            </div>
+  useEffect(() => {
+    drawEvents()
+  }, [
+    selectedEvents
+  ])
+
+  return (
+    <div className='stage' ref={containerRef}>
+      <div className='viewport'>
+        <div className='scene3D-container'>
+          <img
+            alt='San Diego sunset as background for timeline '
+            src={backgroudImagePath}
+            width={width}
+            height={height}
+          />
+          <div className='scene3D' ref={sceneRef}>
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: `${sceneSize.width}px`,
+                height: `${sceneSize.height}px`
+              }}
+              width={`${sceneSize.width * deviceScale}`}
+              height={`${sceneSize.height * deviceScale}`}
+            ></canvas>
           </div>
         </div>
       </div>
-    )
-  }
-
-  return (
-    <TimelineContext.Consumer>
-      {renderStage}
-    </TimelineContext.Consumer>
-  );
+    </div>
+  )
 };
 
 export default Stage

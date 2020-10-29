@@ -8,7 +8,7 @@ import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
 import Categories from "./components/Categories";
 
-import { TimelineContextProvider } from './TimelineContext'
+import TimelineContext, { TimelineContextProvider } from './TimelineContext'
 
 function App() {
   return (
@@ -20,7 +20,14 @@ function App() {
           <div className="column flex">
             <div className="row">
               <Sidebar />
-              <Stage />
+              <TimelineContext.Consumer>
+                {({data, selectedSectors}) => (
+                  <Stage
+                    data={data}
+                    selectedSectors={selectedSectors}
+                  />
+                )}
+              </TimelineContext.Consumer>
             </div>
             <div className="row fixed-100">
               <YearSelector />
