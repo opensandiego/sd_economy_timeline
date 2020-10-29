@@ -3,31 +3,31 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
-import TimelineContext from "../TimelineContext";
+import EventDataContext from '../EventDataContext'
 
 const Sidebar = (props) => {
   return (
-    <TimelineContext.Consumer>
+    <EventDataContext.Consumer>
       {({
         selectedSectors,
         keySectors,
         allSectors,
-        showASector,
+        showAllSectors,
         showFilter,
-        handleCheckbox,
+        updateSelectedSectors,
         removeSector,
-        clearFilter,
-        toggleShowASector,
-        toggleShowFilter
+        clearSelectedSectors,
+        updateShowAllSectors,
+        updateShowFilter
       }) => (
         <div className={showFilter ? "column fixed-270 show" : "column fixed-270 hide"}>
           <div id="sidebar">
-            <div className="close"><button onClick={toggleShowFilter}><VscChromeClose size={18}/></button></div>
+            <div className="close"><button onClick={updateShowFilter}><VscChromeClose size={18}/></button></div>
             {/* <div className="sidebar-title">A History of San Diego</div> */}
 
             <div className="sidebar-label">
               <p>Filtered By:</p>
-              <button className="clear" onClick={clearFilter}>
+              <button className="clear" onClick={clearSelectedSectors}>
                 Clear all
               </button>
             </div>
@@ -50,17 +50,17 @@ const Sidebar = (props) => {
             <div className="sidebar-label">
               <p>All Sectors<br/>(max of five)</p>
 
-              {showASector ? (
-                <button onClick={toggleShowASector}>
+              {showAllSectors ? (
+                <button onClick={updateShowAllSectors}>
                   <BiMinus size={15}/>
                 </button>
               ) : (
-                <button onClick={toggleShowASector}>
+                <button onClick={updateShowAllSectors}>
                   <BiPlus size={15}/>
                 </button>
               )}
             </div>
-            {showASector ? (
+            {showAllSectors ? (
               <div className="all-sectors">
                 {keySectors.map((sector) => (
                   <div className="key-sector-selector" key={sector}>
@@ -70,7 +70,7 @@ const Sidebar = (props) => {
                       value={sector}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        handleCheckbox(e, sector)
+                        updateSelectedSectors(e, sector)
                       }}
                     />
                     <span className="key-sector-selector-item">{sector}</span>
@@ -85,7 +85,7 @@ const Sidebar = (props) => {
                       checked={selectedSectors.includes(sector)}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        handleCheckbox(e, sector)
+                        updateSelectedSectors(e, sector)
                       }}
                     />
                     <span className="all-sector-selector-item">{sector}</span>
@@ -97,7 +97,7 @@ const Sidebar = (props) => {
           </div>
         </div>
       )}
-    </TimelineContext.Consumer>
+    </EventDataContext.Consumer>
 
   );
 };
