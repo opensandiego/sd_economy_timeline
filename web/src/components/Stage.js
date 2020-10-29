@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
+import EventDataContext from '../EventDataContext'
 import './stage.scss'
 import backgroudImagePath from './beach.jpg'
 
@@ -29,9 +30,9 @@ for (let i = 0; i < rectCount; i++) {
   rects.push(nextRect)
 }
 
-const Stage = ({ events, selectedSectors }) => {
-  const selectedEvents = events.filter(event => selectedSectors.includes(event.Category))
-  console.log('selected events', selectedEvents)
+const Stage = props => {
+  // const selectedEvents = events.filter(event => selectedSectors.includes(event.Category))
+  console.log('stage props', props)
 
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
@@ -258,30 +259,39 @@ const Stage = ({ events, selectedSectors }) => {
     sceneSizeEstablished
   ])
 
-  return (
-    <div className='stage' ref={containerRef}>
-      <div className='viewport'>
-        <div className='scene3D-container'>
-          <img
-            alt='San Diego sunset as background for timeline '
-            src={backgroudImagePath}
-            width={width}
-            height={height}
-          />
-          <div className='scene3D' ref={sceneRef}>
-            <canvas
-              ref={canvasRef}
-              style={{
-                width: `${sceneSize.width}px`,
-                height: `${sceneSize.height}px`
-              }}
-              width={`${sceneSize.width * deviceScale}`}
-              height={`${sceneSize.height * deviceScale}`}
-            ></canvas>
+  const renderStage = context => {
+    console.log('stage context', context)
+    return (
+      <div className='stage' ref={containerRef}>
+        <div className='viewport'>
+          <div className='scene3D-container'>
+            <img
+              alt='San Diego sunset as background for timeline '
+              src={backgroudImagePath}
+              width={width}
+              height={height}
+            />
+            <div className='scene3D' ref={sceneRef}>
+              <canvas
+                ref={canvasRef}
+                style={{
+                  width: `${sceneSize.width}px`,
+                  height: `${sceneSize.height}px`
+                }}
+                width={`${sceneSize.width * deviceScale}`}
+                height={`${sceneSize.height * deviceScale}`}
+              ></canvas>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    )
+  }
+
+  return (
+    <EventDataContext.Consumer>
+      {renderStage}
+    </EventDataContext.Consumer>
   );
 };
 

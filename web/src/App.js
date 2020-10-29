@@ -9,6 +9,8 @@ import YearSelector from "./components/YearSelector";
 import TimelineContext from "./TimelineContext";
 import { IoIosPin } from "react-icons/io";
 
+import { EventDataProvider } from './EventDataContext'
+
 function App() {
   return (
     <TimelineContext.Consumer>
@@ -31,10 +33,13 @@ function App() {
                   selectedSectors={selectedSectors}
                   updateResults={updateResults}
                 />
-                <Stage
+                {/* <Stage
                   selectedSectors={selectedSectors}
                   events={stageResults}
-                />
+                /> */}
+                <EventDataProvider>
+                  <Stage />
+                </EventDataProvider>
               </div>
               <div className="row fixed-100">
                 <YearSelector />

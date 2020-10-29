@@ -5,8 +5,6 @@ import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
 import TimelineContext from "../TimelineContext";
 
-
-
 const Sidebar = (props) => {
   return (
     <TimelineContext.Consumer>
