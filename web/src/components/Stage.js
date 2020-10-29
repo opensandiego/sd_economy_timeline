@@ -31,9 +31,6 @@ for (let i = 0; i < rectCount; i++) {
 }
 
 const Stage = props => {
-  // const selectedEvents = events.filter(event => selectedSectors.includes(event.Category))
-  console.log('stage props', props)
-
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
@@ -260,7 +257,6 @@ const Stage = props => {
   ])
 
   const renderStage = context => {
-    console.log('stage context', context)
     return (
       <div className='stage' ref={containerRef}>
         <div className='viewport'>
