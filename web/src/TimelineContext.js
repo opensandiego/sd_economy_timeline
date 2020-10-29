@@ -1,139 +1,111 @@
-import React, { Component } from "react";
-import TimelineService from "./timelineService"
+import React, {
+  createContext,
+  useState,
+  useEffect
+} from 'react'
+import timelineService from './timelineService'
 
-const TimelineContext = React.createContext({
-  stageResults: [],
-  selectedDec: null,
+const selectedSectorsDefault = ["Civic", "Mobility", "Military", "Political", "Tourism"]
+const keySectorsDefault = ["Civic", "Mobility", "Military", "Political", "Tourism"]
+const allSectorsDefault = [
+  "Healthcare",
+  "Tech",
+  "Manufacturing",
+  "Goods Movement",
+  "Tribal",
+  "Crossborder",
+  "Landuse",
+]
+const TimelineContext = createContext({
+  data: [],
+  loaded: false,
+  selectedDec: 2010,
   selectedSectors: [],
   keySectors: [],
   allSectors: [],
-  showASector: null,
+  showAllSectors: true,
   showFilter: false,
-  updateDec: () => {},
-  updateSelectedSectors: () => {},
-  handleCheckbox: () => {},
-  removeSector: () => {},
-  clearFilter: () => {},
-  toggleShowASector: () => {},
-  toggleShowFilter: () => {},
-  updateResults: () =>{}
-});
+})
+export default TimelineContext
 
-export default TimelineContext;
+export const TimelineContextProvider  = ({children}) => {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [selectedDecade, setSelectedDecade] = useState(null)
+  const [selectedSectors, setSelectedSectors] = useState(selectedSectorsDefault)
+  const [keySectors, setKeySectors] = useState(keySectorsDefault)
+  const [allSectors, setAllSectors] = useState(allSectorsDefault)
+  const [showAllSectors, setShowAllSectors] = useState(true)
+  const [showFilter, setShowFilter] = useState(false)
 
-export class TimelineContextProvider extends Component {
-  state = {
-    stageResults: [],
-    selectedDec: 2010,
-    selectedSectors: ["Civic", "Mobility", "Military", "Political", "Tourism"],
-    keySectors: ["Civic", "Mobility", "Military", "Political", "Tourism"],
-    allSectors: [
-      "Healthcare",
-      "Tech",
-      "Manufacturing",
-      "Goods Movement",
-      "Tribal",
-      "Crossborder",
-      "Landuse",
-    ],
-    showASector: true,
-    showFilter: true,
-  };
-
-  async componentDidMount () {
-    const stageResults = await TimelineService.readCSV()
-    this.setState({ stageResults })
+  const getEventData = async () => {
+    setLoading(true)
+    const events = await timelineService.readCSV()
+    setData(events)
+    setLoading(false)
   }
+  useEffect(() => {
+    getEventData()
+  }, [])
 
-  updateDec = (selectedDec) => {
-    console.log("changing decade");
-    this.setState({
-      selectedDec,
-    });
-  };
-
-  handleCheckbox = (e, sector) => {
+  const updateSelectedSectors = (e, sector) => {
     const { checked } = e.target
     if (checked) {
-      if (this.state.selectedSectors.length === 5) {
+      if (selectedSectors.length === 5) {
         // TODO:  shows a message in the UI for this
         console.log("you can only select 5 sectors at a time");
         return
       } else {
-        this.setState({
-          selectedSectors: [...this.state.selectedSectors, e.target.value],
-        });
+        setSelectedSectors([...selectedSectors, e.target.value])
       }
     }
     if (!checked) {
-      const nextSectors = [ ...this.state.selectedSectors ]
+      const nextSectors = [ ...selectedSectors ]
       const sectorToRemove = nextSectors.indexOf(sector)
       nextSectors.splice(sectorToRemove, 1)
-      this.setState({
-        selectedSectors: nextSectors
-      })
+      setSelectedSectors(nextSectors)
     }
-  };
+  }
 
-  removeSector = (sector) => {
-    let index = this.state.selectedSectors.indexOf(sector);
-    let newSelected = this.state.selectedSectors;
+  const updateShowFilter = () => {
+    console.log('toggling filter')
+    setShowFilter(!showFilter)
+  }
+
+  const updateShowAllSectors = () => {
+    setShowAllSectors(!showAllSectors)
+  }
+
+  const removeSector = (sector) => {
+    let index = selectedSectors.indexOf(sector);
+    let newSelected = [ ...selectedSectors ]
     newSelected.splice(index, 1);
-    this.setState({
-      selectedSectors: newSelected,
-    });
-  };
-
-  clearFilter = () => {
-    this.setState({ selectedSectors: [] });
-  };
-
-  toggleShowASector = () => {
-    this.setState((prevState) => ({
-      showASector: !prevState.showASector,
-    }));
-  };
-
-  updateDec = (value) => {
-    // console.log('updating year',value);
-    this.setState({selectedDec: value})
+    setSelectedSectors(newSelected)
   }
 
-  updateResults = (results) => {
-    console.log('IN UPDATERESULTS',results)
-    // this.setState({stageResults: results})
-    // console.log(this.state.stageResults)
+  const clearSelectedSectors = () => {
+    setSelectedSectors([])
   }
 
-  toggleShowFilter = () => {
-    this.setState((prevState) => ({
-      showFilter: !prevState.showFilter,
-    }));
-  };
-
-  render() {
-    const value = {
-      stageResults: this.state.stageResults,
-      selectedDec: this.state.selectedDec,
-      selectedSectors: this.state.selectedSectors,
-      keySectors: this.state.keySectors,
-      allSectors: this.state.allSectors,
-      showASector: this.state.showASector,
-      showFilter: this.state.showFilter,
-      updateDec: this.updateDec,
-      updateSelectedSectors: this.updateSelectedSectors,
-      handleCheckbox: this.handleCheckbox,
-      removeSector: this.removeSector,
-      clearFilter: this.clearFilter,
-      toggleShowASector: this.toggleShowASector,
-      toggleShowFilter: this.toggleShowFilter,
-      updateResults: this.updateResults
-    };
-
-    return (
-      <TimelineContext.Provider value={value}>
-        {this.props.children}
-      </TimelineContext.Provider>
-    );
+  const value = {
+    loading,
+    data,
+    showFilter,
+    showAllSectors,
+    selectedSectors,
+    keySectors,
+    allSectors,
+    updateSelectedSectors,
+    removeSector,
+    clearSelectedSectors,
+    updateShowFilter,
+    updateShowAllSectors
   }
+
+  return (
+    <TimelineContext.Provider value={value}>
+      {children}
+    </TimelineContext.Provider>
+  )
 }
+

@@ -8,11 +8,11 @@ import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
 import Categories from "./components/Categories";
 
-import { EventDataProvider } from './EventDataContext'
+import { TimelineContextProvider } from './TimelineContext'
 
 function App() {
   return (
-    <EventDataProvider>
+    <TimelineContextProvider>
       <div className="container flex">
         <Header />
         <div className="content flex">
@@ -28,7 +28,7 @@ function App() {
           </div>
         </div>
       </div>
-    </EventDataProvider>
+    </TimelineContextProvider>
   );
 }
 

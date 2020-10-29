@@ -1,10 +1,10 @@
 import React from 'react'
 import { IoIosPin } from "react-icons/io";
-import EventDataContext from '../EventDataContext'
+import TimelineContext from '../TimelineContext'
 
 const Categories = () => {
   return (
-    <EventDataContext.Consumer>
+    <TimelineContext.Consumer>
       {({updateShowFilter}) => (
         <button className="categories button" onClick={updateShowFilter}>
           {" "}
@@ -12,7 +12,7 @@ const Categories = () => {
           Categories
         </button>
       )}
-    </EventDataContext.Consumer>
+    </TimelineContext.Consumer>
   )
 }
 

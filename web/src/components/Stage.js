@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import EventDataContext from '../EventDataContext'
+import TimelineContext from '../TimelineContext'
 import './stage.scss'
 import backgroudImagePath from './sd.png'
 
@@ -289,9 +289,9 @@ const Stage = props => {
   }
 
   return (
-    <EventDataContext.Consumer>
+    <TimelineContext.Consumer>
       {renderStage}
-    </EventDataContext.Consumer>
+    </TimelineContext.Consumer>
   );
 };
 

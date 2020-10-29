@@ -3,11 +3,11 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
-import EventDataContext from '../EventDataContext'
+import TimelineContext from '../TimelineContext'
 
 const Sidebar = (props) => {
   return (
-    <EventDataContext.Consumer>
+    <TimelineContext.Consumer>
       {({
         selectedSectors,
         keySectors,
@@ -97,7 +97,7 @@ const Sidebar = (props) => {
           </div>
         </div>
       )}
-    </EventDataContext.Consumer>
+    </TimelineContext.Consumer>
 
   );
 };
