@@ -17,6 +17,9 @@ let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 const cardSize = 720
 const timeline3DLength = 1000
 let rects = []
+let selectedEvents
+let eventTextElements = {}
+let eventTextBuilt = false
 const rectCount = 10
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
@@ -29,8 +32,59 @@ for (let i = 0; i < rectCount; i++) {
   rects.push(nextRect)
 }
 
+const makeEventKey = e => {
+  const { Category, Description, Year } = e
+  return `${Category}-${Year}-${Description.replace(/\w/g, '-')}`
+}
+
+const drawEventText = (info, width, height) => {
+  const { Category, Year } = info
+  const textCanvas = document.createElement('canvas')
+  textCanvas.style = {
+    width: `${width}px`,
+    height: `${height}px`
+  }
+  textCanvas.width = width * deviceScale
+  textCanvas.height = height * deviceScale
+  const dateSize = {
+    fontSize: 15,
+    x: 12,
+    y: 22
+  }
+  const textSize = {
+    fontSize: 24,
+    x: 12,
+    y: 46
+  }
+  const textFillStyle = 'rgba(60, 60, 60, 1)'
+  const dateFillStyle = 'rgba(110, 110, 110, 1)'
+  const panelStyle = 'rgba(255, 255, 255, 1)'
+  const dateFont = '"Helvetica","sans-serif"'
+  const textFont = '"Helvetica","sans-serif"'
+  const ctx = textCanvas.getContext('2d')
+  ctx.scale(deviceScale, deviceScale)
+  ctx.fillStyle = panelStyle;
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = textFillStyle;
+  ctx.textAlign = "left";
+  ctx.font = "Bold " + textSize.fontSize + 'px ' + textFont;
+  ctx.fillText(Category, textSize.x, textSize.y)
+  ctx.fillStyle = dateFillStyle;
+  ctx.font = dateSize.fontSize + 'px ' + dateFont;
+  ctx.fillText(Year, dateSize.x, dateSize.y);
+  return textCanvas
+}
+
 const Stage = ({data, selectedSectors})=> {
-  const selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
+  selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
+  // TODO:  useEffect hook for component did mount?
+  if (data && data.length && !eventTextBuilt) {
+    data.forEach(event => {
+      eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
+    })
+    eventTextBuilt = true
+    console.log('eventTextElements', eventTextElements)
+  }
   console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
@@ -106,17 +160,22 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawEvents = (change = 0) => {
+    // console.log('selectedEvents', selectedEvents)
+    if (!selectedEvents) {
+      return
+    }
     const nextRects = rects.map(rect => ({
       x: rect.x,
       y: rect.y - (-change * 25) // <-- flip scroll direction
       // y: rect.y - (change * 25)
     }))
     nextRects.forEach((rect, i) => {
+      // console.log('selected event?', selectedEvents[i])
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-      const cardWidth = 400 * scaleFactor
+      const cardWidth = 200 * scaleFactor
       if (cardWidth < 3) {
         return
       }
@@ -150,6 +209,19 @@ const Stage = ({data, selectedSectors})=> {
           x: screenPosition.x,
           y: screenPosition.y - vShift
       }
+      // triangle only
+      // contextRef.current.beginPath();
+      // contextRef.current.moveTo(startPos.x, startPos.y);
+      // startPos.x -= arrowWidth / 3;
+      // startPos.y -= arrowHeight * 1.25;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x += arrowWidth / 1.5;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x -= arrowWidth / 3;
+      // startPos.y += arrowHeight * 1.25;
+      // contextRef.current.closePath();
+      // contextRef.current.fill();
+
       // main card panel with beak
       contextRef.current.beginPath();
       contextRef.current.moveTo(startPos.x, startPos.y);
@@ -169,6 +241,14 @@ const Stage = ({data, selectedSectors})=> {
       contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
       contextRef.current.closePath();
       contextRef.current.fill();
+
+      const eventText = eventTextElements[makeEventKey(selectedEvents[i])]
+      const dx = screenPosition.x - 0.5 * cardWidth
+      // const dy = screenPosition.y - arrowHeight - textHolderHeight - vShift
+      const dy = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
+      // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
+      contextRef.current.drawImage(eventText, dx, dy, cardWidth, textHolderHeight);
+
       // reflection
       startPos = {
         x: screenPosition.x,
@@ -202,6 +282,8 @@ const Stage = ({data, selectedSectors})=> {
     })
     rects = nextRects
   }
+
+
 
   useEffect(() => {
     const {
