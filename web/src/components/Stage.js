@@ -5,6 +5,7 @@ import React, {
 } from 'react'
 import './stage.scss'
 import backgroudImagePath from './sd.png'
+import teardrop from '../assets/teardrop@3x.png'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
@@ -20,6 +21,9 @@ let rects = []
 let selectedEvents
 let eventTextElements = {}
 let eventTextBuilt = false
+let eventTeardrop
+const eventTeardropWidth = 95
+const eventTeardropHeight = 137
 const rectCount = 10
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
@@ -34,7 +38,15 @@ for (let i = 0; i < rectCount; i++) {
 
 const makeEventKey = e => {
   const { Category, Description, Year } = e
-  return `${Category}-${Year}-${Description.replace(/\w/g, '-')}`
+  return `${Category}-${Year}-${Description.replace(/\W/g, '-')}`
+}
+
+const createImage = (path, width, height) => {
+  const image = document.createElement('img')
+  image.width = width
+  image.height = height
+  image.src = path
+  return image
 }
 
 const drawEventText = (info, width, height) => {
@@ -83,6 +95,7 @@ const Stage = ({data, selectedSectors})=> {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
     })
     eventTextBuilt = true
+    eventTeardrop = createImage(teardrop, 95, 137)
     console.log('eventTextElements', eventTextElements)
   }
   console.log('selectedEvents', selectedEvents)
@@ -175,7 +188,7 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-      const cardWidth = 200 * scaleFactor
+      const cardWidth = 110 * scaleFactor
       if (cardWidth < 3) {
         return
       }
@@ -183,7 +196,7 @@ const Stage = ({data, selectedSectors})=> {
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
-      const textHolderHeight = 60 * scaleFactor + vTextAdjust;
+      const textHolderHeight = 137 * scaleFactor + vTextAdjust;
       const shadowBlockHeight = 60 * scaleFactor
       const imageBoxHeight = 150 * scaleFactor
       const arrowHeight = 50 * scaleFactor
@@ -244,10 +257,15 @@ const Stage = ({data, selectedSectors})=> {
 
       const eventText = eventTextElements[makeEventKey(selectedEvents[i])]
       const dx = screenPosition.x - 0.5 * cardWidth
-      // const dy = screenPosition.y - arrowHeight - textHolderHeight - vShift
-      const dy = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
+      const dy = screenPosition.y - textHolderHeight - vShift
+      // const dy = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
-      contextRef.current.drawImage(eventText, dx, dy, cardWidth, textHolderHeight);
+      // contextRef.current.drawImage(eventText, dx, dy, cardWidth, textHolderHeight);
+
+      console.log('drawing...', textHolderHeight, eventTeardrop)
+      const teardropScaledX = screenPosition.x - (eventTeardropWidth * scaleFactor * 0.5)
+      const teardropScaledY = screenPosition.y - (eventTeardropHeight * scaleFactor)
+      contextRef.current.drawImage(eventTeardrop, dx, dy, cardWidth, textHolderHeight);
 
       // reflection
       startPos = {
