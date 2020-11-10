@@ -4,8 +4,9 @@ import React, {
   useState
 } from 'react'
 import './stage.scss'
-import backgroudImagePath from './sd.png'
+import backgroudImagePath from '../assets/sandag-background@3x.png'
 import teardrop from '../assets/teardrop@3x.png'
+import { iconInfo, categoryToIcon } from './icons'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
@@ -22,8 +23,6 @@ let selectedEvents
 let eventTextElements = {}
 let eventTextBuilt = false
 let eventTeardrop
-const eventTeardropWidth = 95
-const eventTeardropHeight = 137
 const rectCount = 10
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
@@ -89,15 +88,13 @@ const drawEventText = (info, width, height) => {
 
 const Stage = ({data, selectedSectors})=> {
   selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
-  // TODO:  useEffect hook for component did mount?
   if (data && data.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
     })
     eventTextBuilt = true
-    console.log('eventTextElements', eventTextElements)
   }
-  console.log('selectedEvents', selectedEvents)
+  // console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
@@ -237,24 +234,24 @@ const Stage = ({data, selectedSectors})=> {
       // contextRef.current.fill();
 
       // main card panel with beak
-      contextRef.current.beginPath();
-      contextRef.current.moveTo(startPos.x, startPos.y);
-      startPos.x -= arrowWidth / 2;
-      startPos.y -= arrowHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.y -= textHolderHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x += cardWidth;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.y += textHolderHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
-      contextRef.current.closePath();
-      contextRef.current.fill();
+      // contextRef.current.beginPath();
+      // contextRef.current.moveTo(startPos.x, startPos.y);
+      // startPos.x -= arrowWidth / 2;
+      // startPos.y -= arrowHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x -= (cardWidth / 2 - arrowWidth / 2);
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.y -= textHolderHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x += cardWidth;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.y += textHolderHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x -= (cardWidth / 2 - arrowWidth / 2);
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
+      // contextRef.current.closePath();
+      // contextRef.current.fill();
 
       const eventText = eventTextElements[makeEventKey(selectedEvents[i])]
       const dxText = screenPosition.x - 0.5 * cardWidth
@@ -265,6 +262,18 @@ const Stage = ({data, selectedSectors})=> {
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
       contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight);
+
+      const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
+      // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
+      if (eventIcon) {
+        const iconScaleFactor = scaleFactor * 1.2
+        const iconWidth = eventIcon.width * iconScaleFactor
+        const iconHeight = eventIcon.height * iconScaleFactor
+        const iconHeightAdjust = teardropHeight - (20 * iconScaleFactor)
+        const dxIcon = screenPosition.x - 0.5 * iconWidth
+        const dyIcon = screenPosition.y - iconHeightAdjust
+        contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
+      }
 
       // reflection
       startPos = {
@@ -283,13 +292,13 @@ const Stage = ({data, selectedSectors})=> {
       startPos.y += arrowHeight;
       contextRef.current.lineTo(startPos.x, startPos.y);
       startPos.x += (cardWidth / 2 - arrowWidth / 2);
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.y += shadowBlockHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.y += shadowBlockHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
       startPos.x -= cardWidth;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.y -= shadowBlockHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.y -= shadowBlockHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
       startPos.x += (cardWidth / 2 - arrowWidth / 2);
       contextRef.current.lineTo(startPos.x, startPos.y);
       contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
@@ -317,6 +326,11 @@ const Stage = ({data, selectedSectors})=> {
     })
     setSceneSizeEstablished(true)
     eventTeardrop = createImage(teardrop, 95, 137)
+    Object.values(iconInfo).forEach(info => {
+      const { path, width, height } = info
+      info.image = createImage(path, width, height)
+    })
+    console.log('icons', iconInfo)
   }, [])
 
   useEffect(() => {
