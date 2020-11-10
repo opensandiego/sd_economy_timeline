@@ -95,7 +95,6 @@ const Stage = ({data, selectedSectors})=> {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
     })
     eventTextBuilt = true
-    eventTeardrop = createImage(teardrop, 95, 137)
     console.log('eventTextElements', eventTextElements)
   }
   console.log('selectedEvents', selectedEvents)
@@ -188,7 +187,8 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-      const cardWidth = 110 * scaleFactor
+      const cardWidth = 200 * scaleFactor
+      const teardropWidth = 110 * scaleFactor
       if (cardWidth < 3) {
         return
       }
@@ -196,7 +196,8 @@ const Stage = ({data, selectedSectors})=> {
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
-      const textHolderHeight = 137 * scaleFactor + vTextAdjust;
+      const textHolderHeight = 60 * scaleFactor + vTextAdjust;
+      const teardropHeight = 137 * scaleFactor + vTextAdjust;
       const shadowBlockHeight = 60 * scaleFactor
       const imageBoxHeight = 150 * scaleFactor
       const arrowHeight = 50 * scaleFactor
@@ -256,16 +257,14 @@ const Stage = ({data, selectedSectors})=> {
       contextRef.current.fill();
 
       const eventText = eventTextElements[makeEventKey(selectedEvents[i])]
-      const dx = screenPosition.x - 0.5 * cardWidth
-      const dy = screenPosition.y - textHolderHeight - vShift
-      // const dy = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
+      const dxText = screenPosition.x - 0.5 * cardWidth
+      const dyText = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
-      // contextRef.current.drawImage(eventText, dx, dy, cardWidth, textHolderHeight);
+      contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
 
-      console.log('drawing...', textHolderHeight, eventTeardrop)
-      const teardropScaledX = screenPosition.x - (eventTeardropWidth * scaleFactor * 0.5)
-      const teardropScaledY = screenPosition.y - (eventTeardropHeight * scaleFactor)
-      contextRef.current.drawImage(eventTeardrop, dx, dy, cardWidth, textHolderHeight);
+      const dx = screenPosition.x - 0.5 * teardropWidth
+      const dy = screenPosition.y - teardropHeight - vShift
+      contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight);
 
       // reflection
       startPos = {
@@ -317,6 +316,7 @@ const Stage = ({data, selectedSectors})=> {
       height
     })
     setSceneSizeEstablished(true)
+    eventTeardrop = createImage(teardrop, 95, 137)
   }, [])
 
   useEffect(() => {
