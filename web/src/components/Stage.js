@@ -88,7 +88,7 @@ const drawEventText = (info, width, height) => {
 
 const Stage = ({data, selectedSectors})=> {
   selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
-  if (data && data.length && !eventTextBuilt) {
+  if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
     })
@@ -169,8 +169,8 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawEvents = (change = 0) => {
-    // console.log('selectedEvents', selectedEvents)
-    if (!selectedEvents) {
+    console.log('selectedEvents', selectedEvents)
+    if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
     const nextRects = rects.map(rect => ({
@@ -185,7 +185,7 @@ const Stage = ({data, selectedSectors})=> {
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const cardWidth = 200 * scaleFactor
-      const teardropWidth = 110 * scaleFactor
+      const teardropWidth = 77 * scaleFactor
       if (cardWidth < 3) {
         return
       }
@@ -194,7 +194,7 @@ const Stage = ({data, selectedSectors})=> {
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
       const textHolderHeight = 60 * scaleFactor + vTextAdjust;
-      const teardropHeight = 137 * scaleFactor + vTextAdjust;
+      const teardropHeight = 95 * scaleFactor + vTextAdjust;
       const shadowBlockHeight = 60 * scaleFactor
       const imageBoxHeight = 150 * scaleFactor
       const arrowHeight = 50 * scaleFactor
@@ -266,10 +266,9 @@ const Stage = ({data, selectedSectors})=> {
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
       if (eventIcon) {
-        const iconScaleFactor = scaleFactor * 1.2
-        const iconWidth = eventIcon.width * iconScaleFactor
-        const iconHeight = eventIcon.height * iconScaleFactor
-        const iconHeightAdjust = teardropHeight - (20 * iconScaleFactor)
+        const iconWidth = eventIcon.width * scaleFactor
+        const iconHeight = eventIcon.height * scaleFactor
+        const iconHeightAdjust = teardropHeight - (20 * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
