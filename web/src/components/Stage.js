@@ -67,14 +67,14 @@ const drawEventText = (info, multiplier) => {
       aspect: (width * multiplier) / (height * multiplier)
     }
     document.body.removeChild(span)
-    console.log(Category, eventTextDimensions[textDimensionsKey])
+    // console.log(Category, eventTextDimensions[textDimensionsKey])
   }
   const {
     width: textWidth,
     height: textHeight
   } = eventTextDimensions[textDimensionsKey]
-  const rectWidth = textWidth * 1.2
-  const rectHeight = textHeight * 2
+  const rectWidth = textWidth * 0.75
+  const rectHeight = textHeight * 1.25
 
   const textCanvas = document.createElement('canvas')
   textCanvas.style = {
@@ -83,15 +83,15 @@ const drawEventText = (info, multiplier) => {
   }
   textCanvas.width = rectWidth * deviceScale
   textCanvas.height = rectHeight * deviceScale
-  const dateSize = {
+  const textSize = {
     fontSize: 10 * multiplier,
     x: rectWidth / 2,
-    y: 28 * multiplier
+    y: 12 * multiplier
   }
-  const textSize = {
-    fontSize: 14 * multiplier,
+  const dateSize = {
+    fontSize: 6 * multiplier,
     x: rectWidth / 2,
-    y: 16 * multiplier
+    y: 18 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
@@ -121,7 +121,7 @@ const Stage = ({data, selectedSectors})=> {
       eventTextElements[`${makeEventKey(event)}-high-res`] = drawEventText(event, 2)
     })
     eventTextBuilt = true
-    console.log(eventTextElements)
+    // console.log(eventTextElements)
   }
   // console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
@@ -198,7 +198,7 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawEvents = (change = 0) => {
-    console.log('selectedEvents', selectedEvents)
+    // console.log('selectedEvents', selectedEvents)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
@@ -215,7 +215,7 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
       const cardWidth = eventTextWidth * 2.5 * scaleFactor
-      const teardropWidth = 77 * scaleFactor
+      const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
         return
       }
@@ -224,16 +224,16 @@ const Stage = ({data, selectedSectors})=> {
       if (cardWidth > (1.5 * eventTextWidth)) {
         // need higher res event text
         eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
-        console.log('...high-res', selectedEvents[i].Category)
+        // console.log('...high-res', selectedEvents[i].Category)
       } else {
         eventTextKey = makeEventKey(selectedEvents[i])
       }
       const gradColor = "rgba(255,255,255,";
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
-      const vTextAdjust = (numTextLines - 2) * 16 * scaleFactor
-      const textHolderHeight = 60 * scaleFactor + vTextAdjust;
-      const teardropHeight = 95 * scaleFactor + vTextAdjust;
+      const vTextAdjust = (numTextLines - 2) * 10 * scaleFactor
+      const textHolderHeight = 40 * scaleFactor + vTextAdjust;
+      const teardropHeight = 69 * scaleFactor + vTextAdjust;
       const shadowBlockHeight = 60 * scaleFactor
       const imageBoxHeight = 150 * scaleFactor
       const arrowHeight = 50 * scaleFactor
@@ -293,7 +293,6 @@ const Stage = ({data, selectedSectors})=> {
       // contextRef.current.fill();
 
       const eventText = eventTextElements[eventTextKey]
-      console.log('eventText width', eventText.width)
       const dxText = screenPosition.x - 0.5 * cardWidth
       const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
@@ -319,7 +318,7 @@ const Stage = ({data, selectedSectors})=> {
       if (eventIcon) {
         const iconWidth = eventIcon.width * scaleFactor
         const iconHeight = eventIcon.height * scaleFactor
-        const iconHeightAdjust = teardropHeight - (20 * scaleFactor)
+        const iconHeightAdjust = teardropHeight - (15 * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);

@@ -34,6 +34,11 @@ export const iconInfo = {
   tourism: { path: tourism, file: 'tourism@3x.png', category: 'Tourism', width: 50, height: 44 },
   tribal: { path: tribal, file: 'tribal nations@3x.png', category: 'Tribal', width: 65, height: 51 }
 }
+const scale = 0.75
+Object.values(iconInfo).forEach(info => {
+  info.width = info.width * scale
+  info.height = info.height * scale
+})
 
 export const categoryToIcon = Object.fromEntries(Object.entries(iconInfo).map(([key, value]) => {
   return [value.category, key]
