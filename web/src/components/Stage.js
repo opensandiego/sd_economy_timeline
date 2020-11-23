@@ -73,8 +73,8 @@ const drawEventText = (info, multiplier) => {
     width: textWidth,
     height: textHeight
   } = eventTextDimensions[textDimensionsKey]
-  const rectWidth = textWidth * 0.75
-  const rectHeight = textHeight * 1.25
+  const rectWidth = textWidth * 0.65
+  const rectHeight = textHeight * 1.15
 
   const textCanvas = document.createElement('canvas')
   textCanvas.style = {
@@ -84,14 +84,14 @@ const drawEventText = (info, multiplier) => {
   textCanvas.width = rectWidth * deviceScale
   textCanvas.height = rectHeight * deviceScale
   const textSize = {
-    fontSize: 10 * multiplier,
+    fontSize: 8 * multiplier,
     x: rectWidth / 2,
-    y: 12 * multiplier
+    y: 10 * multiplier
   }
   const dateSize = {
     fontSize: 6 * multiplier,
     x: rectWidth / 2,
-    y: 18 * multiplier
+    y: 16 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
@@ -105,10 +105,10 @@ const drawEventText = (info, multiplier) => {
   // console.log('rect width and height', rectWidth, rectHeight, Category)
   ctx.fillStyle = textFillStyle;
   ctx.textAlign = "center";
-  ctx.font = "Bold " + textSize.fontSize + 'px ' + textFont;
+  ctx.font = `${textSize.fontSize}px ${textFont}`;
   ctx.fillText(Category, textSize.x, textSize.y)
   ctx.fillStyle = dateFillStyle;
-  ctx.font = dateSize.fontSize + 'px ' + dateFont;
+  ctx.font = `${dateSize.fontSize}px ${dateFont}`;
   ctx.fillText(Year, dateSize.x, dateSize.y);
   return textCanvas
 }
