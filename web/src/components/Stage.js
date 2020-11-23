@@ -21,6 +21,7 @@ const timeline3DLength = 1000
 let rects = []
 let selectedEvents
 let eventTextElements = {}
+let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop
 const rectCount = 10
@@ -48,24 +49,49 @@ const createImage = (path, width, height) => {
   return image
 }
 
-const drawEventText = (info, width, height) => {
+const drawEventText = (info, multiplier) => {
   const { Category, Year } = info
+  const textDimensionsKey = `${Category}-${multiplier}`
+
+  // dynamically calculate text width/height
+  if (!eventTextDimensions[textDimensionsKey]) {
+    const span = document.createElement('span')
+    span.innerHTML = Category
+    span.style.opacity = 0
+    span.style.fontFamily = "Helvetica, sans-serif"
+    document.body.appendChild(span)
+    const { width, height } = span.getBoundingClientRect()
+    eventTextDimensions[textDimensionsKey] = {
+      width: width * multiplier,
+      height: height * multiplier,
+      aspect: (width * multiplier) / (height * multiplier)
+    }
+    document.body.removeChild(span)
+    console.log(Category, eventTextDimensions[textDimensionsKey])
+  }
+  const {
+    width: textWidth,
+    height: textHeight
+  } = eventTextDimensions[textDimensionsKey]
+  const rectWidth = textWidth * 1.2
+  const rectHeight = textHeight * 2
+
   const textCanvas = document.createElement('canvas')
   textCanvas.style = {
-    width: `${width}px`,
-    height: `${height}px`
+    width: `${rectWidth}px`,
+    height: `${rectHeight}px`
   }
-  textCanvas.width = width * deviceScale
-  textCanvas.height = height * deviceScale
+  textCanvas.width = rectWidth * deviceScale
+  textCanvas.height = rectHeight * deviceScale
   const dateSize = {
-    fontSize: 15,
-    x: 12,
-    y: 22
+    fontSize: 10 * multiplier,
+    x: rectWidth / 2,
+    y: 28 * multiplier
   }
   const textSize = {
-    fontSize: 24,
-    x: 12,
-    y: 46
+    fontSize: 14 * multiplier,
+    x: rectWidth / 2,
+    y: 16 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
@@ -75,9 +101,10 @@ const drawEventText = (info, width, height) => {
   const ctx = textCanvas.getContext('2d')
   ctx.scale(deviceScale, deviceScale)
   ctx.fillStyle = panelStyle;
-  ctx.fillRect(0, 0, width, height);
+  ctx.fillRect(0, 0, rectWidth * multiplier, rectHeight * multiplier);
+  // console.log('rect width and height', rectWidth, rectHeight, Category)
   ctx.fillStyle = textFillStyle;
-  ctx.textAlign = "left";
+  ctx.textAlign = "center";
   ctx.font = "Bold " + textSize.fontSize + 'px ' + textFont;
   ctx.fillText(Category, textSize.x, textSize.y)
   ctx.fillStyle = dateFillStyle;
@@ -90,9 +117,11 @@ const Stage = ({data, selectedSectors})=> {
   selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
-      eventTextElements[makeEventKey(event)] = drawEventText(event, 200, 92)
+      eventTextElements[makeEventKey(event)] = drawEventText(event, 1)
+      eventTextElements[`${makeEventKey(event)}-high-res`] = drawEventText(event, 2)
     })
     eventTextBuilt = true
+    console.log(eventTextElements)
   }
   // console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
@@ -184,10 +213,20 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-      const cardWidth = 200 * scaleFactor
+      const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
+      const cardWidth = eventTextWidth * 2.5 * scaleFactor
       const teardropWidth = 77 * scaleFactor
       if (cardWidth < 3) {
         return
+      }
+      // console.log('cardWidth', cardWidth, selectedEvents[i], ';text width', eventTextDimensions[selectedEvents[i].Category].width)
+      let eventTextKey
+      if (cardWidth > (1.5 * eventTextWidth)) {
+        // need higher res event text
+        eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
+        console.log('...high-res', selectedEvents[i].Category)
+      } else {
+        eventTextKey = makeEventKey(selectedEvents[i])
       }
       const gradColor = "rgba(255,255,255,";
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
@@ -253,11 +292,23 @@ const Stage = ({data, selectedSectors})=> {
       // contextRef.current.closePath();
       // contextRef.current.fill();
 
-      const eventText = eventTextElements[makeEventKey(selectedEvents[i])]
+      const eventText = eventTextElements[eventTextKey]
+      console.log('eventText width', eventText.width)
       const dxText = screenPosition.x - 0.5 * cardWidth
-      const dyText = screenPosition.y - arrowHeight - 2.5 * textHolderHeight - vShift
+      const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
+
+      // experimenting with some shadow stuff...not happy with it
+      // contextRef.current.strokeStyle = 'white';
+      // contextRef.current.shadowColor = "rgba(105, 105, 105, 1)";
+      // contextRef.current.shadowBlur = 5;
+      // contextRef.current.shadowOffsetX = 0;
+      // contextRef.current.shadowOffsetY = 0;
+      // contextRef.current.strokeRect(dxText, dyText, cardWidth, textHolderHeight);
+      // contextRef.current.shadowBlur = 0
+      // contextRef.current.shadowOffsetX = 0
+      // contextRef.current.shadowOffsetY = 0
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
@@ -279,30 +330,59 @@ const Stage = ({data, selectedSectors})=> {
         x: screenPosition.x,
         y: screenPosition.y + vShift
       }
-      const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
-      grad.addColorStop(0, gradColor + "0.5)");
-      grad.addColorStop(0.3, gradColor + "0.2)");
-      grad.addColorStop(0.7, gradColor + "0.05)");
-      grad.addColorStop(1, gradColor + "0)");
-      contextRef.current.fillStyle = grad;
+      // const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
+      // grad.addColorStop(0, gradColor + "0.5)");
+      // grad.addColorStop(0.3, gradColor + "0.2)");
+      // grad.addColorStop(0.7, gradColor + "0.05)");
+      // grad.addColorStop(1, gradColor + "0)");
+      // contextRef.current.fillStyle = grad;
+      // contextRef.current.beginPath();
+      // contextRef.current.moveTo(startPos.x, startPos.y);
+      // startPos.x += arrowWidth / 2;
+      // startPos.y += arrowHeight;
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x += (cardWidth / 2 - arrowWidth / 2);
+      // // contextRef.current.lineTo(startPos.x, startPos.y);
+      // // startPos.y += shadowBlockHeight;
+      // // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x -= cardWidth;
+      // // contextRef.current.lineTo(startPos.x, startPos.y);
+      // // startPos.y -= shadowBlockHeight;
+      // // contextRef.current.lineTo(startPos.x, startPos.y);
+      // startPos.x += (cardWidth / 2 - arrowWidth / 2);
+      // contextRef.current.lineTo(startPos.x, startPos.y);
+      // contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
+      // contextRef.current.closePath();
+      // contextRef.current.fill();
+
+      const { x, y } = startPos
+      const radius = 15 * scaleFactor
+      const centerX = x
+      const centerY = y + (20 * scaleFactor)
+      const width = 60 * scaleFactor
+      const height = 5 * scaleFactor
+      const radialGradient = contextRef.current.createRadialGradient(x, y + radius + 5, 1, x, y + radius + 5, width)
+      radialGradient.addColorStop(0, 'rgba(51, 51, 51, 0.2)');
+      radialGradient.addColorStop(0.4, 'rgba(51, 51, 51, 0)');
+      radialGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      contextRef.current.fillStyle = radialGradient;
+
+      // draws the ellipse to use for the shadow under a teardrop
       contextRef.current.beginPath();
-      contextRef.current.moveTo(startPos.x, startPos.y);
-      startPos.x += arrowWidth / 2;
-      startPos.y += arrowHeight;
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x += (cardWidth / 2 - arrowWidth / 2);
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.y += shadowBlockHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x -= cardWidth;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.y -= shadowBlockHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      startPos.x += (cardWidth / 2 - arrowWidth / 2);
-      contextRef.current.lineTo(startPos.x, startPos.y);
-      contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
-      contextRef.current.closePath();
+      contextRef.current.moveTo(centerX, centerY - height);
+      contextRef.current.bezierCurveTo(
+        centerX + width / 2, centerY - height,
+        centerX + width / 2, centerY + height,
+        centerX, centerY + height
+      );
+      contextRef.current.bezierCurveTo(
+        centerX - width / 2, centerY + height,
+        centerX - width / 2, centerY - height,
+        centerX, centerY - height
+      );
       contextRef.current.fill();
+      contextRef.current.closePath();
+
       contextRef.current.globalAlpha = 1
     })
     rects = nextRects
