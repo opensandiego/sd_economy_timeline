@@ -73,7 +73,7 @@ button.decade.hide {
   height:0;
   left:75px;
   z-index: -99999;
-  top: 55px;
+  top: 52px;
   background: none;
 }
 .solid {
@@ -100,7 +100,7 @@ button.decade.hide {
   padding: 0 15px;
 }
 
-.right div p {
+.right div button {
   text-decoration: underline;
   font: normal normal normal 17px/20px Montserrat;
   letter-spacing: 0px;
@@ -115,7 +115,26 @@ button.decade.hide {
   margin-bottom: 9px;
 }
 
+.year:last-of-type {
+  padding-right: 50px;
+}
 
 .years div:last-of-type hr{
   display: none;
+}
+
+button.decade {
+  position: relative;
+}
+.years .decade.show svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+}
+.years .decade.hide svg {
+  position: absolute;
+  top: 2px;
+  left: 1px;
+  padding: 1.5px;
 }

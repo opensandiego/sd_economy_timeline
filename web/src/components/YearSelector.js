@@ -1,8 +1,10 @@
 import React from "react";
+import { BiMinus, BiPlus } from "react-icons/bi";
+import TimelineContext from "../TimelineContext"
 import "./year-selector.css";
 
-const YearSelector = ({ selectedDecade }) => {
-  console.log("IN YEAR SELECTOR", selectedDecade);
+const YearSelector = () => {
+  // console.log("IN YEAR SELECTOR", selectedDecade);
   const decades = [
     2010,
     2000,
@@ -47,39 +49,50 @@ const YearSelector = ({ selectedDecade }) => {
     },
   ];
   return (
-    <div className="years">
-      {/* pick a year...between 1900 and 2020 */}
-      {decades.map((decade, index) => (
-        <div key={index} className="year">
-          <div className="left">
-            <p>{decade}s</p>
-            <button
-              className={
-                selectedDecade === decade ? "decade show" : "decade hide"
-              }
-            >
-              {selectedDecade === decade ? "-" : "+"}
-            </button>
-          </div>
-          {/* {selectedDecade === decade ? dummyResults.map((res, index) => {
-            <div className="right" key={index}>{res.year}</div>
-          }) : null} */}
-          <div className="right" style={selectedDecade === decade ? {display: "flex"} : {display: "none"}}>
-          {dummyResults.map((res, index) => {
-              // selectedDecade === decade ? (
-              //   <div key={index}>{res.year}</div>
-              // ) : null;
-              if(selectedDecade === decade)
-               return <div key={index}><p>{res.year}</p><div className="vl"></div></div>
-            })}
-          </div>
+    <TimelineContext.Consumer>
+      {({ selectedDec, updateSelectedDecade }) => (
+        <div className="years">
+          {decades.map((decade, index) => (
+            <div key={index} className="year">
+              <div className="left">
+                <p>{decade}s</p>
+                <button
+                  className={
+                    selectedDec === decade ? "decade show" : "decade hide"
+                  }
+                  value={decade}
+                  onClick={() =>
+                    updateSelectedDecade(decade)
+                  }
+                >
+                  {selectedDec === decade ? <BiMinus /> : <BiPlus />}
+                </button>
+              </div>
+              <div
+                className="right"
+                style={
+                  selectedDec === decade
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+              >
+                {dummyResults.map((res, index) => {
+                  if (selectedDec === decade)
+                    return (
+                      <div key={index}>
+                        <button>{res.year}</button>
+                        <div className="vl"></div>
+                      </div>
+                    );
+                })}
+              </div>
 
-
-
-          <hr className={selectedDecade === decade ? "dash" : "solid"}></hr>
+              <hr className={selectedDec === decade ? "dash" : "solid"}></hr>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </TimelineContext.Consumer>
   );
 };
 
