@@ -133,7 +133,7 @@ const Stage = ({data, selectedSectors})=> {
     width,
     height
   })
-  const timelineGradColor = 'rgb(24,105,169' // sdforward blue...
+  const timelineGradColor = 'rgb(19,72,100'
 
   const timelineToScreen = position => {
     // console.log('timelineToScreen', width)
