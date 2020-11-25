@@ -49,6 +49,10 @@
   height: 100px;
   max-height: 100px;
   z-index: 99;
+  background: #072236;
+  max-width: 1024px;
+  overflow: auto;
+  margin-bottom: 100px;
 }
 
 body {
@@ -146,5 +150,6 @@ img:nth-of-type(2) {
 
 .categories svg {
   margin-right: 3px;
+  height: 12px;
 }
 

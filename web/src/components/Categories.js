@@ -1,5 +1,5 @@
 import React from 'react'
-import { IoIosPin } from "react-icons/io";
+import { FaFilter } from "react-icons/fa"
 import TimelineContext from '../TimelineContext'
 
 const Categories = () => {
@@ -8,7 +8,7 @@ const Categories = () => {
       {({updateShowFilter}) => (
         <button className="categories button" onClick={updateShowFilter}>
           {" "}
-          <IoIosPin />
+          <FaFilter />
           Categories
         </button>
       )}

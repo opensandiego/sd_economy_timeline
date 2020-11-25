@@ -31,7 +31,7 @@ export default TimelineContext
 export const TimelineContextProvider  = ({children}) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [selectedDecade, setSelectedDecade] = useState(null)
+  const [selectedDec, setSelectedDecade] = useState(null)
   const [selectedSectors, setSelectedSectors] = useState(selectedSectorsDefault)
   const [keySectors, setKeySectors] = useState(keySectorsDefault)
   const [allSectors, setAllSectors] = useState(allSectorsDefault)
@@ -87,6 +87,11 @@ export const TimelineContextProvider  = ({children}) => {
     setSelectedSectors([])
   }
 
+  const updateSelectedDecade = (value) => {
+    setSelectedDecade(value)
+  }
+  
+
   const value = {
     loading,
     data,
@@ -95,11 +100,13 @@ export const TimelineContextProvider  = ({children}) => {
     selectedSectors,
     keySectors,
     allSectors,
+    selectedDec,
     updateSelectedSectors,
     removeSector,
     clearSelectedSectors,
     updateShowFilter,
-    updateShowAllSectors
+    updateShowAllSectors,
+    updateSelectedDecade
   }
 
   return (
