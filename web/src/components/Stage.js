@@ -129,7 +129,15 @@ const drawEventText = (info, multiplier) => {
 }
 
 const Stage = ({data, selectedSectors})=> {
-  selectedEvents = data && data.filter(event => selectedSectors.includes(event.Category))
+  selectedEvents = data && data
+    .filter(event => selectedSectors.includes(event.Category))
+    .map(event => {
+      return {
+        ...event,
+        position: {}
+      }
+    })
+  console.log({ selectedEvents })
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 1)
@@ -233,6 +241,7 @@ const Stage = ({data, selectedSectors})=> {
       const cardWidth = eventTextWidth * 2 * scaleFactor
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
+        selectedEvents[i].position.active = false
         return
       }
       // console.log('cardWidth', cardWidth, selectedEvents[i], ';text width', eventTextDimensions[selectedEvents[i].Category].width)
@@ -324,6 +333,16 @@ const Stage = ({data, selectedSectors})=> {
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
       contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight);
+
+      // keep track of dimensions to test if a timeline item is clicked
+      selectedEvents[i].position = {
+        x: dx,
+        y: dy,
+        width: teardropWidth,
+        height: teardropHeight,
+        active: true,
+
+      }
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
