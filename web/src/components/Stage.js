@@ -52,13 +52,16 @@ const createImage = (path, width, height) => {
 const drawEventText = (info, multiplier) => {
   const { Category, Year } = info
   const textDimensionsKey = `${Category}-${multiplier}`
+  const fontSize = 8
 
   // dynamically calculate text width/height
   if (!eventTextDimensions[textDimensionsKey]) {
     const span = document.createElement('span')
     span.innerHTML = Category
     span.style.opacity = 0
+    span.style.fontSize = `${fontSize}px`
     span.style.fontFamily = 'Helvetica, sans-serif'
+    span.style.padding = '4px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
     // console.log('span width height', width, height, Category)
@@ -67,7 +70,7 @@ const drawEventText = (info, multiplier) => {
       height: height * multiplier,
       aspect: (width * multiplier) / (height * multiplier)
     }
-    // document.body.removeChild(span)
+    document.body.removeChild(span)
     // console.log(Category, eventTextDimensions[textDimensionsKey])
   }
   const {
@@ -76,31 +79,44 @@ const drawEventText = (info, multiplier) => {
   } = eventTextDimensions[textDimensionsKey]
   const rectWidth = textWidth
   const rectHeight = textHeight
-  // console.log('rect width height', rectWidth, rectHeight)
 
   const textCanvas = document.createElement('canvas')
   textCanvas.style = `width: ${rectWidth}px; height: ${rectHeight}px`
   textCanvas.width = rectWidth * deviceScale
   textCanvas.height = rectHeight * deviceScale
   const textSize = {
-    fontSize: 8 * multiplier,
+    fontSize: fontSize * multiplier,
     x: rectWidth / 2,
     y: 8 * multiplier
   }
   const dateSize = {
-    fontSize: 6 * multiplier,
+    fontSize: (fontSize * 0.75) * multiplier,
     x: rectWidth / 2,
     y: 14 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
-  const panelStyle = 'rgba(255, 255, 255, 1)'
+  const opaque = 'rgba(255, 255, 255, 1)'
+  const transparent = 'rgba(255, 255, 255, 0)'
   const dateFont = '"Helvetica","sans-serif"'
   const textFont = '"Helvetica","sans-serif"'
   const ctx = textCanvas.getContext('2d')
+  // const gradientHorizontal = ctx.createLinearGradient(0, 0, rectWidth, 0);
+  // gradientHorizontal.addColorStop(0, transparent);
+  // gradientHorizontal.addColorStop(0.1, opaque);
+  // gradientHorizontal.addColorStop(0.9, opaque);
+  // gradientHorizontal.addColorStop(1, transparent);
+  const gradientVertical = ctx.createLinearGradient(0, 0, 0, rectHeight);
+  gradientVertical.addColorStop(0, transparent);
+  gradientVertical.addColorStop(0.2, opaque);
+  gradientVertical.addColorStop(0.8, opaque);
+  gradientVertical.addColorStop(1, transparent);
   ctx.scale(deviceScale, deviceScale)
-  ctx.fillStyle = panelStyle;
-  ctx.fillRect(0, 0, rectWidth * multiplier, rectHeight * multiplier);
+  // ctx.fillStyle = gradientHorizontal;
+  // ctx.fillRect(0, 0, rectWidth, rectHeight);
+  // ctx.fillStyle = gradientVertical;
+  ctx.fillStyle = opaque;
+  ctx.fillRect(0, 0, rectWidth, rectHeight);
   // console.log('rect width and height', rectWidth, rectHeight, Category)
   ctx.fillStyle = textFillStyle;
   ctx.textAlign = "center";
@@ -291,7 +307,7 @@ const Stage = ({data, selectedSectors})=> {
       const dxText = screenPosition.x - 0.5 * cardWidth
       const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
-      console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
+      // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
 
       // experimenting with some shadow stuff...not happy with it
@@ -465,7 +481,7 @@ const Stage = ({data, selectedSectors})=> {
             <canvas
               ref={canvasRef}
               style={{
-                width: `${sceneSize.width}px`,
+                width: `${sceneSize.width - 30}px`,
                 height: `${sceneSize.height}px`
               }}
               width={`${sceneSize.width * deviceScale}`}
