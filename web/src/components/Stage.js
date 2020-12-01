@@ -411,10 +411,18 @@ const Stage = ({data, selectedSectors})=> {
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
     })
+
+    const canvasClickHandler = clickEvent => {
+      console.log('canvas click', clickEvent, selectedEvents)
+    }
+    canvasRef.current.addEventListener('click', canvasClickHandler)
+
     const containerElement = containerRef.current
+    const canvasElement = canvasRef.current
 
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
+      canvasElement.removeEventListener('click', canvasClickHandler, false)
     }
   }, [
     sceneSizeEstablished
