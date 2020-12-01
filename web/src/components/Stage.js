@@ -58,40 +58,39 @@ const drawEventText = (info, multiplier) => {
     const span = document.createElement('span')
     span.innerHTML = Category
     span.style.opacity = 0
-    span.style.fontFamily = "Helvetica, sans-serif"
+    span.style.fontFamily = 'Helvetica, sans-serif'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
+    // console.log('span width height', width, height, Category)
     eventTextDimensions[textDimensionsKey] = {
       width: width * multiplier,
       height: height * multiplier,
       aspect: (width * multiplier) / (height * multiplier)
     }
-    document.body.removeChild(span)
+    // document.body.removeChild(span)
     // console.log(Category, eventTextDimensions[textDimensionsKey])
   }
   const {
     width: textWidth,
     height: textHeight
   } = eventTextDimensions[textDimensionsKey]
-  const rectWidth = textWidth * 0.65
-  const rectHeight = textHeight * 1.15
+  const rectWidth = textWidth
+  const rectHeight = textHeight
+  // console.log('rect width height', rectWidth, rectHeight)
 
   const textCanvas = document.createElement('canvas')
-  textCanvas.style = {
-    width: `${rectWidth}px`,
-    height: `${rectHeight}px`
-  }
+  textCanvas.style = `width: ${rectWidth}px; height: ${rectHeight}px`
   textCanvas.width = rectWidth * deviceScale
   textCanvas.height = rectHeight * deviceScale
   const textSize = {
     fontSize: 8 * multiplier,
     x: rectWidth / 2,
-    y: 10 * multiplier
+    y: 8 * multiplier
   }
   const dateSize = {
     fontSize: 6 * multiplier,
     x: rectWidth / 2,
-    y: 16 * multiplier
+    y: 14 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
@@ -214,7 +213,8 @@ const Stage = ({data, selectedSectors})=> {
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
-      const cardWidth = eventTextWidth * 2.5 * scaleFactor
+      const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Category}-1`].height
+      const cardWidth = eventTextWidth * 2 * scaleFactor
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
         return
@@ -232,15 +232,9 @@ const Stage = ({data, selectedSectors})=> {
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 10 * scaleFactor
-      const textHolderHeight = 40 * scaleFactor + vTextAdjust;
+      const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust;
       const teardropHeight = 69 * scaleFactor + vTextAdjust;
-      const shadowBlockHeight = 60 * scaleFactor
-      const imageBoxHeight = 150 * scaleFactor
-      const arrowHeight = 50 * scaleFactor
-      const arrowWidth = 100 * scaleFactor
-      const itemHeight = textHolderHeight + imageBoxHeight + arrowHeight
-      const itemHeightNoImage = textHolderHeight + arrowHeight
-      const textPadding = cardWidth / 30
+      const arrowHeight = (eventTextHeight + 40) * scaleFactor
       const vShift = 0
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
@@ -293,9 +287,11 @@ const Stage = ({data, selectedSectors})=> {
       // contextRef.current.fill();
 
       const eventText = eventTextElements[eventTextKey]
+      // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
       const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
+      console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
 
       // experimenting with some shadow stuff...not happy with it
