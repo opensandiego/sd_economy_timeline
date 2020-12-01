@@ -137,7 +137,6 @@ const Stage = ({data, selectedSectors})=> {
         position: {}
       }
     })
-  console.log({ selectedEvents })
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 1)
@@ -278,39 +277,6 @@ const Stage = ({data, selectedSectors})=> {
           x: screenPosition.x,
           y: screenPosition.y - vShift
       }
-      // triangle only
-      // contextRef.current.beginPath();
-      // contextRef.current.moveTo(startPos.x, startPos.y);
-      // startPos.x -= arrowWidth / 3;
-      // startPos.y -= arrowHeight * 1.25;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x += arrowWidth / 1.5;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x -= arrowWidth / 3;
-      // startPos.y += arrowHeight * 1.25;
-      // contextRef.current.closePath();
-      // contextRef.current.fill();
-
-      // main card panel with beak
-      // contextRef.current.beginPath();
-      // contextRef.current.moveTo(startPos.x, startPos.y);
-      // startPos.x -= arrowWidth / 2;
-      // startPos.y -= arrowHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.y -= textHolderHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x += cardWidth;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.y += textHolderHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x -= (cardWidth / 2 - arrowWidth / 2);
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // contextRef.current.lineTo(screenPosition.x, screenPosition.y - vShift);
-      // contextRef.current.closePath();
-      // contextRef.current.fill();
-
       const eventText = eventTextElements[eventTextKey]
       // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
@@ -355,36 +321,10 @@ const Stage = ({data, selectedSectors})=> {
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
       }
 
-      // reflection
       startPos = {
         x: screenPosition.x,
         y: screenPosition.y + vShift
       }
-      // const grad = contextRef.current.createLinearGradient(screenPosition.x, screenPosition.y, screenPosition.x, screenPosition.y + shadowBlockHeight + arrowWidth);
-      // grad.addColorStop(0, gradColor + "0.5)");
-      // grad.addColorStop(0.3, gradColor + "0.2)");
-      // grad.addColorStop(0.7, gradColor + "0.05)");
-      // grad.addColorStop(1, gradColor + "0)");
-      // contextRef.current.fillStyle = grad;
-      // contextRef.current.beginPath();
-      // contextRef.current.moveTo(startPos.x, startPos.y);
-      // startPos.x += arrowWidth / 2;
-      // startPos.y += arrowHeight;
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x += (cardWidth / 2 - arrowWidth / 2);
-      // // contextRef.current.lineTo(startPos.x, startPos.y);
-      // // startPos.y += shadowBlockHeight;
-      // // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x -= cardWidth;
-      // // contextRef.current.lineTo(startPos.x, startPos.y);
-      // // startPos.y -= shadowBlockHeight;
-      // // contextRef.current.lineTo(startPos.x, startPos.y);
-      // startPos.x += (cardWidth / 2 - arrowWidth / 2);
-      // contextRef.current.lineTo(startPos.x, startPos.y);
-      // contextRef.current.lineTo(screenPosition.x, screenPosition.y + vShift);
-      // contextRef.current.closePath();
-      // contextRef.current.fill();
-
       const { x, y } = startPos
       const radius = 15 * scaleFactor
       const centerX = x
