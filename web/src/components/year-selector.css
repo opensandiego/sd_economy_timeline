@@ -11,12 +11,17 @@
 }
 
 .years div p {
-  font: normal normal 600 18px/22px Montserrat;
+  font: normal normal normal 18px/22px Montserrat;
   letter-spacing: 0px;
   color: #2ca5ff;
   opacity: 1;
   margin: 0;
   padding: 20px 0 11px 0;
+}
+
+button:focus
+{
+    outline:none;
 }
 button.decade.show {
   border: 2px solid #e04d8b;
@@ -26,12 +31,12 @@ button.decade.show {
   height: 26px;
   border-radius: 13px;
   font-size: 23px;
-  background: #072236;
+  background: black;
 }
 
 button.decade.hide {
   background: transparent
-    linear-gradient(90deg, #89cdff 0%, #2ca5ff 31%, #1f74b3 69%, #175888 100%)
+    linear-gradient(180deg, #89cdff 0%, #2ca5ff 31%, #1f74b3 69%, #175888 100%)
     0% 0% no-repeat padding-box;
   width: 26px;
   height: 26px;
@@ -39,6 +44,10 @@ button.decade.hide {
   border: 0px;
   color: #072236;
   font-size: 23px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* width */
@@ -109,10 +118,10 @@ button.decade.hide {
 }
 
 .right .vl {
-  height: 20px;
+  height: 18px;
   border-right: 2px dotted #E04D8B;
   padding: 0;
-  margin-bottom: 9px;
+  margin-bottom: 17px;
 }
 
 .year:last-of-type {
@@ -133,7 +142,7 @@ button.decade {
   padding: 2px;
 }
 .years .decade.hide svg {
-  position: absolute;
+  /* position: absolute; */
   top: 2px;
   left: 1px;
   padding: 1.5px;

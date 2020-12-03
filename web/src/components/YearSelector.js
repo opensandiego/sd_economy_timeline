@@ -1,29 +1,9 @@
 import React from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import TimelineContext from "../TimelineContext"
+import TimelineContext from "../TimelineContext";
 import "./year-selector.css";
 
 const YearSelector = () => {
-  // console.log("IN YEAR SELECTOR", selectedDecade);
-  const decades = [
-    2010,
-    2000,
-    1990,
-    1980,
-    1970,
-    1960,
-    1950,
-    1940,
-    1930,
-    1920,
-    1910,
-    1900,
-    1890,
-    1880,
-    1870,
-    1860,
-    1850,
-  ];
 
   const dummyResults = [
     {
@@ -50,34 +30,32 @@ const YearSelector = () => {
   ];
   return (
     <TimelineContext.Consumer>
-      {({ selectedDec, updateSelectedDecade }) => (
+      {({ selectedDec, showYears, handleYearSelector, decades }) => (
         <div className="years">
           {decades.map((decade, index) => (
             <div key={index} className="year">
               <div className="left">
-                <p>{decade}s</p>
+                <p style={selectedDec === decade ? {fontWeight: "bold"} : {fontWeight: "normal"}}>{decade}s</p>
                 <button
                   className={
-                    selectedDec === decade ? "decade show" : "decade hide"
+                    ((selectedDec === decade) && showYears) ? "decade show" : "decade hide"
                   }
                   value={decade}
-                  onClick={() =>
-                    updateSelectedDecade(decade)
-                  }
+                  onClick={() => handleYearSelector(decade)}
                 >
-                  {selectedDec === decade ? <BiMinus /> : <BiPlus />}
+                  {((selectedDec === decade) && showYears) ? <BiMinus /> : <BiPlus />}
                 </button>
               </div>
               <div
                 className="right"
                 style={
-                  selectedDec === decade
+                  ((selectedDec === decade) && showYears)
                     ? { display: "flex" }
                     : { display: "none" }
                 }
               >
                 {dummyResults.map((res, index) => {
-                  if (selectedDec === decade)
+                  if ((selectedDec === decade) && showYears)
                     return (
                       <div key={index}>
                         <button>{res.year}</button>
@@ -87,7 +65,7 @@ const YearSelector = () => {
                 })}
               </div>
 
-              <hr className={selectedDec === decade ? "dash" : "solid"}></hr>
+              <hr className={((selectedDec === decade) && showYears) ? "dash" : "solid"}></hr>
             </div>
           ))}
         </div>
