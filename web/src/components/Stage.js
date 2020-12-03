@@ -17,23 +17,37 @@ let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
-const timeline3DLength = 1000
+const timeline3DLength = 3000
 let rects = []
 let selectedEvents
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop
-const rectCount = 10
+const rectCount = 20
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
-for (let i = 0; i < rectCount; i++) {
-  const rectY = timeline3DLength - (yIncrement + (i * yIncrement))
-  const nextRect = {
-    x: i % 2 ? x + 0.5 : x,
-    y: rectY
+const rows = Math.ceil(rectCount / 1.5)
+for (let i = 0; i < rows; i++) {
+  // alternate between 1 event and 2 events per row
+  if (i % 2 === 0) {
+    rects.push({
+      x: 0.25,
+      y: timeline3DLength - (yIncrement + (i * yIncrement)),
+      row: i
+    })
+    rects.push({
+      x: 0.75,
+      y: timeline3DLength - (yIncrement + (i * yIncrement)),
+      row: i
+    })
+  } else {
+    rects.push({
+      x: 0.5,
+      y: timeline3DLength - (yIncrement + (i * yIncrement)),
+      row: i
+    })
   }
-  rects.push(nextRect)
 }
 
 const makeEventKey = e => {
@@ -130,7 +144,7 @@ const drawEventText = (info, multiplier) => {
 
 const Stage = ({data, selectedSectors})=> {
   selectedEvents = data && data
-    .filter(event => selectedSectors.includes(event.Category))
+    .filter(event => selectedSectors.includes(event.Category) && +event.Year > 1899)
     .map(event => {
       return {
         ...event,
@@ -225,12 +239,24 @@ const Stage = ({data, selectedSectors})=> {
       return
     }
     const nextRects = rects.map(rect => ({
+      row: rect.row,
       x: rect.x,
       y: rect.y - (-change * 25) // <-- flip scroll direction
       // y: rect.y - (change * 25)
     }))
+    const rowYears = {}
     nextRects.forEach((rect, i) => {
-      // console.log('selected event?', selectedEvents[i])
+      // const selectedEvent = selectedEvents[i]
+      // if (rowYears[rect.row]) {
+      //   rowYears[rect.row].push(selectedEvent.Year)
+      // } else {
+      //   rowYears[rect.row] = [selectedEvent.Year]
+      // }
+      // if (rowYears[rect.row].length === 2) {
+      //   const [year1, year2] = rowYears[rect.row]
+      //   const yearDiffence = +year2 - (+year1)
+      //   // rect.y = rect.y + 10
+      // }
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
