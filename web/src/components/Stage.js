@@ -17,13 +17,14 @@ let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
-const timeline3DLength = 3000
+const timeline3DLength = 2000
 let rects = []
 let selectedEvents
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop
+const borderWidth = 10
 const rectCount = 20
 const x = 0.25
 const yIncrement = timeline3DLength / rectCount
@@ -78,11 +79,11 @@ const drawEventText = (info, multiplier) => {
     span.style.padding = '4px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
+    console.log(Category, width, height)
     // console.log('span width height', width, height, Category)
     eventTextDimensions[textDimensionsKey] = {
       width: width * multiplier,
-      height: height * multiplier,
-      aspect: (width * multiplier) / (height * multiplier)
+      height: height * multiplier
     }
     document.body.removeChild(span)
     // console.log(Category, eventTextDimensions[textDimensionsKey])
@@ -93,6 +94,7 @@ const drawEventText = (info, multiplier) => {
   } = eventTextDimensions[textDimensionsKey]
   const rectWidth = textWidth
   const rectHeight = textHeight
+  // console.log(`rectWidth ${rectWidth}, rectHeight ${rectHeight}`)
 
   const textCanvas = document.createElement('canvas')
   textCanvas.style = `width: ${rectWidth}px; height: ${rectHeight}px`
@@ -111,35 +113,50 @@ const drawEventText = (info, multiplier) => {
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const dateFillStyle = 'rgba(110, 110, 110, 1)'
   const opaque = 'rgba(255, 255, 255, 1)'
-  const transparent = 'rgba(255, 255, 255, 0)'
   const dateFont = '"Helvetica","sans-serif"'
   const textFont = '"Helvetica","sans-serif"'
   const ctx = textCanvas.getContext('2d')
-  // const gradientHorizontal = ctx.createLinearGradient(0, 0, rectWidth, 0);
-  // gradientHorizontal.addColorStop(0, transparent);
-  // gradientHorizontal.addColorStop(0.1, opaque);
-  // gradientHorizontal.addColorStop(0.9, opaque);
-  // gradientHorizontal.addColorStop(1, transparent);
-  const gradientVertical = ctx.createLinearGradient(0, 0, 0, rectHeight);
-  gradientVertical.addColorStop(0, transparent);
-  gradientVertical.addColorStop(0.2, opaque);
-  gradientVertical.addColorStop(0.8, opaque);
-  gradientVertical.addColorStop(1, transparent);
   ctx.scale(deviceScale, deviceScale)
-  // ctx.fillStyle = gradientHorizontal;
-  // ctx.fillRect(0, 0, rectWidth, rectHeight);
-  // ctx.fillStyle = gradientVertical;
   ctx.fillStyle = opaque;
   ctx.fillRect(0, 0, rectWidth, rectHeight);
   // console.log('rect width and height', rectWidth, rectHeight, Category)
   ctx.fillStyle = textFillStyle;
   ctx.textAlign = "center";
   ctx.font = `${textSize.fontSize}px ${textFont}`;
+  // console.log('text size', textSize.fontSize)
   ctx.fillText(Category, textSize.x, textSize.y)
   ctx.fillStyle = dateFillStyle;
   ctx.font = `${dateSize.fontSize}px ${dateFont}`;
   ctx.fillText(Year, dateSize.x, dateSize.y);
   return textCanvas
+  // console.log({ Category })
+  // console.log('text canvas', textCanvas)
+  // const withFadedBorder = addFadeBorderForText(textCanvas, rectWidth, rectHeight, multiplier)
+  // console.log('with faded border', withFadedBorder)
+  // return withFadedBorder
+}
+
+const addFadeBorderForText = (textCanvas, width, height) => {
+  const fadedBorderCanvas = document.createElement('canvas')
+  const totalWidth = width + (borderWidth * 2)
+  // console.log('total width', totalWidth)
+  const totalHeight = height + (borderWidth * 2)
+  fadedBorderCanvas.style = `width: ${totalWidth}px; height: ${totalHeight}px`
+  fadedBorderCanvas.width = totalWidth * deviceScale
+  fadedBorderCanvas.height = totalHeight * deviceScale
+  const ctx = fadedBorderCanvas.getContext('2d')
+  const fadeStep = 0.1
+  const fades = Array.from(Array(borderWidth)).map((_, i) => {
+    return `rgba(255, 255, 255, ${(fadeStep * i).toFixed(1)})`
+  })
+  fades.forEach((fill, index) => {
+    ctx.fillStyle = fill
+    const twiceIndex = index * 2
+    ctx.fillRect(index, index, totalWidth - twiceIndex, totalHeight - twiceIndex)
+  })
+  ctx.drawImage(textCanvas, borderWidth, borderWidth, width, height)
+
+  return fadedBorderCanvas
 }
 
 const Stage = ({data, selectedSectors})=> {
@@ -220,7 +237,7 @@ const Stage = ({data, selectedSectors})=> {
       const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
       gradient.addColorStop(0, `${timelineGradColor},0)`)
       gradient.addColorStop(0.06, `${timelineGradColor},0)`)
-      gradient.addColorStop(0.8, `${timelineGradColor},1)`)
+      gradient.addColorStop(0.4, `${timelineGradColor},1)`)
       gradient.addColorStop(1, `${timelineGradColor},1)`)
       contextRef.current.fillStyle = gradient
       contextRef.current.beginPath()
@@ -263,6 +280,7 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
       const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Category}-1`].height
+      console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * 2 * scaleFactor
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
