@@ -350,8 +350,7 @@ const Stage = ({data, selectedSectors})=> {
         y: dy,
         width: teardropWidth,
         height: teardropHeight,
-        active: true,
-
+        active: true
       }
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
@@ -457,7 +456,34 @@ const Stage = ({data, selectedSectors})=> {
     })
 
     const canvasClickHandler = clickEvent => {
-      console.log('canvas click', clickEvent, selectedEvents)
+      let clickedMarker
+      const {
+        x: horizontalOffset,
+        y: verticalOffset
+      } = canvasRef.current.getBoundingClientRect()
+      const { clientX, clientY } = clickEvent
+      const coords = { x: clientX, y: clientY }
+      const scr = {
+        x: coords.x - horizontalOffset,
+        y: coords.y - verticalOffset
+      }
+      const v2 = 0
+      const num = selectedEvents.length
+      for (let c = num - 1; c >= 0; c--) {
+        var m = selectedEvents[c];
+        var ma = m.position;
+        if (!ma || m.searchHidden || m.madeInvisible) {
+            continue
+        }
+        if (ma.active && scr.x > ma.x && scr.x < (ma.x + ma.width) && (scr.y - v2) > ma.y && (scr.y - v2) < (ma.y + ma.height)) {
+          clickedMarker = m;
+          break;
+        }
+      }
+      if (clickedMarker) {
+        console.log('clicked...?', clickedMarker)
+      }
+      // console.log('canvas click', clickEvent, clientX, clientY)
     }
     canvasRef.current.addEventListener('click', canvasClickHandler)
 
