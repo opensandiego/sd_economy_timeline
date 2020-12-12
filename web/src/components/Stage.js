@@ -63,10 +63,10 @@ const Stage = ({data, selectedSectors})=> {
     .map(event => {
       return {
         ...event,
-        position: {}
+        position: event.position || {}
       }
     })
-  console.log('stage updated selectedEvents', selectedEvents)
+  // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 1, eventTextDimensions, deviceScale)
@@ -150,7 +150,6 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawEvents = (change = 0) => {
-    // console.log('selectedEvents', selectedEvents)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
@@ -301,7 +300,7 @@ const Stage = ({data, selectedSectors})=> {
   }, [])
 
   useEffect(() => {
-    // if (!sceneSizeEstablished) return
+    if (!sceneSizeEstablished) return
     contextRef.current = canvasRef.current.getContext('2d')
     contextRef.current.scale(deviceScale, deviceScale)
 
