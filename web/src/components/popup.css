@@ -1,0 +1,17 @@
+.eventPopup {
+  position: absolute;
+  z-index: 10;
+  top: 8em;
+  left: 50%;
+  background: black;
+  color: white;
+  text-align: center;
+  width: 20em;
+  margin-left: -10em;
+  padding: 1em;
+  font-size: 0.8em;
+}
+
+.eventPopup .close svg {
+  color: white
+}

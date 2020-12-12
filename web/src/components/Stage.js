@@ -1,12 +1,14 @@
 import React, {
   useRef,
   useEffect,
+  useCallback,
   useState
 } from 'react'
 import './stage.scss'
 import backgroudImagePath from '../assets/sandag-background@3x.png'
 import teardrop from '../assets/teardrop@3x.png'
 import { iconInfo, categoryToIcon } from './icons'
+import Popup from './Popup'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
@@ -186,6 +188,7 @@ const Stage = ({data, selectedSectors})=> {
     width,
     height
   })
+  const [eventForPopup, setEventForPopup] = useState(null)
   const timelineGradColor = 'rgb(19,72,100'
 
   const timelineToScreen = position => {
@@ -250,7 +253,7 @@ const Stage = ({data, selectedSectors})=> {
     }
   }
 
-  const drawEvents = (change = 0) => {
+  const drawEvents = useCallback((change = 0) => {
     // console.log('selectedEvents', selectedEvents)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
@@ -280,7 +283,7 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
       const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Category}-1`].height
-      console.log('eventText dims', eventTextWidth, eventTextHeight)
+      // console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * 2 * scaleFactor
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
@@ -307,19 +310,19 @@ const Stage = ({data, selectedSectors})=> {
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
       if (screenPosition.y > fadeOutLimit) {
-          opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
-          opacity = opacity < 0 ? 0 : opacity
-          // console.log('over fade out limit', opacity, screenPosition.y)
-          // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
+        opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
+        opacity = opacity < 0 ? 0 : opacity
+        // console.log('over fade out limit', opacity, screenPosition.y)
+        // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
       } else {
-          opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
+        opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
       }
       contextRef.current.globalAlpha = opacity;
       // contextRef.current.fillStyle = panelColor;
       contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
       let startPos = {
-          x: screenPosition.x,
-          y: screenPosition.y - vShift
+        x: screenPosition.x,
+        y: screenPosition.y - vShift
       }
       const eventText = eventTextElements[eventTextKey]
       // console.log('event text', eventText, selectedEvents[i].Category)
@@ -328,17 +331,6 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
-
-      // experimenting with some shadow stuff...not happy with it
-      // contextRef.current.strokeStyle = 'white';
-      // contextRef.current.shadowColor = "rgba(105, 105, 105, 1)";
-      // contextRef.current.shadowBlur = 5;
-      // contextRef.current.shadowOffsetX = 0;
-      // contextRef.current.shadowOffsetY = 0;
-      // contextRef.current.strokeRect(dxText, dyText, cardWidth, textHolderHeight);
-      // contextRef.current.shadowBlur = 0
-      // contextRef.current.shadowOffsetX = 0
-      // contextRef.current.shadowOffsetY = 0
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
@@ -399,9 +391,7 @@ const Stage = ({data, selectedSectors})=> {
       contextRef.current.globalAlpha = 1
     })
     rects = nextRects
-  }
-
-
+  })
 
   useEffect(() => {
     const {
@@ -469,6 +459,7 @@ const Stage = ({data, selectedSectors})=> {
       }
       const v2 = 0
       const num = selectedEvents.length
+      // console.log('canvasClickHandler, num?', num, scr)
       for (let c = num - 1; c >= 0; c--) {
         var m = selectedEvents[c];
         var ma = m.position;
@@ -481,7 +472,8 @@ const Stage = ({data, selectedSectors})=> {
         }
       }
       if (clickedMarker) {
-        console.log('clicked...?', clickedMarker)
+        // console.log('clicked...?', clickedMarker)
+        setEventForPopup(clickedMarker)
       }
       // console.log('canvas click', clickEvent, clientX, clientY)
     }
@@ -501,12 +493,20 @@ const Stage = ({data, selectedSectors})=> {
   useEffect(() => {
     drawEvents()
   }, [
-    selectedEvents
+    drawEvents
   ])
 
   return (
     <div className='stage' ref={containerRef}>
       <div className='viewport'>
+        {eventForPopup &&
+          <Popup
+            category={eventForPopup.Category}
+            year={eventForPopup.Year}
+            description={eventForPopup.Description}
+            setEventForPopup={setEventForPopup}
+          />
+        }
         <div className='scene3D-container'>
           <img
             alt='San Diego sunset as background for timeline '
