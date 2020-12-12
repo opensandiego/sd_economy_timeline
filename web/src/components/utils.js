@@ -26,7 +26,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     span.style.padding = '4px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
-    console.log(Category, width, height)
+    // console.log(Category, width, height)
     // console.log('span width height', width, height, Category)
     eventTextDimensions[textDimensionsKey] = {
       width: width * multiplier,

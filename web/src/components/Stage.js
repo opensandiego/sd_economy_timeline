@@ -1,7 +1,6 @@
 import React, {
   useRef,
   useEffect,
-  useCallback,
   useState
 } from 'react'
 import './stage.scss'
@@ -34,7 +33,6 @@ let eventTextBuilt = false
 let eventTeardrop
 const borderWidth = 10
 const rectCount = 20
-const x = 0.25
 const yIncrement = timeline3DLength / rectCount
 const rows = Math.ceil(rectCount / 1.5)
 for (let i = 0; i < rows; i++) {
@@ -68,6 +66,7 @@ const Stage = ({data, selectedSectors})=> {
         position: {}
       }
     })
+  console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 1, eventTextDimensions, deviceScale)
@@ -76,7 +75,6 @@ const Stage = ({data, selectedSectors})=> {
     eventTextBuilt = true
     // console.log(eventTextElements)
   }
-  // console.log('selectedEvents', selectedEvents)
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
@@ -151,7 +149,7 @@ const Stage = ({data, selectedSectors})=> {
     }
   }
 
-  const drawEvents = useCallback((change = 0) => {
+  const drawEvents = (change = 0) => {
     // console.log('selectedEvents', selectedEvents)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
@@ -162,19 +160,7 @@ const Stage = ({data, selectedSectors})=> {
       y: rect.y - (-change * 25) // <-- flip scroll direction
       // y: rect.y - (change * 25)
     }))
-    const rowYears = {}
     nextRects.forEach((rect, i) => {
-      // const selectedEvent = selectedEvents[i]
-      // if (rowYears[rect.row]) {
-      //   rowYears[rect.row].push(selectedEvent.Year)
-      // } else {
-      //   rowYears[rect.row] = [selectedEvent.Year]
-      // }
-      // if (rowYears[rect.row].length === 2) {
-      //   const [year1, year2] = rowYears[rect.row]
-      //   const yearDiffence = +year2 - (+year1)
-      //   // rect.y = rect.y + 10
-      // }
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
@@ -242,6 +228,7 @@ const Stage = ({data, selectedSectors})=> {
         height: teardropHeight,
         active: true
       }
+      // console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
@@ -289,7 +276,7 @@ const Stage = ({data, selectedSectors})=> {
       contextRef.current.globalAlpha = 1
     })
     rects = nextRects
-  })
+  }
 
   useEffect(() => {
     const {
@@ -383,6 +370,7 @@ const Stage = ({data, selectedSectors})=> {
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
       canvasElement.removeEventListener('click', canvasClickHandler, false)
+      console.log('☠️ removed event listener???')
     }
   }, [
     sceneSizeEstablished
@@ -390,9 +378,7 @@ const Stage = ({data, selectedSectors})=> {
 
   useEffect(() => {
     drawEvents()
-  }, [
-    drawEvents
-  ])
+  })
 
   return (
     <div className='stage' ref={containerRef}>
@@ -429,4 +415,4 @@ const Stage = ({data, selectedSectors})=> {
   )
 };
 
-export default Stage
+export default React.memo(Stage)
