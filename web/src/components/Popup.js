@@ -8,7 +8,6 @@ const Popup = ({ category, year, description, setEventForPopup }) => {
     <div className='eventPopup'>
       <div className='close'>
         <button onClick={() => {
-          console.log('closing!')
           setEventForPopup(null)
         }}>
           <VscChromeClose size={18} />
