@@ -3,7 +3,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
-import TimelineContext from '../TimelineContext'
+import TimelineContext from "../TimelineContext";
 
 const Sidebar = (props) => {
   return (
@@ -18,18 +18,31 @@ const Sidebar = (props) => {
         removeSector,
         clearSelectedSectors,
         updateShowAllSectors,
-        updateShowFilter
+        updateShowFilter,
       }) => (
-        <div className={showFilter ? "column fixed-270 show" : "column fixed-270 hide"}>
+        <div
+          className={
+            showFilter ? "column fixed-270 show" : "column fixed-270 hide"
+          }
+        >
           <div id="sidebar">
-            <div className="close"><button onClick={updateShowFilter}><VscChromeClose size={18}/></button></div>
+            {/* <div className="close">
+              <button onClick={updateShowFilter}>
+                <VscChromeClose size={18} />
+              </button>
+            </div> */}
             {/* <div className="sidebar-title">A History of San Diego</div> */}
 
             <div className="sidebar-label">
-              <p>Filtered By:</p>
+              <p>Filtered By</p>
               <button className="clear" onClick={clearSelectedSectors}>
                 Clear all
               </button>
+              <div className="close">
+              <button onClick={updateShowFilter}>
+                <VscChromeClose size={18} />
+              </button>
+            </div>
             </div>
 
             {selectedSectors.length === 0 ? (
@@ -48,9 +61,11 @@ const Sidebar = (props) => {
             )}
 
             <div className="sidebar-label">
-              <p>All Sectors<br/>(max of five)</p>
+              <p>
+                Categories<span>(Select maximum of 5 at a time)</span>
+              </p>
 
-              {showAllSectors ? (
+              {/* {showAllSectors ? (
                 <button onClick={updateShowAllSectors}>
                   <BiMinus size={15}/>
                 </button>
@@ -58,7 +73,7 @@ const Sidebar = (props) => {
                 <button onClick={updateShowAllSectors}>
                   <BiPlus size={15}/>
                 </button>
-              )}
+              )} */}
             </div>
             {showAllSectors ? (
               <div className="all-sectors">
@@ -66,13 +81,15 @@ const Sidebar = (props) => {
                   <div className="key-sector-selector" key={sector}>
                     <input
                       type="checkbox"
+                      className="checkbox-input"
                       checked={selectedSectors.includes(sector)}
                       value={sector}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        updateSelectedSectors(e, sector)
+                        updateSelectedSectors(e, sector);
                       }}
                     />
+                    <span className="checkbox-custom"></span>
                     <span className="key-sector-selector-item">{sector}</span>
                     <BsInfoCircle />
                   </div>
@@ -81,13 +98,15 @@ const Sidebar = (props) => {
                   <div className="all-sector-selector" key={sector}>
                     <input
                       type="checkbox"
+                      className="checkbox-input"
                       value={sector}
                       checked={selectedSectors.includes(sector)}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        updateSelectedSectors(e, sector)
+                        updateSelectedSectors(e, sector);
                       }}
                     />
+                    <span className="checkbox-custom"></span>
                     <span className="all-sector-selector-item">{sector}</span>
                     <BsInfoCircle />
                   </div>
@@ -98,7 +117,6 @@ const Sidebar = (props) => {
         </div>
       )}
     </TimelineContext.Consumer>
-
   );
 };
 

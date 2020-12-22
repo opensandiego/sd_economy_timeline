@@ -74,6 +74,9 @@ button.decade.hide {
 .year {
   position: relative;
 }
+button.decade {
+  z-index: 1;
+}
 
 .solid, .dash {
   width: 100%;
@@ -81,7 +84,7 @@ button.decade.hide {
   border: 0 none;
   height:0;
   left:75px;
-  z-index: -99999;
+  /* z-index: -99999; */
   top: 52px;
   background: none;
 }
@@ -121,16 +124,16 @@ button.decade.hide {
   height: 18px;
   border-right: 2px dotted #E04D8B;
   padding: 0;
-  margin-bottom: 17px;
+  margin-bottom: 15px;
 }
 
 .year:last-of-type {
   padding-right: 50px;
 }
-
+/* 
 .years div:last-of-type hr{
   display: none;
-}
+} */
 
 button.decade {
   position: relative;
@@ -146,4 +149,28 @@ button.decade {
   top: 2px;
   left: 1px;
   padding: 1.5px;
+}
+
+.solid {
+  transition: opacity .2s ease-out;
+  opacity: 1;
+}
+
+.solid.hide{
+  opacity: 0;
+}
+
+.right {
+  display: flex;
+  overflow:hidden;
+  transition:max-width 1.5s ease-out;
+  height:auto;
+  max-width:600px;
+  margin: 0;
+  padding: 0;
+}
+.right.collapsed {
+  max-width:0;
+  margin: 0;
+  padding: 0;
 }
