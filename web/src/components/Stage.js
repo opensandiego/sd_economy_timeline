@@ -85,7 +85,6 @@ const Stage = ({data, selectedSectors})=> {
     height
   })
   const [eventForPopup, setEventForPopup] = useState(null)
-  const timelineGradColor = 'rgb(19,72,100'
 
   const timelineToScreen = position => {
     // console.log('timelineToScreen', width)
@@ -134,10 +133,11 @@ const Stage = ({data, selectedSectors})=> {
         y: timeline3DLength
       })
       const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
-      gradient.addColorStop(0, `${timelineGradColor},0)`)
-      gradient.addColorStop(0.06, `${timelineGradColor},0)`)
-      gradient.addColorStop(0.4, `${timelineGradColor},1)`)
-      gradient.addColorStop(1, `${timelineGradColor},1)`)
+      gradient.addColorStop(0, `rgb(69,109,131,0)`)
+      gradient.addColorStop(0.13, `rgb(12,70,110,0.31)`)
+      gradient.addColorStop(0.32, `rgb(12,70,110,0.67)`)
+      gradient.addColorStop(0.59, `rgb(12,70,110,0.82)`)
+      gradient.addColorStop(1, `rgb(8,36,56,1)`)
       contextRef.current.fillStyle = gradient
       contextRef.current.beginPath()
       contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
