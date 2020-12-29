@@ -28,7 +28,7 @@ export const iconInfo = {
   goodsmovement: { path: goodsmovement, file: 'goods movement@3x.png', category: 'Goods Movement', width: 55, height: 39 },
   healthcare: { path: healthcare, file: 'healthcare@3x.png', category: 'Healthcare', width: 42, height: 42 },
   landuse: { path: landuse, file: 'historic land use@3x.png', category: 'LU & EP', width: 63, height: 33 },
-  innovation: { path: innovation, file: 'innovation@3x.png', category: 'Innovation', width: 30, height: 50 },
+  innovation: { path: innovation, file: 'innovation@3x.png', category: 'Innovation', width: 55, height: 58 },
   manufacturing: { path: manufacturing, file: 'manufacturing@3x.png', category: 'Manufacturing', width: 50, height: 50 },
   military: { path: military, file: 'military@3x.png', category: 'Military', width: 60, height: 53 },
   tourism: { path: tourism, file: 'tourism@3x.png', category: 'Tourism', width: 50, height: 44 },
