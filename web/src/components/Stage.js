@@ -27,6 +27,7 @@ const cardSize = 720
 const timeline3DLength = 2000
 let rects = []
 let selectedEvents
+let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
@@ -182,14 +183,13 @@ const Stage = ({data, selectedSectors})=> {
       } else {
         eventTextKey = makeEventKey(selectedEvents[i])
       }
-      const gradColor = "rgba(255,255,255,";
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 10 * scaleFactor
       const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust;
       const teardropHeight = 69 * scaleFactor + vTextAdjust;
       const arrowHeight = (eventTextHeight + 40) * scaleFactor
-      const vShift = 0
+      const vShift = (currentHover && selectedEvents[i] === currentHover) ? 5 * scaleFactor : 0
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
       if (screenPosition.y > fadeOutLimit) {
@@ -236,7 +236,7 @@ const Stage = ({data, selectedSectors})=> {
         const iconHeight = eventIcon.height * scaleFactor
         const iconHeightAdjust = teardropHeight - (15 * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
-        const dyIcon = screenPosition.y - iconHeightAdjust
+        const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
       }
 
@@ -329,13 +329,13 @@ const Stage = ({data, selectedSectors})=> {
       passive: false
     })
 
-    const canvasClickHandler = clickEvent => {
+    const hitTest = e => {
       let clickedMarker
       const {
         x: horizontalOffset,
         y: verticalOffset
       } = canvasRef.current.getBoundingClientRect()
-      const { clientX, clientY } = clickEvent
+      const { clientX, clientY } = e
       const coords = { x: clientX, y: clientY }
       const scr = {
         x: coords.x - horizontalOffset,
@@ -343,7 +343,6 @@ const Stage = ({data, selectedSectors})=> {
       }
       const v2 = 0
       const num = selectedEvents.length
-      // console.log('canvasClickHandler, num?', num, scr)
       for (let c = num - 1; c >= 0; c--) {
         var m = selectedEvents[c];
         var ma = m.position;
@@ -355,6 +354,11 @@ const Stage = ({data, selectedSectors})=> {
           break;
         }
       }
+      return clickedMarker
+    }
+
+    const canvasClickHandler = clickEvent => {
+      const clickedMarker = hitTest(clickEvent)
       if (clickedMarker) {
         // console.log('clicked...?', clickedMarker)
         setEventForPopup(clickedMarker)
@@ -363,13 +367,35 @@ const Stage = ({data, selectedSectors})=> {
     }
     canvasRef.current.addEventListener('click', canvasClickHandler)
 
+    const canvasMouseMoveHandler = mouseMoveEvent => {
+      let redraw = false
+      if (currentHover) {
+        delete currentHover.hovered
+        currentHover = null
+        redraw = true
+      }
+      const hoveredMarker = hitTest(mouseMoveEvent)
+      if (hoveredMarker) {
+        currentHover = hoveredMarker
+        currentHover.hovered = true
+        redraw = true
+        console.log('HOVER!', hoveredMarker)
+      }
+      if (redraw) {
+        contextRef.current.clearRect(0, 0, width, height)
+        drawBoundaries(vanishingPoint)
+        drawEvents()
+      }
+    }
+    canvasRef.current.addEventListener('mousemove', canvasMouseMoveHandler)
+
     const containerElement = containerRef.current
     const canvasElement = canvasRef.current
 
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
       canvasElement.removeEventListener('click', canvasClickHandler, false)
-      console.log('☠️ removed event listener???')
+      canvasElement.removeEventListener('mousemove', canvasMouseMoveHandler, false)
     }
   }, [
     sceneSizeEstablished
