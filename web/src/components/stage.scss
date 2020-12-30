@@ -1,13 +1,3 @@
-:root {
-  --scenePerspective: 1;
-  --scenePerspectiveOriginX: 100;
-  --scenePerspectiveOriginY: 0;
-  --itemZ: 2;
-  --cameraSpeed: 150; // Where 1 is the fastest
-  --cameraZ: 0;
-  --viewportHeight: 0;
-}
-
 .stage {
   position: relative;
   height: 100%;
@@ -33,12 +23,10 @@
       calc(var(--scenePerspectiveOriginY) * 1%);
     will-change: perspective-origin;
     transform: translate3d(0, 0, 0); //Allow Hardware-Accelerated CSS
-    // overflow: auto;
 
     .scene3D {
       position: absolute;
       top: 0;
-      // height: 100vh;
       width: 100%;
       transform-style: preserve-3d;
       transform: translateZ(calc(var(--cameraZ) * 1px));
