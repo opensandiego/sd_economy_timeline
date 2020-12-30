@@ -150,7 +150,14 @@ const Stage = ({data, selectedSectors})=> {
     }
   }
 
+  const eventIsCurrentHover = e => {
+    return currentHover.Year === e.Year &&
+      currentHover.Category === e.Category &&
+      currentHover.Description === e.Description
+  }
+
   const drawEvents = (change = 0) => {
+    // console.log('drawEvent current hover?', currentHover)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
@@ -183,13 +190,14 @@ const Stage = ({data, selectedSectors})=> {
       } else {
         eventTextKey = makeEventKey(selectedEvents[i])
       }
+      // console.log('selected event', selectedEvents[i])
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * 10 * scaleFactor
       const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust;
       const teardropHeight = 69 * scaleFactor + vTextAdjust;
       const arrowHeight = (eventTextHeight + 40) * scaleFactor
-      const vShift = (currentHover && selectedEvents[i] === currentHover) ? 5 * scaleFactor : 0
+      const vShift = (currentHover && eventIsCurrentHover(selectedEvents[i])) ? 5 * scaleFactor : 0
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
       if (screenPosition.y > fadeOutLimit) {
@@ -380,7 +388,6 @@ const Stage = ({data, selectedSectors})=> {
         currentHover = hoveredMarker
         currentHover.hovered = true
         redraw = true
-        console.log('HOVER!', hoveredMarker)
       }
       if (redraw) {
         contextRef.current.clearRect(0, 0, width, height)
@@ -395,31 +402,35 @@ const Stage = ({data, selectedSectors})=> {
 
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
-      canvasElement.removeEventListener('click', canvasClickHandler, false)
       canvasElement.removeEventListener('mousemove', canvasMouseMoveHandler, false)
+      canvasElement.removeEventListener('click', canvasClickHandler, false)
     }
   }, [
     sceneSizeEstablished
   ])
 
   useEffect(() => {
+    if (!contextRef || !contextRef.current) return
+    const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
+    contextRef.current.clearRect(0, 0, width, height)
+    drawBoundaries(vanishingPoint)
     drawEvents()
   })
 
   return (
     <div className='stage' ref={containerRef}>
+      {eventForPopup &&
+        <Popup
+          category={eventForPopup.Category}
+          year={eventForPopup.Year}
+          description={eventForPopup.Description}
+          setEventForPopup={setEventForPopup}
+        />
+      }
       <div className='viewport'>
-        {eventForPopup &&
-          <Popup
-            category={eventForPopup.Category}
-            year={eventForPopup.Year}
-            description={eventForPopup.Description}
-            setEventForPopup={setEventForPopup}
-          />
-        }
         <div className='scene3D-container'>
           <img
-            alt='San Diego sunset as background for timeline '
+            alt='Various landmarks and components of the San Diego region'
             src={backgroudImagePath}
             width={width}
             height={height}
