@@ -234,7 +234,8 @@ const Stage = ({data, selectedSectors})=> {
       if (eventIcon) {
         const iconWidth = eventIcon.width * scaleFactor
         const iconHeight = eventIcon.height * scaleFactor
-        const iconHeightAdjust = teardropHeight - (15 * scaleFactor)
+        const iconVerticalShift = 15 - (eventIcon.verticalShift || 0)
+        const iconHeightAdjust = teardropHeight - (iconVerticalShift * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
