@@ -375,6 +375,7 @@ const Stage = ({data, selectedSectors})=> {
       if (clickedMarker) {
         // console.log('clicked...?', clickedMarker)
         setEventForPopup(clickedMarker)
+        setSelectedBackgroundRegion(null)
       }
       if (!clickedMarker) {
         let backgroundRegionClick
@@ -387,6 +388,8 @@ const Stage = ({data, selectedSectors})=> {
         })
         if (backgroundRegionClick) {
           setSelectedBackgroundRegion(backgroundRegionClick)
+        } else {
+          setSelectedBackgroundRegion(null)
         }
       }
       // console.log('canvas click', clickEvent, clientX, clientY)
