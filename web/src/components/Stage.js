@@ -15,6 +15,7 @@ import {
   addFadeBorderForText
 } from './utils'
 import Popup from './Popup'
+import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
@@ -87,6 +88,7 @@ const Stage = ({data, selectedSectors})=> {
     height
   })
   const [eventForPopup, setEventForPopup] = useState(null)
+  const [selectedBackgroundRegion, setSelectedBackgroundRegion] = useState(null)
 
   const timelineToScreen = position => {
     // console.log('timelineToScreen', width)
@@ -375,16 +377,16 @@ const Stage = ({data, selectedSectors})=> {
         setEventForPopup(clickedMarker)
       }
       if (!clickedMarker) {
-        let backgroundRegionClick = false
+        let backgroundRegionClick
         Object.entries(regions).forEach(([region, bounds]) => {
           const [left, bottom, right, top] = bounds
           if (x > left && x < right && y < bottom && y > top) {
             console.log('bg click!', region, descriptions[region])
-            backgroundRegionClick = true
+            backgroundRegionClick = region
           }
         })
         if (backgroundRegionClick) {
-          // TODO:  populate a tooltip component
+          setSelectedBackgroundRegion(backgroundRegionClick)
         }
       }
       // console.log('canvas click', clickEvent, clientX, clientY)
@@ -440,6 +442,13 @@ const Stage = ({data, selectedSectors})=> {
           year={eventForPopup.Year}
           description={eventForPopup.Description}
           setEventForPopup={setEventForPopup}
+        />
+      }
+      {selectedBackgroundRegion &&
+        <BackgroundTooltip
+          description={descriptions[selectedBackgroundRegion]}
+          bounds={regions[selectedBackgroundRegion]}
+          setSelectedBackgroundRegion={setSelectedBackgroundRegion}
         />
       }
       <div className='viewport'>

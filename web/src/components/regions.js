@@ -23,4 +23,13 @@ export const descriptions = {
   kumeyaay: 'Kumeyaay Indigenous people'
 }
 
-export default regions
+export const positions = {
+  submarine: 'top',
+  midway: 'top',
+  cabrillo: 'top',
+  hoteldel: 'top',
+  downtown: 'top',
+  fighter: 'top',
+  mission: 'top',
+  kumeyaay: 'top'
+}
