@@ -7,6 +7,7 @@ import './stage.scss'
 import backgroudImagePath from '../assets/sandag-background@3x.png'
 import teardrop from '../assets/teardrop@3x.png'
 import { iconInfo, categoryToIcon } from './icons'
+import { regions, descriptions } from './regions'
 import {
   makeEventKey,
   createImage,
@@ -367,10 +368,24 @@ const Stage = ({data, selectedSectors})=> {
     }
 
     const canvasClickHandler = clickEvent => {
+      const { offsetX: x, offsetY: y } = clickEvent
       const clickedMarker = hitTest(clickEvent)
       if (clickedMarker) {
         // console.log('clicked...?', clickedMarker)
         setEventForPopup(clickedMarker)
+      }
+      if (!clickedMarker) {
+        let backgroundRegionClick = false
+        Object.entries(regions).forEach(([region, bounds]) => {
+          const [left, bottom, right, top] = bounds
+          if (x > left && x < right && y < bottom && y > top) {
+            console.log('bg click!', region, descriptions[region])
+            backgroundRegionClick = true
+          }
+        })
+        if (backgroundRegionClick) {
+          // TODO:  populate a tooltip component
+        }
       }
       // console.log('canvas click', clickEvent, clientX, clientY)
     }
