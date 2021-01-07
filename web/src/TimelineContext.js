@@ -1,28 +1,56 @@
 import React, { createContext, useState, useEffect } from "react";
 import timelineService from "./timelineService";
 
+//  -------- for testing --------
+//const selectedSectorsDefault = [
+//   "Civic",
+//   "Transportation",
+//   "Military",
+//   "Innovation",
+//   "Tourism",
+// ];
+// const keySectorsDefault = [
+//   "Civic",
+//   "Mobility",
+//   "Military",
+//   "Political",
+//   "Tourism",
+// ];
+// const allSectorsDefault = [
+//   "Healthcare",
+//   "Tech",
+//   "Manufacturing",
+//   "Goods Movement",
+//   "Tribal",
+//   "Crossborder",
+//   "Landuse",
+// ];
+//  -------- for testing --------
+
 const selectedSectorsDefault = [
   "Civic",
-  "Mobility",
-  "Military",
-  "Political",
+  "Transportation",
   "Tourism",
+  "Innovation",
+  "Military",
 ];
 const keySectorsDefault = [
   "Civic",
-  "Mobility",
-  "Military",
-  "Political",
+  "Transportation",
   "Tourism",
+  "Innovation",
+  "Military",
 ];
 const allSectorsDefault = [
+  "Tribal Nation",
+  "Crossborder",
+  "Historic Land Use",
+  "Education",
+  "Retail",
   "Healthcare",
-  "Tech",
   "Manufacturing",
   "Goods Movement",
-  "Tribal",
-  "Crossborder",
-  "Landuse",
+  "Professional"
 ];
 
 const decadesDefault = [1850, 1860, 1870, 1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010];

@@ -1,5 +1,5 @@
 #sidebar{
-  padding: 0px 10px 20px 15px;
+  padding: 20px 10px 20px 15px;
   position: relative;
   background-color: white;
   height: 700px;
@@ -33,7 +33,7 @@ height: 18px;
   color: #1869a9;
   font-size: 0.5em;
   font-weight: bold;
-  padding: 20px 0 15px 0;
+  margin: 20px 0 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +60,7 @@ height: 18px;
 }
 
 .sector-filter-tag {
-  width: 100px;
+  margin: 0 10px 8px 0;
 }
 
 .sector-filter-tag svg {
@@ -99,7 +99,7 @@ height: 18px;
 
 .active-sectors svg, .all-sectors svg {
   color: #9a2577;
-
+  height: 11px;
 }
 
 /* .selected-sectors::after {
@@ -172,4 +172,15 @@ span.checkbox-custom {
   width: 80%;
   border-bottom: 1px solid #2B2B2B66;
   margin-top: 17px;
+}
+
+.key-sector-selector, .all-sector-selector {
+  margin: 13px 0px;
+}
+
+div#sidebar .sidebar-label:nth-of-type(1) {
+  margin-top: 0;
+}
+.sector-filter-tag button {
+  padding-left: 0;
 }
