@@ -322,6 +322,12 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.fillStyle = 'rgba(0,0,0,0)'
     contextRef.current.fillRect(0, 0, width, height)
 
+    // Reach up to the .row element and set a height so
+    // that the timeline sits flush with the stage
+    // ...there's probably a better way to do this but as a quick fix this work
+    containerRef.current.parentElement.style.height = `${height}px`
+    containerRef.current.parentElement.style.flex = 'none'
+
     drawBoundaries(vanishingPoint)
     drawEvents()
 

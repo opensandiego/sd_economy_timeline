@@ -50,9 +50,9 @@
   max-height: 100px;
   /* z-index: 99; NP*/
   background: black;
-  max-width: 1024px;
+  max-width: 994px;
   overflow: auto;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
 }
 
 body {
