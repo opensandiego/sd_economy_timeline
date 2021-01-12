@@ -62,7 +62,7 @@ const YearSelector = () => {
               <div
                 className={
                   selectedDec === decade && showYears
-                    ? "right "
+                    ? "right open"
                     : "right collapsed"
                 }
                 // style={

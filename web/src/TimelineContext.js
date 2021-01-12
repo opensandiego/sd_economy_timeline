@@ -3,10 +3,10 @@ import timelineService from "./timelineService";
 
 const selectedSectorsDefault = [
   "Civic",
-  "Mobility",
-  "Military",
-  "Political",
+  "Transportation",
   "Tourism",
+  "Innovation",
+  "Military",
 ];
 const keySectorsDefault = [
   {name: "Civic", desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nunc leo, ac accumsan metus lacinia dictum. Integer accumsan finibus leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`},
@@ -24,7 +24,7 @@ const allSectorsDefault = [
   {name: "Healthcare", desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nunc leo, ac accumsan metus lacinia dictum. Integer accumsan finibus leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`},
   {name: "Manufacturing", desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nunc leo, ac accumsan metus lacinia dictum. Integer accumsan finibus leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`},
   {name: "Goods Movement", desc: `Beyond people, the movement of goods and freight throughout the San Diego region is an important component for continued economic development. `},
-  {name: "Professional", desc: ``}
+  {name: "Professional", desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nunc leo, ac accumsan metus lacinia dictum. Integer accumsan finibus leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`}
 ];
 const decadesDefault = [1850, 1860, 1870, 1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010];
 
