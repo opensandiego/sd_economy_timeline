@@ -10,6 +10,7 @@ const BackgroundTooltip = ({ description, bounds, setSelectedBackgroundRegion })
   }
   return (
     <div className='tooltip' style={position} onClick={() => setSelectedBackgroundRegion(null)}>
+      <div className='description'>{description || 'No description available.'}</div>
       <div className='close'>
         <button onClick={() => {
           setSelectedBackgroundRegion(null)
@@ -17,7 +18,6 @@ const BackgroundTooltip = ({ description, bounds, setSelectedBackgroundRegion })
           <VscChromeClose size={18} />
         </button>
       </div>
-      <div className='description'>{description || 'No description available.'}</div>
     </div>
   )
 }

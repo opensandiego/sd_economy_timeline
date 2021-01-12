@@ -3,4 +3,12 @@
   z-index: 10;
   border-radius: 10px;
   background: #fff;
+  padding: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  .description {
+    font-size: 14px;
+  }
 }
