@@ -19,7 +19,6 @@
 
 .content {
   align-items: stretch;
-  font-size: calc(10px + 2vmin);
   flex: 1;
 }
 

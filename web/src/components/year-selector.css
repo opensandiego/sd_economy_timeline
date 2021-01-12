@@ -85,7 +85,7 @@ button.decade {
   height:0;
   left:75px;
   /* z-index: -99999; */
-  top: 52px;
+  top: 56px;
   background: none;
 }
 .solid {
@@ -130,7 +130,7 @@ button.decade {
 .year:last-of-type {
   padding-right: 50px;
 }
-/* 
+/*
 .years div:last-of-type hr{
   display: none;
 } */
