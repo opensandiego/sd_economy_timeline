@@ -21,7 +21,7 @@ export const iconInfo = {
   retail: { path: retail, file: 'Retail@3x.png', category: 'Retail', width: 47, height: 53 },
   transportation: { path: transportation, file: 'Transportation@3x.png', category: 'Transportation', width: 51, height: 39 },
   mobility: { path: transportation, file: 'Transportation@3x.png', category: 'Mobility', width: 51, height: 39 },
-  civic: { path: civic, file: 'civic@3x.png', category: 'Civic', width: 42, height: 56 },
+  civic: { path: civic, file: 'civic@3x.png', category: 'Civic', width: 42, height: 56, verticalShift: 5 },
   crossborder: { path: crossborder, file: 'crossborder@3x.png', category: 'CrossBorder', width: 48, height: 48 },
   education: { path: education, file: 'education@3x.png', category: 'Education', width: 58, height: 35 },
   global: { path: global, file: 'global@3x.png', category: 'Global', width: 52, height: 52 },

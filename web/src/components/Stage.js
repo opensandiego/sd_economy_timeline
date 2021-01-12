@@ -326,6 +326,7 @@ const Stage = ({data, selectedSectors})=> {
     // that the timeline sits flush with the stage
     // ...there's probably a better way to do this but as a quick fix this work
     containerRef.current.parentElement.style.height = `${height}px`
+    containerRef.current.parentElement.style.overflow = 'hidden'
     containerRef.current.parentElement.style.flex = 'none'
 
     drawBoundaries(vanishingPoint)
@@ -472,7 +473,7 @@ const Stage = ({data, selectedSectors})=> {
             <canvas
               ref={canvasRef}
               style={{
-                width: `${sceneSize.width - 30}px`,
+                width: `${sceneSize.width}px`,
                 height: `${sceneSize.height}px`
               }}
               width={`${sceneSize.width * deviceScale}`}
