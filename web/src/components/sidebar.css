@@ -210,7 +210,6 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   border-radius: 6px;
   padding: 10px 18px;
   position: absolute;
-  /* z-index: 1; */
   bottom: 150%;
   left: 150%;
   margin-left: -60px;

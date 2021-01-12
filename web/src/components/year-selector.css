@@ -135,7 +135,7 @@ button.decade {
 }
 
 .year:last-of-type hr.dash{
-  display: block;
+  /* display: block; */
 }
 /*
 .years div:last-of-type hr{
@@ -177,13 +177,45 @@ button.decade {
   padding: 0;
 } */
 .right.collapsed {
-  max-width:0;
   margin: 0;
   padding: 0;
-    /* transition:max-width 3s linear;
+  max-width:0;
+  /* transition:max-width 3s linear;
   -webkit-transition:max-width 3s linear;
   -moz-transition: max-width 3s linear;
   -ms-transition: max-width 3s linear;
   -o-transition: max-width 3s linear; */
   animation: subyearclose 3s ease;
+}
+@keyframes subyearclose {        
+  from {
+    max-width: 600px;
+  }
+  to {
+    max-width: 0;
+  }      
+}
+
+.right.open {
+  display: flex;
+  overflow:hidden;
+  max-width:600px;
+  /* transition:max-width 3s linear;
+  -webkit-transition:max-width 3s linear;
+  -moz-transition: max-width 3s linear;
+  -ms-transition: max-width 3s linear;
+  -o-transition: max-width 3s linear; */
+  animation: subyear 3.5s ease-out;
+  height:auto;
+  margin: 0;
+  padding-left: 50px;
+  animation-delay: -.2s;
+}
+@keyframes subyear {        
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 600px;
+  }      
 }
