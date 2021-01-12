@@ -1,8 +1,9 @@
 #sidebar{
-  padding: 0px 10px 20px 15px;
+  padding: 20px 10px 20px 15px;
   position: relative;
   background-color: white;
   height: 700px;
+  z-index: 0;
 }
 .fixed-270.show {
   transform: translate3d(0vw, 0, 0);
@@ -33,7 +34,7 @@ height: 18px;
   color: #1869a9;
   font-size: 0.5em;
   font-weight: bold;
-  padding: 20px 0 15px 0;
+  margin: 20px 0 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +61,7 @@ height: 18px;
 }
 
 .sector-filter-tag {
-  width: 100px;
+  margin: 0 10px 8px 0;
 }
 
 .sector-filter-tag svg {
@@ -99,7 +100,8 @@ height: 18px;
 
 .active-sectors svg, .all-sectors svg {
   color: #9a2577;
-
+  height: 11px;
+  width: 11px;
 }
 
 /* .selected-sectors::after {
@@ -172,4 +174,81 @@ span.checkbox-custom {
   width: 80%;
   border-bottom: 1px solid #2B2B2B66;
   margin-top: 17px;
+}
+
+.key-sector-selector, .all-sector-selector {
+  margin: 14px 0px;
+}
+
+div#sidebar .sidebar-label:nth-of-type(1) {
+  margin-top: 0;
+}
+.sector-filter-tag button {
+  padding-left: 0;
+}
+
+#sidebar .tooltip {
+  position: relative;
+
+
+  /* resetting styles from Dereks background tooltip style */
+  z-index: 0;
+  border-radius: 0;
+  background: none;
+  padding: 3px 0 0 0;
+  display: block;
+  flex-flow: unset;
+  justify-content: unset;
+}
+
+/* .tooltip:hover svg{
+  fill: white;
+  background-color: #9a2577;
+  border-radius: .5em;
+} */
+
+#sidebar .tooltip .tooltiptext {
+  visibility: hidden;
+  box-shadow: 0px 1px 2px #00000029;
+  border-radius: 6px;
+  width: 200px;
+  background-color: white;
+  text-align: left;
+  border-radius: 6px;
+  padding: 10px 18px;
+  position: absolute;
+  /* z-index: 1; */
+  bottom: 150%;
+  left: 150%;
+  margin-left: -60px;
+  font: normal normal 600 8px/11px Montserrat !important;
+letter-spacing: 0px;
+color: #031620;
+}
+
+#sidebar .tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 24%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+#sidebar .tooltip .tooltiptext::before{
+  content: "";
+  position: absolute;
+  background: white;
+  width: 10px;
+  height: 10px;
+  z-index: -1;
+  bottom: -6px;
+  transform: rotate(45deg);
+  left: 23%;
+  box-shadow: 0px 1.5px 2px #00000029;
+}
+
+#sidebar .tooltip:hover .tooltiptext {
+  visibility: visible;
 }

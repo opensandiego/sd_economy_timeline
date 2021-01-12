@@ -77,38 +77,38 @@ const Sidebar = (props) => {
             </div>
             {showAllSectors ? (
               <div className="all-sectors">
-                {keySectors.map((sector) => (
-                  <div className="key-sector-selector" key={sector}>
+                {keySectors.map((sector, index) => (
+                  <div className="key-sector-selector" key={index}>
                     <input
                       type="checkbox"
                       className="checkbox-input"
-                      checked={selectedSectors.includes(sector)}
-                      value={sector}
+                      checked={selectedSectors.includes(sector.name)}
+                      value={sector.name}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
-                        updateSelectedSectors(e, sector);
+                        updateSelectedSectors(e, sector.name);
                       }}
                     />
                     <span className="checkbox-custom"></span>
-                    <span className="key-sector-selector-item">{sector}</span>
-                    <BsInfoCircle />
+                    <span className="key-sector-selector-item">{sector.name}</span>
+                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.desc}</span></div>
                   </div>
                 ))}
-                {allSectors.map((sector) => (
-                  <div className="all-sector-selector" key={sector}>
+                {allSectors.map((sector, index) => (
+                  <div className="all-sector-selector" key={index}>
                     <input
                       type="checkbox"
                       className="checkbox-input"
-                      value={sector}
-                      checked={selectedSectors.includes(sector)}
+                      value={sector.name}
+                      checked={selectedSectors.includes(sector.desc)}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
                         updateSelectedSectors(e, sector);
                       }}
                     />
                     <span className="checkbox-custom"></span>
-                    <span className="all-sector-selector-item">{sector}</span>
-                    <BsInfoCircle />
+                    <span className="all-sector-selector-item">{sector.name}</span>
+                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.desc}</span></div>
                   </div>
                 ))}
               </div>
