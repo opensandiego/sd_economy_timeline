@@ -61,7 +61,6 @@ height: 18px;
 }
 
 .sector-filter-tag {
-  /* width: 100px; */
   margin: 0 10px 8px 0;
 }
 
@@ -102,6 +101,7 @@ height: 18px;
 .active-sectors svg, .all-sectors svg {
   color: #9a2577;
   height: 11px;
+  width: 11px;
 }
 
 /* .selected-sectors::after {
@@ -187,11 +187,18 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   padding-left: 0;
 }
 
-
-.tooltip {
+#sidebar .tooltip {
   position: relative;
-  height: 1em;
-  width: 1em;
+
+
+  /* resetting styles from Dereks background tooltip style */
+  z-index: 0;
+  border-radius: 0;
+  background: none;
+  padding: 3px 0 0 0;
+  display: block;
+  flex-flow: unset;
+  justify-content: unset;
 }
 
 /* .tooltip:hover svg{
@@ -200,7 +207,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   border-radius: .5em;
 } */
 
-.tooltip .tooltiptext {
+#sidebar .tooltip .tooltiptext {
   visibility: hidden;
   box-shadow: 0px 1px 2px #00000029;
   border-radius: 6px;
@@ -210,6 +217,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   border-radius: 6px;
   padding: 10px 18px;
   position: absolute;
+  /* z-index: 1; */
   bottom: 150%;
   left: 150%;
   margin-left: -60px;
@@ -218,17 +226,17 @@ letter-spacing: 0px;
 color: #031620;
 }
 
-.tooltip .tooltiptext::after {
+#sidebar .tooltip .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 20%;
+  left: 24%;
   margin-left: -5px;
   border-width: 8px;
   border-style: solid;
   border-color: white transparent transparent transparent;
 }
-.tooltip .tooltiptext::before{
+#sidebar .tooltip .tooltiptext::before{
   content: "";
   position: absolute;
   background: white;
@@ -237,10 +245,10 @@ color: #031620;
   z-index: -1;
   bottom: -6px;
   transform: rotate(45deg);
-  left: 19%;
+  left: 23%;
   box-shadow: 0px 1.5px 2px #00000029;
 }
 
-.tooltip:hover .tooltiptext {
+#sidebar .tooltip:hover .tooltiptext {
   visibility: visible;
-} 
+}
