@@ -179,43 +179,43 @@ button.decade {
 .right.collapsed {
   margin: 0;
   padding: 0;
-  max-width:0;
+  width:0;
   /* transition:max-width 3s linear;
   -webkit-transition:max-width 3s linear;
   -moz-transition: max-width 3s linear;
   -ms-transition: max-width 3s linear;
   -o-transition: max-width 3s linear; */
-  animation: subyearclose 3s ease;
+  animation: subyearclose 0.3s ease;
 }
-@keyframes subyearclose {        
+@keyframes subyearclose {
   from {
-    max-width: 600px;
+    width: 300px;
   }
   to {
-    max-width: 0;
-  }      
+    width: 0;
+  }
 }
 
 .right.open {
   display: flex;
-  overflow:hidden;
-  max-width:600px;
+  overflow: hidden;
+  width: 300px;
   /* transition:max-width 3s linear;
   -webkit-transition:max-width 3s linear;
   -moz-transition: max-width 3s linear;
   -ms-transition: max-width 3s linear;
   -o-transition: max-width 3s linear; */
-  animation: subyear 3.5s ease-out;
-  height:auto;
+  animation: subyear 0.3s ease-out;
+  height: auto;
   margin: 0;
   padding-left: 50px;
-  animation-delay: -.2s;
+  /* animation-delay: -.2s; */
 }
-@keyframes subyear {        
+@keyframes subyear {
   from {
-    max-width: 0;
+    width: 0;
   }
   to {
-    max-width: 600px;
-  }      
+    width: 300px;
+  }
 }
