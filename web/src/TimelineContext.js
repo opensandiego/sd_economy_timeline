@@ -26,7 +26,7 @@ const allSectorsDefault = [
   {name: "Goods Movement", desc: `Beyond people, the movement of goods and freight throughout the San Diego region is an important component for continued economic development. `},
   {name: "Professional", desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nunc leo, ac accumsan metus lacinia dictum. Integer accumsan finibus leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`}
 ];
-const decadesDefault = [1850, 1860, 1870, 1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010];
+const decadesDefault = { 1850: [], 1860: [], 1870: [], 1880: [], 1890: [], 1900: [], 1910: [], 1920: [], 1930: [], 1940: [], 1950: [], 1960: [], 1970: [], 1980: [], 1990: [], 2000: [], 2010: [], 2020: [] };
 
 const TimelineContext = createContext({
   data: [],
@@ -56,10 +56,28 @@ export const TimelineContextProvider = ({ children }) => {
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
 
+  const buildDecades = events => {
+    const after1850 = events.filter(event => +event.Year >= 1850)
+    let decades = {}
+    after1850.forEach(event => {
+      const year = event.Year
+      const decadeStart = `${year.slice(0, 3)}0`
+      if (!Object.keys(decades).includes(decadeStart)) {
+        decades[decadeStart] = [year]
+      }
+      if (!decades[decadeStart].includes(year)) {
+        decades[decadeStart].push(year)
+      }
+    })
+    // console.log('decades', decades)
+    return decades
+  }
+
   const getEventData = async () => {
     setLoading(true);
     const events = await timelineService.readCSV();
     setData(events);
+    setDecades(buildDecades(events));
     setLoading(false);
   };
   useEffect(() => {
