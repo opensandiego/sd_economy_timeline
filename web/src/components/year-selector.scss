@@ -58,12 +58,13 @@ button.decade.hide {
 /* Track */
 .row.fixed-100::-webkit-scrollbar-track {
   height: 5px;
-  background-color: transparent;
+  background-color: #c3c3c3;
 }
 
 /* Handle */
 .row.fixed-100::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 5px;
 }
 
 /* Handle on hover */
