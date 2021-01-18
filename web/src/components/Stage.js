@@ -26,8 +26,7 @@ let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
-const timeline3DLength = 2000
-let rects = []
+let timeline3DLength = 3000
 let selectedEvents
 let currentHover
 let eventTextElements = {}
@@ -35,40 +34,59 @@ let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop
 const borderWidth = 10
-const rectCount = 20
+let rectCount = 30
 const yIncrement = timeline3DLength / rectCount
-const rows = Math.ceil(rectCount / 1.5)
-for (let i = 0; i < rows; i++) {
-  // alternate between 1 event and 2 events per row
-  if (i % 2 === 0) {
-    rects.push({
-      x: 0.25,
-      y: timeline3DLength - (yIncrement + (i * yIncrement)),
-      row: i
-    })
-    rects.push({
-      x: 0.75,
-      y: timeline3DLength - (yIncrement + (i * yIncrement)),
-      row: i
-    })
-  } else {
-    rects.push({
-      x: 0.5,
-      y: timeline3DLength - (yIncrement + (i * yIncrement)),
-      row: i
-    })
+const initializePositions = () => {
+  const rows = Math.ceil(rectCount / 1.5)
+  let positions = []
+  for (let i = 0; i < rows; i++) {
+    // alternate between 1 event and 2 events per row
+    if (i % 2 === 0) {
+      positions.push({
+        x: 0.25,
+        y: timeline3DLength - (yIncrement + (i * yIncrement)),
+        row: i
+      })
+      positions.push({
+        x: 0.75,
+        y: timeline3DLength - (yIncrement + (i * yIncrement)),
+        row: i
+      })
+    } else {
+      positions.push({
+        x: 0.5,
+        y: timeline3DLength - (yIncrement + (i * yIncrement)),
+        row: i
+      })
+    }
   }
+  return positions
 }
+const updatePositions = (change, positions) => {
+  return positions.map(position => ({
+    row: position.row,
+    x: position.x,
+    y: position.y - (-change * 25) // <-- flip scroll direction
+    // y: rect.y - (change * 25)
+  }))
+}
+let rects = initializePositions()
 
 const Stage = ({data, selectedSectors})=> {
+  console.log('selectedSectors', selectedSectors)
   selectedEvents = data && data
-    .filter(event => selectedSectors.includes(event.Category) && +event.Year > 1899)
+    .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
       return {
         ...event,
         position: event.position || {}
       }
     })
+  if (data && data.length && (selectedEvents.length - 1 !== rectCount)) {
+    rectCount = selectedEvents.length - 1
+    timeline3DLength = rectCount * yIncrement
+    rects = initializePositions()
+  }
   // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
@@ -164,12 +182,7 @@ const Stage = ({data, selectedSectors})=> {
     if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
-    const nextRects = rects.map(rect => ({
-      row: rect.row,
-      x: rect.x,
-      y: rect.y - (-change * 25) // <-- flip scroll direction
-      // y: rect.y - (change * 25)
-    }))
+    const nextRects = updatePositions(change, rects)
     nextRects.forEach((rect, i) => {
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)

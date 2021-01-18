@@ -1,7 +1,7 @@
 import React from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import TimelineContext from "../TimelineContext";
-import "./year-selector.css";
+import "./year-selector.scss";
 
 const YearSelector = () => {
   const dummyResults = [
@@ -29,71 +29,72 @@ const YearSelector = () => {
   ];
   return (
     <TimelineContext.Consumer>
-      {({ selectedDec, showYears, handleYearSelector, decades }) => (
-        <div className="years">
-          {decades.map((decade, index) => (
-            <div key={index} className="year">
-              <div className="left">
-                <p
-                  style={
-                    selectedDec === decade
-                      ? { fontWeight: "bold" }
-                      : { fontWeight: "normal" }
-                  }
-                >
-                  {decade}s
-                </p>
-                <button
-                  className={
-                    selectedDec === decade && showYears
-                      ? "decade show"
-                      : "decade hide"
-                  }
-                  value={decade}
-                  onClick={() => handleYearSelector(decade)}
-                >
-                  {selectedDec === decade && showYears ? (
-                    <BiMinus />
-                  ) : (
-                    <BiPlus />
-                  )}
-                </button>
-              </div>
-              <div
-                className={
-                  selectedDec === decade && showYears
-                    ? "right open"
-                    : "right collapsed"
-                }
-                // style={
-                //   selectedDec === decade && showYears
-                //     ? { display: "flex" }
-                //     : { display: "none" }
-                // }
-              >
-                {dummyResults.map((res, index) => {
-                  if (selectedDec === decade && showYears)
-                    return (
-                      <div key={index}>
-                        <button>{res.year}</button>
-                        <div className="vl"></div>
-                      </div>
-                    );
-                })}
-                <hr
-                  className="dash"
-                ></hr>
-              </div>
+      {({ selectedDec, showYears, handleYearSelector, decades }) => {
+        return (
+          <div className="years">
+            {Object.entries(decades).map(([decade, years], index) => {
+              return (
+                <div key={index} className="year">
+                  <div className="left">
+                    <p
+                      style={
+                        selectedDec === decade
+                          ? { fontWeight: "bold" }
+                          : { fontWeight: "normal" }
+                      }
+                    >
+                      {decade}s
+                    </p>
+                    <button
+                      className={
+                        selectedDec === decade && showYears
+                          ? "decade show"
+                          : "decade hide"
+                      }
+                      value={decade}
+                      onClick={() => handleYearSelector(decade)}
+                    >
+                      {selectedDec === decade && showYears ? (
+                        <BiMinus />
+                      ) : (
+                        <BiPlus />
+                      )}
+                    </button>
+                  </div>
+                  <div
+                    className={
+                      selectedDec === decade && showYears
+                        ? `right open-${years.length}`
+                        : `right collapsed-${years.length}`
+                    }
+                    // style={
+                    //   selectedDec === decade && showYears
+                    //     ? { display: "flex" }
+                    //     : { display: "none" }
+                    // }
+                  >
+                    {decades && selectedDec && decades[selectedDec].map((year, index) => {
+                      if (selectedDec === decade && showYears)
+                        return (
+                          <div key={index}>
+                            <button>{year}</button>
+                            <div className="vl"></div>
+                          </div>
+                        );
+                    })}
+                    <hr className="dash" />
+                  </div>
 
-              <hr
-                className={
-                  selectedDec === decade && showYears ? "solid hide" : "solid show"
-                }
-              ></hr>
-            </div>
-          ))}
-        </div>
-      )}
+                  <hr
+                    className={
+                      selectedDec === decade && showYears ? "solid hide" : "solid show"
+                    }
+                  ></hr>
+                </div>
+              )}
+            )}
+          </div>
+        )}}
     </TimelineContext.Consumer>
   );
 };
