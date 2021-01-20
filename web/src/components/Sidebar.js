@@ -100,7 +100,7 @@ const Sidebar = (props) => {
                       type="checkbox"
                       className="checkbox-input"
                       value={sector.name}
-                      checked={selectedSectors.includes(sector.desc)}
+                      checked={selectedSectors.includes(sector.name)}
                       // disabled={selectedSectors.length < 5 ? false : true}
                       onChange={(e) => {
                         updateSelectedSectors(e, sector);
