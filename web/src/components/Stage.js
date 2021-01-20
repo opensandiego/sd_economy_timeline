@@ -83,7 +83,7 @@ const Stage = ({data, selectedSectors})=> {
       }
     })
   if (data && data.length && (selectedEvents.length - 1 !== rectCount)) {
-    rectCount = selectedEvents.length - 1
+    rectCount = (selectedEvents.length) ? selectedEvents.length - 1 : 3000
     timeline3DLength = rectCount * yIncrement
     rects = initializePositions()
   }
