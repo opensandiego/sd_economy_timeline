@@ -11,6 +11,30 @@
     color: #E04D8B;
     display: flex;
     align-items: center;
+    flex-direction: column;
+
+    .action-container {
+      font-size: 10px;
+
+      .action {
+        width: 1px;
+        height: 6px;
+        background-color: #fff;
+        display: inline-block;
+        margin-right: 4px;
+        margin-bottom: 2px;
+      }
+
+      .action:first-child {
+        transform: rotate(155deg);
+        margin-bottom: 0px;
+      }
+
+      .action:last-child {
+        transform: rotate(25deg);
+        margin-bottom: 0px;
+      }
+    }
   }
 
   .hint {

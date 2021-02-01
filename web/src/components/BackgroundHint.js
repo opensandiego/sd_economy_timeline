@@ -6,6 +6,11 @@ const BackgroundHint = () => {
   return (
     <div className='background-hint'>
       <div className='icon'>
+        <div className='action-container'>
+          <div className='action' />
+          <div className='action' />
+          <div className='action' />
+        </div>
         <FaHandPointUp />
       </div>
       <div className='hint'>
