@@ -15,6 +15,7 @@ import {
   addFadeBorderForText
 } from './utils'
 import Popup from './Popup'
+import BackgroundHint from './BackgroundHint'
 import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
@@ -493,6 +494,7 @@ const Stage = ({data, selectedSectors})=> {
               height={`${sceneSize.height * deviceScale}`}
             ></canvas>
           </div>
+          <BackgroundHint />
         </div>
       </div>
     </div>

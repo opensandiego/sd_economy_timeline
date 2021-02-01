@@ -1,0 +1,19 @@
+.background-hint {
+  position: absolute;
+  right: 1em;
+  bottom: 15em;
+  width: 180px;
+  font-size: 14px;
+  display: flex;
+
+  .icon {
+    font-size: 18px;
+    color: #E04D8B;
+    display: flex;
+    align-items: center;
+  }
+
+  .hint {
+    padding-left: 4px;
+  }
+}
