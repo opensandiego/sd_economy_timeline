@@ -15,6 +15,7 @@
 
     .action-container {
       font-size: 10px;
+      margin-right: 2px;
 
       .action {
         width: 1px;
@@ -26,7 +27,7 @@
       }
 
       .action:first-child {
-        transform: rotate(155deg);
+        transform: rotate(335deg);
         margin-bottom: 0px;
       }
 

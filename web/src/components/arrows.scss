@@ -1,0 +1,25 @@
+.zoom {
+  position: absolute;
+  bottom: 2em;
+  width: 100%;
+  height: 46px;
+  display: flex;
+  justify-content: space-around;
+  z-index: 2;
+
+  img,
+  img:nth-of-type(1),
+  img:nth-of-type(2) {
+    width: 47px;
+    height: 46px;
+    bottom: 0;
+
+    &.left {
+      left: 33%;
+    }
+
+    &.right {
+      left: 66%;
+    }
+  }
+}

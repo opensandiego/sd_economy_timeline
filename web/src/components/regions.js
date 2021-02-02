@@ -9,7 +9,7 @@ export const regions = {
   downtown: [400, 220, 560, 90],
   fighter: [710, 80, 770, 40],
   mission: [680, 230, 770, 150],
-  kumeyaay: [780, 350, 900, 290]
+  kumeyaay: [780, 320, 960, 240]
 }
 
 export const descriptions = {

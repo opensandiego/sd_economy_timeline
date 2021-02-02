@@ -5,7 +5,8 @@ const tooltipHeight = 60
 
 const BackgroundTooltip = ({ description, bounds, setSelectedBackgroundRegion }) => {
   const position = {
-    left: `${(bounds[0] + bounds[2]) / 2}px`,
+    // left: `${(bounds[0] + bounds[2]) / 2}px`,
+    left: `${bounds[0]}px`,
     top: `${bounds[3] - tooltipHeight}px`
   }
   return (
@@ -15,7 +16,7 @@ const BackgroundTooltip = ({ description, bounds, setSelectedBackgroundRegion })
         <button onClick={() => {
           setSelectedBackgroundRegion(null)
         }}>
-          <VscChromeClose size={18} />
+          <VscChromeClose size={12} />
         </button>
       </div>
     </div>

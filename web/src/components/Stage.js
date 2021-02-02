@@ -16,6 +16,7 @@ import {
 } from './utils'
 import Popup from './Popup'
 import BackgroundHint from './BackgroundHint'
+import Arrows from './Arrows'
 import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
@@ -495,6 +496,7 @@ const Stage = ({data, selectedSectors})=> {
             ></canvas>
           </div>
           <BackgroundHint />
+          <Arrows/>
         </div>
       </div>
     </div>
