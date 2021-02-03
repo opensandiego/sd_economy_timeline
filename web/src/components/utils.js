@@ -83,6 +83,10 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   // return withFadedBorder
 }
 
+export const getDecade = ({Year}) => {
+  return `${Year.slice(0, 3)}0`
+}
+
 export const addFadeBorderForText = (textCanvas, width, height, borderWidth, deviceScale) => {
   const fadedBorderCanvas = document.createElement('canvas')
   const totalWidth = width + (borderWidth * 2)

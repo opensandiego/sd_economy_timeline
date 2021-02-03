@@ -12,6 +12,7 @@ import {
   makeEventKey,
   createImage,
   drawEventText,
+  getDecade,
   addFadeBorderForText
 } from './utils'
 import Popup from './Popup'
@@ -29,6 +30,7 @@ let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
 let timeline3DLength = 3000
+const yearLabelWidth = 55
 let selectedEvents
 let currentHover
 let eventTextElements = {}
@@ -144,33 +146,29 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawBoundaries = vanishingPoint => {
-    const numCols = 1
-
     // filled surface
-    for (let endPt = 0; endPt < numCols; endPt++) {
-      const blPos = timelineToScreen({
-        x: endPt / numCols,
-        y: timeline3DLength
-      })
-      var brPos = timelineToScreen({
-        x: (endPt + 1) / numCols,
-        y: timeline3DLength
-      })
-      const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
-      gradient.addColorStop(0, `rgb(69,109,131,0)`)
-      gradient.addColorStop(0.13, `rgb(12,70,110,0.31)`)
-      gradient.addColorStop(0.32, `rgb(12,70,110,0.67)`)
-      gradient.addColorStop(0.59, `rgb(12,70,110,0.82)`)
-      gradient.addColorStop(1, `rgb(8,36,56,1)`)
-      contextRef.current.fillStyle = gradient
-      contextRef.current.beginPath()
-      contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
-      contextRef.current.lineTo(blPos.x, blPos.y);
-      contextRef.current.lineTo(brPos.x, brPos.y);
-      contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y);
-      contextRef.current.closePath();
-      contextRef.current.fill();
-    }
+    const blPos = timelineToScreen({
+      x: 0,
+      y: timeline3DLength
+    })
+    var brPos = timelineToScreen({
+      x: 1,
+      y: timeline3DLength
+    })
+    const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
+    gradient.addColorStop(0, `rgb(69,109,131,0)`)
+    gradient.addColorStop(0.13, `rgb(12,70,110,0.31)`)
+    gradient.addColorStop(0.32, `rgb(12,70,110,0.67)`)
+    gradient.addColorStop(0.59, `rgb(12,70,110,0.82)`)
+    gradient.addColorStop(1, `rgb(8,36,56,1)`)
+    contextRef.current.fillStyle = gradient
+    contextRef.current.beginPath()
+    contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
+    contextRef.current.lineTo(blPos.x, blPos.y)
+    contextRef.current.lineTo(brPos.x, brPos.y)
+    contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
+    contextRef.current.closePath()
+    contextRef.current.fill()
   }
 
   const eventIsCurrentHover = e => {
@@ -179,12 +177,34 @@ const Stage = ({data, selectedSectors})=> {
       currentHover.Description === e.Description
   }
 
+  const drawDecadeMark = (rect, year) => {
+    const screenPosition = timelineToScreen({
+      x: 0,
+      y: rect.y
+    })
+    const { x, y, sliceWidth } = screenPosition
+    const scaleFactor = sliceWidth / cardSize
+    const xOffset = 90 * scaleFactor
+    const yOffset = 5 * scaleFactor
+    // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
+    contextRef.current.font = `${24 * scaleFactor}px sans-serif`
+    contextRef.current.fillStyle = 'white'
+    contextRef.current.fillText(year, x - xOffset, y + yOffset)
+    contextRef.current.strokeStyle='white'
+    contextRef.current.beginPath()
+    contextRef.current.moveTo(x, y)
+    contextRef.current.lineTo(x + sliceWidth, y)
+    contextRef.current.closePath()
+    contextRef.current.stroke()
+  }
+
   const drawEvents = (change = 0) => {
     // console.log('drawEvent current hover?', currentHover)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
     }
     const nextRects = updatePositions(change, rects)
+    let decade = getDecade(selectedEvents[0])
     nextRects.forEach((rect, i) => {
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
@@ -298,6 +318,13 @@ const Stage = ({data, selectedSectors})=> {
       );
       contextRef.current.fill();
       contextRef.current.closePath();
+
+
+      const eventDecade = getDecade(selectedEvents[i])
+      if (eventDecade !== decade) {
+        drawDecadeMark(rect, eventDecade)
+        decade = eventDecade
+      }
 
       contextRef.current.globalAlpha = 1
     })
