@@ -49,7 +49,7 @@ const initializePositions = (events = []) => {
     let currentRow = 0
     let rowCount = 0
     while (eventsProcessed < totalEvents) {
-      // console.log({ rowCount, currentRow, eventsProcessed, lastRowHasOneEvent })
+      const previousRowHasOneEvent = positions.filter(p => p.row === currentRow - 2).length === 1
       positions.push({
         x: 0.5,
         y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
@@ -59,12 +59,15 @@ const initializePositions = (events = []) => {
       currentRow += 1
       if (rowCount === 0) {
         rowCount = 1
+        const previousEventIsCentered = positions[positions.length - 2] && positions[positions.length - 2].x === 0.5
+        if (previousEventIsCentered) {
+          positions[positions.length - 1].x = 0.25
+        }
       }
-      if (positions.length > 1 && rowCount === 1) {
-        const currentDecade = getDecade(events[eventsProcessed])
+      const currentDecade = getDecade(events[eventsProcessed])
+      if (positions.length > 1 && rowCount === 1 && previousRowHasOneEvent) {
         const previousDecade = getDecade(events[eventsProcessed - 1])
         if (currentDecade === previousDecade) {
-          // console.log('\tpositions length', positions.length)
           positions[positions.length - 1].x = 0.75
           positions[positions.length - 2].x = 0.25
           positions[positions.length - 1].y = positions[positions.length - 2].y
@@ -79,62 +82,6 @@ const initializePositions = (events = []) => {
     }
     return positions
   }
-  //   // group events into 2-1-2-1... rows
-  //   let currentRow = 0
-  //   let currentEvent = 0
-  //   let organized = []
-  //   while (currentRow < rows) {
-  //     if (currentRow % 2 === 0) {
-  //       organized.push([
-  //         events[currentEvent],
-  //         events[currentEvent + 1]
-  //       ])
-  //       currentEvent += 2
-  //     } else {
-  //       organized.push([events[currentEvent]])
-  //       currentEvent += 1
-  //     }
-  //     currentRow += 1
-  //   }
-  //   console.log('organized', organized)
-  //   // find rows where events span different decades
-  //   // do not allow events from different decades in the same row
-  //   organized.forEach(row => {
-  //     // console.log('organized row', row[0])
-  //     if (row.length > 1) {
-  //       const firstDecade = getDecade(row[0])
-  //       const secondDecade = getDecade(row[1])
-  //       if (firstDecade !== secondDecade) {
-  //         extraRowsForDecadeBreaks.push([row[0]])
-  //         extraRowsForDecadeBreaks.push([row[1]])
-  //       }
-  //     } else {
-  //       extraRowsForDecadeBreaks.push(row)
-  //     }
-  //   })
-  //   extraRowsForDecadeBreaks.forEach((row, i) => {
-  //     if (row.length % 2) {
-  //       positions.push({
-  //         x: 0.25,
-  //         y: timeline3DLength - (yIncrement + (i * yIncrement)),
-  //         row: i
-  //       })
-  //       positions.push({
-  //         x: 0.75,
-  //         y: timeline3DLength - (yIncrement + (i * yIncrement)),
-  //         row: i
-  //       })
-  //     } else {
-  //       positions.push({
-  //         x: 0.5,
-  //         y: timeline3DLength - (yIncrement + (i * yIncrement)),
-  //         row: i
-  //       })
-  //     }
-  //   })
-  //   console.log({ extraRowsForDecadeBreaks })
-  //   // return extraRowsForDecadeBreaks
-  // }
   for (let i = 0; i < rows; i++) {
     // alternate between 1 event and 2 events per row
     if (i % 2 === 0) {
