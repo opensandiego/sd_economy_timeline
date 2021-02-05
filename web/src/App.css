@@ -147,6 +147,12 @@ img:nth-of-type(2) {
   font: normal normal 600 16px/19px Montserrat;
 }
 
+.categories:hover {
+  background: white;
+  color: #e04d8b;
+  border: #e04d8b solid 1px;
+}
+
 .categories svg {
   margin-right: 3px;
   height: 12px;
