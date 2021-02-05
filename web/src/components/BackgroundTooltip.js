@@ -4,10 +4,11 @@ import './backgroundTooltip.scss'
 const tooltipHeight = 60
 
 const BackgroundTooltip = ({ description, bounds, setSelectedBackgroundRegion }) => {
+  const left = bounds[0] > 700 ? 700 : bounds[0]
+  const top = (bounds[3] - tooltipHeight) < 10 ? 10 : bounds[3] - tooltipHeight
   const position = {
-    // left: `${(bounds[0] + bounds[2]) / 2}px`,
-    left: `${bounds[0]}px`,
-    top: `${bounds[3] - tooltipHeight}px`
+    left: `${left}px`,
+    top: `${top}px`
   }
   return (
     <div className='tooltip' style={position} onClick={() => setSelectedBackgroundRegion(null)}>
