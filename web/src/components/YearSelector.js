@@ -34,7 +34,7 @@ const YearSelector = () => {
           <div className="years">
             {Object.entries(decades).map(([decade, years], index) => {
               return (
-                <div key={index} className="year">
+                <div key={index} className={selectedDec === decade ? "year active" : "year"}>
                   <div className="left">
                     <p
                       style={
