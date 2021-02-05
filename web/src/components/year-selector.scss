@@ -259,7 +259,7 @@ $yearCounts: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 }
 
 // ---------- indicator -----------
-$menu-items: 17; //number of decades
+$menu-items: 19; //number of decades
 $menu-items-loop-offset: $menu-items - 1;
 
 
@@ -289,7 +289,10 @@ $menu-items-loop-offset: $menu-items - 1;
 $width: (100 - $menu-items) * 1%;
 @for $i from 1 through $menu-items-loop-offset {
   // when the Nav item "is active", make the indicator line up with the navigation item.
-  .year:nth-child(#{$i}).actives {}
+  .year:nth-child(#{$i}).active ~ .year:last-child .left:before{
+    // left:($width*$i)+($width/2)-$width;
+    left: -100px;
+  }
   
   // ~ .year:last-child .left:before
   // {
