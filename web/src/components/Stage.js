@@ -463,11 +463,31 @@ const Stage = ({data, selectedSectors})=> {
       return clickedMarker
     }
 
+    const hitTestBackground = e => {
+      let backgroundHover
+      const {
+        x: horizontalOffset,
+        y: verticalOffset
+      } = canvasRef.current.getBoundingClientRect()
+      const { clientX, clientY } = e
+      const coords = { x: clientX, y: clientY }
+      const scr = {
+        x: coords.x - horizontalOffset,
+        y: coords.y - verticalOffset
+      }
+      Object.entries(regions).forEach(([region, bounds]) => {
+        const [left, bottom, right, top] = bounds
+        if (scr.x > left && scr.x < right && scr.y < bottom && scr.y > top) {
+          backgroundHover = region
+        }
+      })
+      return backgroundHover
+    }
+
     const canvasClickHandler = clickEvent => {
       const { offsetX: x, offsetY: y } = clickEvent
       const clickedMarker = hitTest(clickEvent)
       if (clickedMarker) {
-        // console.log('clicked...?', clickedMarker)
         setEventForPopup(clickedMarker)
         setSelectedBackgroundRegion(null)
       }
@@ -503,6 +523,12 @@ const Stage = ({data, selectedSectors})=> {
         currentHover.hovered = true
         redraw = true
         console.log('canvas?', contextRef)
+        canvasRef.current.style.cursor = 'pointer'
+      } else {
+        canvasRef.current.style.cursor = 'auto'
+      }
+      const backgroundMarker = hitTestBackground(mouseMoveEvent)
+      if (backgroundMarker) {
         canvasRef.current.style.cursor = 'pointer'
       } else {
         canvasRef.current.style.cursor = 'auto'
