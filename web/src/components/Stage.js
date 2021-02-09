@@ -227,7 +227,7 @@ const Stage = ({data, selectedSectors})=> {
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
-    const xOffset = 90 * scaleFactor
+    const xOffset = 110 * scaleFactor
     const yOffset = 5 * scaleFactor
     // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.font = `${24 * scaleFactor}px sans-serif`
