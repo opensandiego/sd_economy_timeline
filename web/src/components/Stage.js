@@ -6,6 +6,8 @@ import React, {
 import './stage.scss'
 import backgroudImagePath from '../assets/sandag-background@3x.png'
 import teardrop from '../assets/teardrop@3x.png'
+import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
+import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
 import { iconInfo, categoryToIcon } from './icons'
 import { regions, descriptions } from './regions'
 import {
@@ -17,7 +19,6 @@ import {
 } from './utils'
 import Popup from './Popup'
 import BackgroundHint from './BackgroundHint'
-import Arrows from './Arrows'
 import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
@@ -36,7 +37,7 @@ let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
-let eventTeardrop
+let eventTeardrop, arrowsLeftImage, arrowsRightImage
 const borderWidth = 10
 let rectCount = 30
 const yIncrement = timeline3DLength / rectCount
@@ -116,7 +117,7 @@ const updatePositions = (change, positions) => {
 let rects = initializePositions()
 
 const Stage = ({data, selectedSectors})=> {
-  console.log('selectedSectors', selectedSectors)
+  // console.log('selectedSectors', selectedSectors)
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -209,6 +210,8 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
     contextRef.current.closePath()
     contextRef.current.fill()
+    contextRef.current.drawImage(arrowsLeftImage, 328, 528, 47, 46)
+    contextRef.current.drawImage(arrowsRightImage, 656, 528, 47, 46)
   }
 
   const eventIsCurrentHover = e => {
@@ -386,6 +389,8 @@ const Stage = ({data, selectedSectors})=> {
     })
     setSceneSizeEstablished(true)
     eventTeardrop = createImage(teardrop, 95, 137)
+    arrowsLeftImage = createImage(arrowsLeft, 47, 46)
+    arrowsRightImage = createImage(arrowsRight, 47, 46)
     Object.values(iconInfo).forEach(info => {
       const { path, width, height } = info
       info.image = createImage(path, width, height)
@@ -567,7 +572,6 @@ const Stage = ({data, selectedSectors})=> {
             ></canvas>
           </div>
           <BackgroundHint />
-          <Arrows/>
         </div>
       </div>
     </div>
