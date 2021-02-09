@@ -497,6 +497,10 @@ const Stage = ({data, selectedSectors})=> {
         currentHover = hoveredMarker
         currentHover.hovered = true
         redraw = true
+        console.log('canvas?', contextRef)
+        canvasRef.current.style.cursor = 'pointer'
+      } else {
+        canvasRef.current.style.cursor = 'auto'
       }
       if (redraw) {
         contextRef.current.clearRect(0, 0, width, height)
