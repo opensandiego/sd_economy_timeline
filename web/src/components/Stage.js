@@ -212,6 +212,12 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.fill()
     contextRef.current.drawImage(arrowsLeftImage, 328, 528, 47, 46)
     contextRef.current.drawImage(arrowsRightImage, 656, 528, 47, 46)
+
+    contextRef.current.font = `14px sans-serif`
+    contextRef.current.fillStyle = 'black'
+    contextRef.current.fillText('Tap on objects to learn', 822, 345)
+    contextRef.current.fillText('about iconic sites in the', 822, 362)
+    contextRef.current.fillText('San Diego region!', 822, 379)
   }
 
   const eventIsCurrentHover = e => {
@@ -353,15 +359,14 @@ const Stage = ({data, selectedSectors})=> {
         centerX + width / 2, centerY - height,
         centerX + width / 2, centerY + height,
         centerX, centerY + height
-      );
+      )
       contextRef.current.bezierCurveTo(
         centerX - width / 2, centerY + height,
         centerX - width / 2, centerY - height,
         centerX, centerY - height
-      );
+      )
       contextRef.current.fill();
       contextRef.current.closePath();
-
 
       const eventDecade = getDecade(selectedEvents[i])
       if (eventDecade !== decade) {
