@@ -130,7 +130,7 @@ const Stage = ({data, selectedSectors})=> {
     rectCount = (selectedEvents.length) ? selectedEvents.length - 1 : 3000
     timeline3DLength = rectCount * yIncrement
     rects = initializePositions(selectedEvents)
-    console.log({ rects })
+    // console.log({ rects })
   }
   // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
@@ -249,7 +249,7 @@ const Stage = ({data, selectedSectors})=> {
   const drawDecadeMark = (rect, year) => {
     const screenPosition = timelineToScreen({
       x: 0,
-      y: rect.y
+      y: rect.y + 5
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
@@ -263,7 +263,7 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.beginPath()
     contextRef.current.moveTo(x, y)
     contextRef.current.lineTo(x + sliceWidth, y)
-    // contextRef.current.closePath()
+    contextRef.current.closePath()
     contextRef.current.stroke()
   }
 
@@ -288,6 +288,16 @@ const Stage = ({data, selectedSectors})=> {
         selectedEvents[i].position.active = false
         return
       }
+
+      // add decade lines as necessary
+      if (nextRects[i + 2]) {
+        const eventDecade = getDecade(selectedEvents[i + 2])
+        if (eventDecade !== decade) {
+          drawDecadeMark(nextRects[i + 2], eventDecade)
+          decade = eventDecade
+        }
+      }
+
       // console.log('cardWidth', cardWidth, selectedEvents[i], ';text width', eventTextDimensions[selectedEvents[i].Category].width)
       let eventTextKey
       if (cardWidth > (1.5 * eventTextWidth)) {
@@ -328,11 +338,11 @@ const Stage = ({data, selectedSectors})=> {
       const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
-      contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight);
+      contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
-      contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight);
+      contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight)
 
       // keep track of dimensions to test if a timeline item is clicked
       selectedEvents[i].position = {
@@ -373,7 +383,7 @@ const Stage = ({data, selectedSectors})=> {
       contextRef.current.fillStyle = radialGradient;
 
       // draws the ellipse to use for the shadow under a teardrop
-      contextRef.current.beginPath();
+      contextRef.current.beginPath()
       contextRef.current.moveTo(centerX, centerY - height);
       contextRef.current.bezierCurveTo(
         centerX + width / 2, centerY - height,
@@ -385,14 +395,8 @@ const Stage = ({data, selectedSectors})=> {
         centerX - width / 2, centerY - height,
         centerX, centerY - height
       )
-      contextRef.current.fill();
-      contextRef.current.closePath();
-
-      const eventDecade = getDecade(selectedEvents[i])
-      if (eventDecade !== decade) {
-        drawDecadeMark(rect, eventDecade)
-        decade = eventDecade
-      }
+      contextRef.current.fill()
+      contextRef.current.closePath()
 
       contextRef.current.globalAlpha = 1
     })
@@ -522,7 +526,6 @@ const Stage = ({data, selectedSectors})=> {
         Object.entries(regions).forEach(([region, bounds]) => {
           const [left, bottom, right, top] = bounds
           if (x > left && x < right && y < bottom && y > top) {
-            console.log('bg click!', region, descriptions[region])
             backgroundRegionClick = region
           }
         })
@@ -548,10 +551,8 @@ const Stage = ({data, selectedSectors})=> {
         currentHover = hoveredMarker
         currentHover.hovered = true
         redraw = true
-        console.log('set to POINTER')
         canvasRef.current.style.cursor = 'pointer'
       } else {
-        console.log('set to auto')
         canvasRef.current.style.cursor = 'auto'
       }
       const backgroundMarker = hitTestBackground(mouseMoveEvent)
