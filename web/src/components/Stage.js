@@ -8,6 +8,7 @@ import backgroudImagePath from '../assets/sandag-background@3x.png'
 import teardrop from '../assets/teardrop@3x.png'
 import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
 import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
+import faHandPointUp from '../assets/fa-hand-point-up.svg'
 import { iconInfo, categoryToIcon } from './icons'
 import { regions, descriptions } from './regions'
 import {
@@ -18,7 +19,6 @@ import {
   addFadeBorderForText
 } from './utils'
 import Popup from './Popup'
-import BackgroundHint from './BackgroundHint'
 import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
@@ -37,7 +37,7 @@ let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
-let eventTeardrop, arrowsLeftImage, arrowsRightImage
+let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 const borderWidth = 10
 let rectCount = 30
 const yIncrement = timeline3DLength / rectCount
@@ -187,7 +187,33 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawBoundaries = vanishingPoint => {
-    // filled surface
+    // hint to click on background objects
+    contextRef.current.font = `14px sans-serif`
+    contextRef.current.fillStyle = 'black'
+    contextRef.current.fillText('Tap on objects to learn', 822, 345)
+    contextRef.current.fillText('about iconic sites in the', 822, 362)
+    contextRef.current.fillText('San Diego region!', 822, 379)
+    contextRef.current.drawImage(faHandPointUpImage, 800, 352, 18, 18)
+    contextRef.current.strokeStyle = 'white'
+    contextRef.current.beginPath()
+    contextRef.current.moveTo(806.5, 349)
+    contextRef.current.lineTo(806.5, 344)
+    contextRef.current.closePath()
+    contextRef.current.stroke()
+    const r = 5
+    contextRef.current.beginPath()
+    contextRef.current.moveTo(812, 341 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(812 - Math.cos(65 * Math.PI / 180) * r, 345 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.closePath()
+    contextRef.current.stroke()
+
+    contextRef.current.beginPath()
+    contextRef.current.moveTo(801, 341 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(801 + Math.cos(65 * Math.PI / 180) * r, 345 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.closePath()
+    contextRef.current.stroke()
+
+    // the stage
     const blPos = timelineToScreen({
       x: 0,
       y: timeline3DLength
@@ -212,12 +238,6 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.fill()
     contextRef.current.drawImage(arrowsLeftImage, 328, 528, 47, 46)
     contextRef.current.drawImage(arrowsRightImage, 656, 528, 47, 46)
-
-    contextRef.current.font = `14px sans-serif`
-    contextRef.current.fillStyle = 'black'
-    contextRef.current.fillText('Tap on objects to learn', 822, 345)
-    contextRef.current.fillText('about iconic sites in the', 822, 362)
-    contextRef.current.fillText('San Diego region!', 822, 379)
   }
 
   const eventIsCurrentHover = e => {
@@ -239,11 +259,11 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.font = `${24 * scaleFactor}px sans-serif`
     contextRef.current.fillStyle = 'white'
     contextRef.current.fillText(year, x - xOffset, y + yOffset)
-    contextRef.current.strokeStyle='white'
+    contextRef.current.strokeStyle = 'white'
     contextRef.current.beginPath()
     contextRef.current.moveTo(x, y)
     contextRef.current.lineTo(x + sliceWidth, y)
-    contextRef.current.closePath()
+    // contextRef.current.closePath()
     contextRef.current.stroke()
   }
 
@@ -396,6 +416,7 @@ const Stage = ({data, selectedSectors})=> {
     eventTeardrop = createImage(teardrop, 95, 137)
     arrowsLeftImage = createImage(arrowsLeft, 47, 46)
     arrowsRightImage = createImage(arrowsRight, 47, 46)
+    faHandPointUpImage = createImage(faHandPointUp, 18, 18)
     Object.values(iconInfo).forEach(info => {
       const { path, width, height } = info
       info.image = createImage(path, width, height)
@@ -605,7 +626,6 @@ const Stage = ({data, selectedSectors})=> {
               height={`${sceneSize.height * deviceScale}`}
             ></canvas>
           </div>
-          <BackgroundHint />
         </div>
       </div>
     </div>

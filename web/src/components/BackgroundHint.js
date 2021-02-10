@@ -13,9 +13,9 @@ const BackgroundHint = () => {
         </div>
         <FaHandPointUp />
       </div>
-      <div className='hint'>
+      {/* <div className='hint'>
         Tap on objects to learn about iconic sites in the San Diego region!
-      </div>
+      </div> */}
     </div>
   )
 }
