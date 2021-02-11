@@ -259,7 +259,7 @@ const Stage = ({data, selectedSectors})=> {
     contextRef.current.font = `${24 * scaleFactor}px sans-serif`
     contextRef.current.fillStyle = 'white'
     contextRef.current.fillText(year, x - xOffset, y + yOffset)
-    contextRef.current.strokeStyle = 'white'
+    contextRef.current.strokeStyle = 'rgba(255, 255, 255, 0.5)'
     contextRef.current.beginPath()
     contextRef.current.moveTo(x, y)
     contextRef.current.lineTo(x + sliceWidth, y)
