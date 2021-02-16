@@ -21,7 +21,7 @@ export const iconInfo = {
   retail: { path: retail, file: 'Retail@3x.png', category: 'Retail', width: 47, height: 53 },
   transportation: { path: transportation, file: 'Transportation@3x.png', category: 'Transportation', width: 51, height: 39 },
   mobility: { path: transportation, file: 'Transportation@3x.png', category: 'Mobility', width: 51, height: 39 },
-  civic: { path: civic, file: 'civic@3x.png', category: 'Civic', width: 42, height: 56, verticalShift: 5 },
+  civic: { path: civic, file: 'civic@3x.png', category: 'Civic', width: 42, height: 56, verticalShift: 8 },
   crossborder: { path: crossborder, file: 'crossborder@3x.png', category: 'CrossBorder', width: 48, height: 48 },
   education: { path: education, file: 'education@3x.png', category: 'Education', width: 58, height: 35 },
   global: { path: global, file: 'global@3x.png', category: 'Global', width: 52, height: 52 },
@@ -30,7 +30,7 @@ export const iconInfo = {
   landuse: { path: landuse, file: 'historic land use@3x.png', category: 'LU & EP', width: 63, height: 33 },
   innovation: { path: innovation, file: 'innovation@3x.png', category: 'Innovation', width: 50, height: 53, verticalShift: 5 },
   manufacturing: { path: manufacturing, file: 'manufacturing@3x.png', category: 'Manufacturing', width: 50, height: 50 },
-  military: { path: military, file: 'military@3x.png', category: 'Military', width: 60, height: 53 },
+  military: { path: military, file: 'military@3x.png', category: 'Military', width: 60, height: 53, verticalShift: 5 },
   tourism: { path: tourism, file: 'tourism@3x.png', category: 'Tourism', width: 50, height: 44 },
   tribal: { path: tribal, file: 'tribal nations@3x.png', category: 'Tribal', width: 65, height: 51 }
 }

@@ -12,21 +12,37 @@ export const createImage = (path, width, height) => {
 }
 
 export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale) => {
-  const { Category, Year } = info
-  const textDimensionsKey = `${Category}-${multiplier}`
+  const { Category, Description } = info
+  // console.log('desc and len', `${Description} (${Description.length})`)
+  const textDimensionsKey = `${Description}-${multiplier}`
   const fontSize = 8
+  const descriptionLimit = 27
+  let desc
+  if (Description.length >= descriptionLimit) {
+    desc = `${Description.slice(0, descriptionLimit).replace(/\W$/g, '').trim()}...`
+    // if (desc[desc.length - 1] !== ' ') {
+    //   desc = `${desc.slice(0, descriptionLimit - 3)}...`
+    // }
+  } else {
+    desc = Description
+  }
+  const descriptionWords = desc.split(' ')
+  const descriptionWordCount = descriptionWords.length
+  const firstLineCount = Math.round(descriptionWordCount / 2)
+  const firstLine = descriptionWords.slice(0, firstLineCount).join(' ')
+  const secondLine = descriptionWords.slice(firstLineCount).join(' ')
 
   // dynamically calculate text width/height
   if (!eventTextDimensions[textDimensionsKey]) {
     const span = document.createElement('span')
-    span.innerHTML = Category
+    span.innerHTML = `${firstLine}<br>${secondLine}`
     span.style.opacity = 0
     span.style.fontSize = `${fontSize}px`
     span.style.fontFamily = 'Helvetica, sans-serif'
-    span.style.padding = '4px'
+    span.style.padding = '4px 6px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
-    // console.log(Category, width, height)
+    // console.log(desc, width, height)
     // console.log('span width height', width, height, Category)
     eventTextDimensions[textDimensionsKey] = {
       width: width * multiplier,
@@ -52,15 +68,15 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     x: rectWidth / 2,
     y: 8 * multiplier
   }
-  const dateSize = {
+  const categorySize = {
     fontSize: (fontSize * 0.75) * multiplier,
     x: rectWidth / 2,
     y: 14 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
-  const dateFillStyle = 'rgba(110, 110, 110, 1)'
+  const categoryFillStyle = 'rgba(110, 110, 110, 1)'
   const opaque = 'rgba(255, 255, 255, 1)'
-  const dateFont = '"Helvetica","sans-serif"'
+  const categoryFont = '"Helvetica","sans-serif"'
   const textFont = '"Helvetica","sans-serif"'
   const ctx = textCanvas.getContext('2d')
   ctx.scale(deviceScale, deviceScale)
@@ -71,10 +87,11 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   ctx.textAlign = "center";
   ctx.font = `${textSize.fontSize}px ${textFont}`;
   // console.log('text size', textSize.fontSize)
-  ctx.fillText(Category, textSize.x, textSize.y)
-  ctx.fillStyle = dateFillStyle;
-  ctx.font = `${dateSize.fontSize}px ${dateFont}`;
-  ctx.fillText(Year, dateSize.x, dateSize.y);
+  ctx.fillText(firstLine, textSize.x, textSize.y)
+  ctx.fillText(secondLine, textSize.x, textSize.y + (10 * multiplier))
+  ctx.fillStyle = categoryFillStyle;
+  ctx.font = `${categorySize.fontSize}px ${categoryFont}`;
+  ctx.fillText(Category, categorySize.x, categorySize.y + (14 * multiplier));
   return textCanvas
   // console.log({ Category })
   // console.log('text canvas', textCanvas)

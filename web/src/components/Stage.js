@@ -62,7 +62,7 @@ const initializePositions = (events = []) => {
         rowCount = 1
         const previousEventIsCentered = positions[positions.length - 2] && positions[positions.length - 2].x === 0.5
         if (previousEventIsCentered) {
-          positions[positions.length - 1].x = 0.25
+          positions[positions.length - 1].x = 0.75
         }
       }
       const currentDecade = getDecade(events[eventsProcessed])
@@ -279,8 +279,8 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
-      const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Category}-1`].width
-      const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Category}-1`].height
+      const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Description}-1`].width
+      const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Description}-1`].height
       // console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * 2 * scaleFactor
       const teardropWidth = 60 * scaleFactor
@@ -335,7 +335,7 @@ const Stage = ({data, selectedSectors})=> {
       const eventText = eventTextElements[eventTextKey]
       // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
-      const dyText = screenPosition.y - arrowHeight - 2 * textHolderHeight - vShift
+      const dyText = screenPosition.y - arrowHeight - 1.35 * textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
@@ -363,7 +363,10 @@ const Stage = ({data, selectedSectors})=> {
         const iconHeightAdjust = teardropHeight - (iconVerticalShift * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
-        contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight);
+        contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
+        contextRef.current.font = `${14 * scaleFactor}px sans-serif`
+        const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
+        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (28 * scaleFactor))
       }
 
       startPos = {
