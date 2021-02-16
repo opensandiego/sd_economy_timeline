@@ -27,12 +27,14 @@
   flex: 1;
   flex-direction: column;
   width: auto;
+  position: relative;
+  overflow: hidden;
 }
 
 .column.fixed-270 {
   width: 270px;
   max-width: 270px;
-  position: fixed;
+  position: absolute;
   z-index: 20;
   opacity: 0;
 }
@@ -145,6 +147,12 @@ img:nth-of-type(2) {
   align-items: center;
   z-index: 10;
   font: normal normal 600 16px/19px Montserrat;
+}
+
+.categories:hover {
+  background: white;
+  color: #e04d8b;
+  border: #e04d8b solid 1px;
 }
 
 .categories svg {

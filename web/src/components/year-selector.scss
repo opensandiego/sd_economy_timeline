@@ -135,9 +135,9 @@ button.decade {
   display: none;
 }
 
-.year:last-of-type hr.dash {
-  /* display: block; */
-}
+// .year:last-of-type.active{
+//   padding-right:0;
+// }
 /*
 .years div:last-of-type hr{
   display: none;
@@ -157,6 +157,10 @@ button.decade {
   top: 2px;
   left: 1px;
   padding: 1.5px;
+}
+
+.y-res {
+  width: 70px;
 }
 
 .solid {
@@ -226,13 +230,22 @@ $yearCounts: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 @each $count in $yearCounts {
   .right.open-#{$count} {
     display: flex;
+    justify-content: center;
     overflow: hidden;
     height: auto;
     margin: 0;
-    padding-left: 20px;
+    padding-left: 0px;
+    margin-left: 50px;
     width: #{70px * $count};
     animation: subyear-#{$count} 0.3s ease-out;
+
   }
+
+  .year:last-of-type.active .right.open-#{$count} hr.dash {
+    display: block; 
+    width: 75%;
+  }
+
   @keyframes subyear-#{$count} {
     from {
       width: 0;
