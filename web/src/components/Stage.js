@@ -313,9 +313,9 @@ const Stage = ({data, selectedSectors})=> {
       const arrowHeight = (eventTextHeight + 20) * scaleFactor
       const vShift = (currentHover && eventIsCurrentHover(selectedEvents[i])) ? 5 * scaleFactor : 0
       let opacity = 1
-      const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
+      const fadeOutLimit = sceneSize.height - (0.25 * sceneSize.height)
       if (screenPosition.y > fadeOutLimit) {
-        opacity = 1 - (screenPosition.y - fadeOutLimit) / (timeline3DLength - fadeOutLimit);
+        opacity = 1 - (screenPosition.y - 100 - fadeOutLimit) / (sceneSize.height - fadeOutLimit)
         opacity = opacity < 0 ? 0 : opacity
         // console.log('over fade out limit', opacity, screenPosition.y)
         // marker.marker3DScreenInfo.active = (opacity > 0.6) ? true : false;
