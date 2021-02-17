@@ -15,8 +15,7 @@ import {
   makeEventKey,
   createImage,
   drawEventText,
-  getDecade,
-  addFadeBorderForText
+  getDecade
 } from './utils'
 import Popup from './Popup'
 import BackgroundTooltip from './BackgroundTooltip'
@@ -31,14 +30,12 @@ let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
 let timeline3DLength = 3000
-const yearLabelWidth = 55
 let selectedEvents
 let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
-const borderWidth = 10
 let rectCount = 30
 const yIncrement = timeline3DLength / rectCount
 const initializePositions = (events = []) => {
@@ -282,7 +279,7 @@ const Stage = ({data, selectedSectors})=> {
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Description}-1`].width
       const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Description}-1`].height
       // console.log('eventText dims', eventTextWidth, eventTextHeight)
-      const cardWidth = eventTextWidth * 2 * scaleFactor
+      const cardWidth = eventTextWidth * scaleFactor
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
         selectedEvents[i].position.active = false
@@ -310,10 +307,10 @@ const Stage = ({data, selectedSectors})=> {
       // console.log('selected event', selectedEvents[i])
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
-      const vTextAdjust = (numTextLines - 2) * 10 * scaleFactor
-      const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust;
+      const vTextAdjust = (numTextLines - 2) * scaleFactor
+      const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust
       const teardropHeight = 69 * scaleFactor + vTextAdjust;
-      const arrowHeight = (eventTextHeight + 40) * scaleFactor
+      const arrowHeight = (eventTextHeight + 20) * scaleFactor
       const vShift = (currentHover && eventIsCurrentHover(selectedEvents[i])) ? 5 * scaleFactor : 0
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.05 * sceneSize.height)
@@ -335,13 +332,15 @@ const Stage = ({data, selectedSectors})=> {
       const eventText = eventTextElements[eventTextKey]
       // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
-      const dyText = screenPosition.y - arrowHeight - 1.35 * textHolderHeight - vShift
+      const dyText = screenPosition.y - arrowHeight - textHolderHeight - vShift
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
+      // Draw the text for the event
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
+      // Draw the tear drop
       contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight)
 
       // keep track of dimensions to test if a timeline item is clicked
@@ -359,14 +358,16 @@ const Stage = ({data, selectedSectors})=> {
       if (eventIcon) {
         const iconWidth = eventIcon.width * scaleFactor
         const iconHeight = eventIcon.height * scaleFactor
-        const iconVerticalShift = 15 - (eventIcon.verticalShift || 0)
+        const iconVerticalShift = 10 - (eventIcon.verticalShift || 0)
         const iconHeightAdjust = teardropHeight - (iconVerticalShift * scaleFactor)
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
+        // Draw the event icon on the tear drop
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
         contextRef.current.font = `${14 * scaleFactor}px sans-serif`
         const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
-        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (28 * scaleFactor))
+        // Draw the event's year under the icon
+        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (24 * scaleFactor))
       }
 
       startPos = {

@@ -11,18 +11,34 @@ export const createImage = (path, width, height) => {
   return image
 }
 
+function roundedRect (ctx, x, y, w, h, corner) {
+  ctx.fillStyle = 'white'
+  const r = x + w
+  const b = y + h
+
+  let region = new Path2D()
+  region.moveTo(x + corner, y)
+  region.lineTo(r - corner, y)
+  region.quadraticCurveTo(r, y, r, y + corner)
+  region.lineTo(r, b - corner)
+  region.quadraticCurveTo(r, b, r - corner, b)
+  region.lineTo(x + corner, b)
+  region.quadraticCurveTo(x, b, x, b - corner)
+  region.lineTo(x, y + corner)
+  region.quadraticCurveTo(x, y, x + corner, y)
+  ctx.fill(region)
+}
+
 export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale) => {
   const { Category, Description } = info
   // console.log('desc and len', `${Description} (${Description.length})`)
   const textDimensionsKey = `${Description}-${multiplier}`
-  const fontSize = 8
+  const fontSize = 16
+  const fontFamily = 'Helvetica, sans-serif'
   const descriptionLimit = 27
   let desc
   if (Description.length >= descriptionLimit) {
     desc = `${Description.slice(0, descriptionLimit).replace(/\W$/g, '').trim()}...`
-    // if (desc[desc.length - 1] !== ' ') {
-    //   desc = `${desc.slice(0, descriptionLimit - 3)}...`
-    // }
   } else {
     desc = Description
   }
@@ -38,18 +54,21 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     span.innerHTML = `${firstLine}<br>${secondLine}`
     span.style.opacity = 0
     span.style.fontSize = `${fontSize}px`
-    span.style.fontFamily = 'Helvetica, sans-serif'
-    span.style.padding = '4px 6px'
+    span.style.fontFamily = fontFamily
+    span.style.textAlign = 'center'
+    span.style.padding = '10px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
-    // console.log(desc, width, height)
-    // console.log('span width height', width, height, Category)
     eventTextDimensions[textDimensionsKey] = {
+      // width: (width + padx) * multiplier,
       width: width * multiplier,
+      // height: (height + pady) * multiplier
       height: height * multiplier
     }
+    // if (firstLine !== 'California is') {
     document.body.removeChild(span)
-    // console.log(Category, eventTextDimensions[textDimensionsKey])
+    // }
+    // console.log(firstLine, eventTextDimensions[textDimensionsKey])
   }
   const {
     width: textWidth,
@@ -57,7 +76,6 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   } = eventTextDimensions[textDimensionsKey]
   const rectWidth = textWidth
   const rectHeight = textHeight
-  // console.log(`rectWidth ${rectWidth}, rectHeight ${rectHeight}`)
 
   const textCanvas = document.createElement('canvas')
   textCanvas.style = `width: ${rectWidth}px; height: ${rectHeight}px`
@@ -66,38 +84,27 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   const textSize = {
     fontSize: fontSize * multiplier,
     x: rectWidth / 2,
-    y: 8 * multiplier
+    y: 16 * multiplier
   }
   const categorySize = {
     fontSize: (fontSize * 0.75) * multiplier,
     x: rectWidth / 2,
-    y: 14 * multiplier
+    y: 22 * multiplier
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const categoryFillStyle = 'rgba(110, 110, 110, 1)'
-  const opaque = 'rgba(255, 255, 255, 1)'
-  const categoryFont = '"Helvetica","sans-serif"'
-  const textFont = '"Helvetica","sans-serif"'
   const ctx = textCanvas.getContext('2d')
   ctx.scale(deviceScale, deviceScale)
-  ctx.fillStyle = opaque;
-  ctx.fillRect(0, 0, rectWidth, rectHeight);
-  // console.log('rect width and height', rectWidth, rectHeight, Category)
-  ctx.fillStyle = textFillStyle;
-  ctx.textAlign = "center";
-  ctx.font = `${textSize.fontSize}px ${textFont}`;
-  // console.log('text size', textSize.fontSize)
-  ctx.fillText(firstLine, textSize.x, textSize.y)
-  ctx.fillText(secondLine, textSize.x, textSize.y + (10 * multiplier))
-  ctx.fillStyle = categoryFillStyle;
-  ctx.font = `${categorySize.fontSize}px ${categoryFont}`;
-  ctx.fillText(Category, categorySize.x, categorySize.y + (14 * multiplier));
+  roundedRect(ctx, 0, 0, rectWidth, rectHeight, 5 * multiplier)
+  ctx.fillStyle = textFillStyle
+  ctx.textAlign = 'center'
+  ctx.font = `${textSize.fontSize}px ${fontFamily}`
+  ctx.fillText(firstLine, textSize.x, textSize.y + (2 * multiplier))
+  ctx.fillText(secondLine, textSize.x, textSize.y + (18 * multiplier))
+  ctx.fillStyle = categoryFillStyle
+  ctx.font = `${categorySize.fontSize}px ${fontFamily}`
+  ctx.fillText(Category, categorySize.x, categorySize.y + (28 * multiplier))
   return textCanvas
-  // console.log({ Category })
-  // console.log('text canvas', textCanvas)
-  // const withFadedBorder = addFadeBorderForText(textCanvas, rectWidth, rectHeight, multiplier)
-  // console.log('with faded border', withFadedBorder)
-  // return withFadedBorder
 }
 
 export const getDecade = ({Year}) => {
