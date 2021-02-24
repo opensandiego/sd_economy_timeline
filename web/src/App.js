@@ -21,16 +21,23 @@ function App() {
             <div className="row">
               <Sidebar />
               <TimelineContext.Consumer>
-                {({data, selectedSectors}) => (
+                {({data, selectedSectors, selectedYear}) => (
                   <Stage
                     data={data}
                     selectedSectors={selectedSectors}
+                    selectedYear={selectedYear}
                   />
                 )}
               </TimelineContext.Consumer>
             </div>
             <div className="row fixed-100">
-              <YearSelector />
+              <TimelineContext.Consumer>
+                {({setSelectedYear}) => (
+                  <YearSelector
+                    setSelectedYear={setSelectedYear}
+                  />
+                )}
+              </TimelineContext.Consumer>
             </div>
           </div>
         </div>

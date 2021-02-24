@@ -27,6 +27,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
@@ -127,6 +128,8 @@ export const TimelineContextProvider = ({ children }) => {
     selectedDec,
     decades,
     showYears,
+    selectedYear,
+    setSelectedYear,
     updateSelectedSectors,
     removeSector,
     clearSelectedSectors,
