@@ -16,7 +16,7 @@
   left: 50%;
   background: black;
   color: white;
-  text-align: center;
+  line-height: 1.25em;
   width: 20em;
   margin-left: -10em;
   padding: 1em;
@@ -36,7 +36,6 @@
   .title {
     .year {
       color: #aaa;
-      font-size: 80%;
     }
 
     .category {
