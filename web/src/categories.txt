@@ -1,0 +1,46 @@
+[{
+  "name": "Civic",
+  "description": "This category represents information about the 18 cities and county government that make up the San Diego region."
+}, {
+  "name": "Transportation",
+  "description": "A historic look at the evolution of transportation in the San Diego region."
+}, {
+  "name": "Tourism",
+  "description": "The San Diego region's scenic geography, along with its cultural history makes it one of the best tourist destinations on the West Coast of the nation. The tourism sector currently accounts for 10% of jobs in the region."
+}, {
+  "name": "Innovation",
+  "description": "San Diego has a prosperous and a rapidly devolping innovation sector supported by leading educational institues like UCSD, SDSU and USD. The innovation sector currently accounts for 11.3% of jobs in the region."
+}, {
+  "name": "Military",
+  "description": "San Diego's location on the Pacific Ocean is ideal for many military operations in the southwest portion of the country. San Diego's military installations include a variety of sizes and uses, and provide a large base for the region. The military currently accounts for 8.5% of jobs in the region."
+}, {
+  "name": "Tribal Nations",
+  "description": "The San Diego region is home to 18 Native American reservations represented by 17 tribal governments, the most in any county in the United States. There are more than 73,000 acres of tribal reservation lands in the region. As sovereign domestic nations, tribal governments govern land use on their reservations and land holdings. SANDAG and the regional tribal governments work together to facilitate government-to-government planning and coordination. These tribal nations are a critical part of the San Diego region's history."
+}, {
+  "name": "Binational",
+  "description": "The San Diego region’s borders are an important part of the economy with strong ties to its neighboring counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 18 tribal governments."
+}, {
+  "name": "Historic Land Use",
+  "description": "The San Diego region is located in the southwestern corner of the United States and is bordered by Mexico to the south, the Pacific Ocean to the west, Orange, and Riverside counties to the north, and Imperial County to the east. The San Diego region encompasses over 4,260 square miles and includes 18 incorporated cities, 17 tribal reservations, and unincorporated San Diego County."
+}, {
+  "name": "Education",
+  "description": "The San Diego region has a history of iconic and innovative educational institutes. The education sector currently accounts for 8.6% of jobs in the region."
+}, {
+  "name": "Retail",
+  "description": "As a large tourist destination, the San Diego region has multiple shopping centers, providing employmet, and serving the needs of the tourists as well as the local population. The retail sector currently accounts for 14.7% of jobs in the region."
+}, {
+  "name": "Healthcare",
+  "description": "The San Diego region has provided healthcare services since the opening of the San Diego County Hospital in 1904. With the expansion of military bases and innovating industries within the region, healthcare is one of the most innovative industries in San Diego. The healthcare sector currently accounts for 11.9% of jobs in the region."
+}, {
+  "name": "Manufacturing",
+  "description": "A historic look at the evolution of Manufacturing in the San Diego region. The manufacturing sector currently accounts for 3.6% of jobs in the region."
+}, {
+  "name": "Goods",
+  "description": "Beyond people, the movement of goods and freight throughout the San Diego region is an important component for continued economic development. "
+}, {
+  "name": "Professional",
+  "description": "The San Diego region has a growing professional workforce. The finance, insurance, real estate, and professional sector currently accounts for 16.3% of jobs in the region."
+}, {
+  "name": "Population",
+  "description": "Here is a look at the population, housing and jobs data from San Diego's past."
+}]

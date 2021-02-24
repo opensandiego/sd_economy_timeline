@@ -77,7 +77,7 @@ const Sidebar = (props) => {
             </div>
             {showAllSectors ? (
               <div className="all-sectors">
-                {keySectors.map((sector, index) => (
+                {/* {keySectors.map((sector, index) => (
                   <div className="key-sector-selector" key={index}>
                     <input
                       type="checkbox"
@@ -91,9 +91,9 @@ const Sidebar = (props) => {
                     />
                     <span className="checkbox-custom"></span>
                     <span className="key-sector-selector-item">{sector.name}</span>
-                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.desc}</span></div>
+                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.description}</span></div>
                   </div>
-                ))}
+                ))} */}
                 {allSectors.map((sector, index) => (
                   <div className="all-sector-selector" key={index}>
                     <input
@@ -108,7 +108,7 @@ const Sidebar = (props) => {
                     />
                     <span className="checkbox-custom"></span>
                     <span className="all-sector-selector-item">{sector.name}</span>
-                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.desc}</span></div>
+                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.description}</span></div>
                   </div>
                 ))}
               </div>
