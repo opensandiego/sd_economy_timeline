@@ -259,7 +259,7 @@ const Stage = ({data, selectedSectors, selectedYear})=> {
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
-    const xOffset = 110 * scaleFactor
+    const xOffset = 180 * scaleFactor
     const yOffset = 5 * scaleFactor
     // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.font = `${32 * scaleFactor}px sans-serif`
