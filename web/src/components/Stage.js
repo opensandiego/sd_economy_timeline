@@ -253,7 +253,7 @@ const Stage = ({data, selectedSectors})=> {
     const xOffset = 110 * scaleFactor
     const yOffset = 5 * scaleFactor
     // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
-    contextRef.current.font = `${24 * scaleFactor}px sans-serif`
+    contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.fillStyle = 'white'
     contextRef.current.fillText(year, x - xOffset, y + yOffset)
     contextRef.current.strokeStyle = 'rgba(255, 255, 255, 0.5)'
@@ -309,8 +309,8 @@ const Stage = ({data, selectedSectors})=> {
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
       const vTextAdjust = (numTextLines - 2) * scaleFactor
       const textHolderHeight = eventTextHeight * scaleFactor + vTextAdjust
-      const teardropHeight = 69 * scaleFactor + vTextAdjust;
-      const arrowHeight = (eventTextHeight + 20) * scaleFactor
+      const teardropHeight = 86.5 * scaleFactor + vTextAdjust;
+      const arrowHeight = (eventTextHeight + 35) * scaleFactor
       const vShift = (currentHover && eventIsCurrentHover(selectedEvents[i])) ? 5 * scaleFactor : 0
       let opacity = 1
       const fadeOutLimit = sceneSize.height - (0.25 * sceneSize.height)
@@ -367,7 +367,7 @@ const Stage = ({data, selectedSectors})=> {
         contextRef.current.font = `${14 * scaleFactor}px sans-serif`
         const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
         // Draw the event's year under the icon
-        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (24 * scaleFactor))
+        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
       }
 
       startPos = {
