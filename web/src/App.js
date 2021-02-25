@@ -31,13 +31,7 @@ function App() {
               </TimelineContext.Consumer>
             </div>
             <div className="row fixed-100">
-              <TimelineContext.Consumer>
-                {({setSelectedYear}) => (
-                  <YearSelector
-                    setSelectedYear={setSelectedYear}
-                  />
-                )}
-              </TimelineContext.Consumer>
+              <YearSelector />
             </div>
           </div>
         </div>

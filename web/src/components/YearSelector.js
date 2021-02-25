@@ -29,7 +29,7 @@ const YearSelector = ({setSelectedYear}) => {
   ];
   return (
     <TimelineContext.Consumer>
-      {({ selectedDec, showYears, handleYearSelector, decades }) => {
+      {({ selectedDec, showYears, handleYearSelector, decades, setSelectedYear }) => {
         return (
           <div className="years">
             {Object.entries(decades).map(([decade, years], index) => {
