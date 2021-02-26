@@ -17,9 +17,9 @@ function App() {
         <Header />
         <div className="content flex">
           <Categories />
+          <Sidebar />
           <div className="column flex">
             <div className="row">
-              <Sidebar />
               <TimelineContext.Consumer>
                 {({data, selectedSectors}) => (
                   <Stage

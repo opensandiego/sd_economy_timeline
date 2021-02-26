@@ -1,9 +1,11 @@
 #sidebar{
-  padding: 20px 10px 20px 15px;
+  padding: 0 calc(100% - 260px) 20px 15px;
   position: relative;
-  background-color: white;
+  /* background-color: white; */
   height: 703px;
   z-index: 0;
+  overflow-y: auto;
+  direction: rtl;
 }
 .fixed-270.show {
   transform: translate3d(0vw, 0, 0);
@@ -17,6 +19,8 @@
 
 .close{
 height: 18px;
+position: fixed;
+right: 85px;
 }
 
 .close svg {
@@ -76,6 +80,7 @@ height: 18px;
 
 .all-sector-selector {
   font-size: 0.5em;
+  height: 2.5em;
 }
 
 .key-sector-selector-item,
@@ -89,6 +94,7 @@ height: 18px;
   letter-spacing: 0px;
   color: #196CAA;
   padding-left: 45px;
+  padding-right: 50px;
 }
 
 
@@ -179,7 +185,8 @@ span.checkbox-custom {
 }
 
 .key-sector-selector, .all-sector-selector {
-  margin: 14px 0px;
+  margin: 15px 0px;
+  position: relative;
 }
 
 div#sidebar .sidebar-label:nth-of-type(1) {
@@ -253,4 +260,56 @@ color: #031620;
 
 #sidebar .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.all-sectors {
+  /* overflow-y: auto;
+  height: calc(703px - 209px); */
+}
+
+div#bkground {
+  height: 100%;
+  position: fixed;
+  width: 270px;
+  margin-left: -15px;
+  margin-top: -20px;
+  background: white;
+  z-index: -1;
+}
+
+.container-sidebar {
+  direction: ltr;
+}
+
+/* width */
+#sidebar::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+#sidebar::-webkit-scrollbar-track {
+  width: 3px;
+  background-color: white
+}
+
+/* Handle */
+#sidebar::-webkit-scrollbar-thumb {
+  background: rgb(174, 174, 174);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgb(137, 137, 137);
+}
+
+.tooltip svg:nth-of-type(2) {
+  display: none;
+}
+
+.tooltip:hover svg:nth-of-type(1) {
+  display: none;
+}
+.tooltip:hover svg:nth-of-type(2) {
+  display: block !important;
 }

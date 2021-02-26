@@ -20,6 +20,7 @@
 .content {
   align-items: stretch;
   flex: 1;
+  overflow-x: hidden;
 }
 
 .column {
@@ -28,15 +29,17 @@
   flex-direction: column;
   width: auto;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+
 }
 
 .column.fixed-270 {
-  width: 270px;
-  max-width: 270px;
+  width: 345px;
+  /* max-width: 270px; */
   position: absolute;
   z-index: 20;
   opacity: 0;
+  /* background-color: white; */
 }
 
 .row {
