@@ -27,6 +27,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
@@ -52,6 +53,7 @@ export const TimelineContextProvider = ({ children }) => {
     setDecades(buildDecades(events));
     setLoading(false);
   };
+
   useEffect(() => {
     getEventData();
   }, []);
@@ -61,9 +63,19 @@ export const TimelineContextProvider = ({ children }) => {
     setSelectedSectors(response.slice(0, 5).map(sector => sector.name))
     setAllSectors(response)
   }
+
   useEffect(() => {
     getCategoryData();
   }, [])
+
+  useEffect(() => {
+    if (!data) return
+    const eventsForSelectedSectors = data.filter(event => selectedSectors.includes(event.Category))
+    setDecades(buildDecades(eventsForSelectedSectors))
+  }, [
+    data,
+    selectedSectors
+  ])
 
   const updateSelectedSectors = (e, sector) => {
     const { checked } = e.target;
@@ -78,7 +90,7 @@ export const TimelineContextProvider = ({ children }) => {
     }
     if (!checked) {
       const nextSectors = [...selectedSectors];
-      const sectorToRemove = nextSectors.indexOf(sector);
+      const sectorToRemove = nextSectors.indexOf(sector.name);
       nextSectors.splice(sectorToRemove, 1);
       setSelectedSectors(nextSectors);
     }
@@ -102,6 +114,7 @@ export const TimelineContextProvider = ({ children }) => {
   const clearSelectedSectors = () => {
     setSelectedSectors([]);
   };
+
   const handleYearSelector = (decade) => {
     if (selectedDec === decade) {
       setShowYears(!showYears); //if user is "minimizing" the decade/selecting the same decade
@@ -126,11 +139,12 @@ export const TimelineContextProvider = ({ children }) => {
     showFilter,
     showAllSectors,
     selectedSectors,
-    // keySectors,
     allSectors,
     selectedDec,
     decades,
     showYears,
+    selectedYear,
+    setSelectedYear,
     updateSelectedSectors,
     removeSector,
     clearSelectedSectors,

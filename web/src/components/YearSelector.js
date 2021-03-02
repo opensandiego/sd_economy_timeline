@@ -3,7 +3,7 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import TimelineContext from "../TimelineContext";
 import "./year-selector.scss";
 
-const YearSelector = () => {
+const YearSelector = ({setSelectedYear}) => {
   const dummyResults = [
     {
       category: "Military",
@@ -29,7 +29,7 @@ const YearSelector = () => {
   ];
   return (
     <TimelineContext.Consumer>
-      {({ selectedDec, showYears, handleYearSelector, decades }) => {
+      {({ selectedDec, showYears, handleYearSelector, decades, setSelectedYear }) => {
         return (
           <div className="years">
             {Object.entries(decades).map(([decade, years], index) => {
@@ -76,7 +76,11 @@ const YearSelector = () => {
                     {decades && selectedDec && decades[selectedDec].map((year, index) => {
                       if (selectedDec === decade && showYears)
                         return (
-                          <div className="y-res" key={index}>
+                          <div
+                            className="y-res"
+                            key={index}
+                            onClick={() => setSelectedYear(year)}
+                          >
                             <button>{year}</button>
                             <div className="vl"></div>
                           </div>

@@ -24,8 +24,12 @@ function App() {
           <div className="column flex">
             <div className="row">
               <TimelineContext.Consumer>
-                {({ data, selectedSectors }) => (
-                  <Stage data={data} selectedSectors={selectedSectors} />
+                {({data, selectedSectors, selectedYear}) => (
+                  <Stage
+                    data={data}
+                    selectedSectors={selectedSectors}
+                    selectedYear={selectedYear}
+                  />
                 )}
               </TimelineContext.Consumer>
             </div>

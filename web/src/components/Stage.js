@@ -37,6 +37,8 @@ let eventTextDimensions = {}
 let eventTextBuilt = false
 let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
+let scrollTotal = 0
+let yearPositions = {}
 const yIncrement = timeline3DLength / rectCount
 const initializePositions = (events = []) => {
   let rows = Math.ceil(rectCount / 1.5)
@@ -113,8 +115,9 @@ const updatePositions = (change, positions) => {
 }
 let rects = initializePositions()
 
-const Stage = ({data, selectedSectors})=> {
+const Stage = ({data, selectedSectors, selectedYear})=> {
   // console.log('selectedSectors', selectedSectors)
+  console.log({ selectedYear })
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -127,7 +130,13 @@ const Stage = ({data, selectedSectors})=> {
     rectCount = (selectedEvents.length) ? selectedEvents.length - 1 : 3000
     timeline3DLength = rectCount * yIncrement
     rects = initializePositions(selectedEvents)
-    // console.log({ rects })
+    yearPositions = rects.reduce((acc, cur) => {
+      return {
+        ...acc,
+        [cur.year]: cur.y
+      }
+    }, {})
+    console.log({ rects, yearPositions })
   }
   // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
@@ -250,7 +259,7 @@ const Stage = ({data, selectedSectors})=> {
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
-    const xOffset = 110 * scaleFactor
+    const xOffset = 180 * scaleFactor
     const yOffset = 5 * scaleFactor
     // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.font = `${32 * scaleFactor}px sans-serif`
@@ -265,6 +274,8 @@ const Stage = ({data, selectedSectors})=> {
   }
 
   const drawEvents = (change = 0) => {
+    scrollTotal += change
+    // console.log('draw events change', change, scrollTotal)
     // console.log('drawEvent current hover?', currentHover)
     if (!selectedEvents || selectedEvents.length === 0) {
       return
@@ -594,6 +605,37 @@ const Stage = ({data, selectedSectors})=> {
     drawBoundaries(vanishingPoint)
     drawEvents()
   })
+
+  useEffect(() => {
+    if (!contextRef || !contextRef.current) return
+    // console.log('year selected', selectedYear, '; position', yearPositions[selectedYear])
+    // calculate total change needed:
+    // - have existing scroll position --> scrollTotal
+    // - starting position is Object.values(yearSelector)[0]
+    // - current position is:  starting position - (scrollTotal * 25)
+    // - desired position is:  (yearPositions[selectedYear] - current position) / 25
+
+    const selectedYearPosition = yearPositions[selectedYear]
+    const currentPosition = Object.values(yearPositions)[0] - (scrollTotal * 25)
+    // the + 3 in the next line moves the selected year slightly closer to the foreground
+    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 3
+    const direction = (totalChangeNeeded < 0) ? -1 : 1
+    const step = 1 * direction
+    let steps = 0
+    const interval = setInterval(() => {
+      const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
+      contextRef.current.clearRect(0, 0, width, height)
+      drawBoundaries(vanishingPoint)
+      drawEvents(step)
+      if (Math.abs(steps * step) < Math.abs(totalChangeNeeded)) {
+        steps += 1
+      } else {
+        clearInterval(interval)
+      }
+    }, 50)
+  }, [
+    selectedYear
+  ])
 
   return (
     <div className='stage' ref={containerRef}>
