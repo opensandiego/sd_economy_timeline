@@ -7,8 +7,9 @@ import Sidebar from "./components/Sidebar";
 import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
 import Categories from "./components/Categories";
+import OutsideClick from "./components/OutsideClick";
 
-import TimelineContext, { TimelineContextProvider } from './TimelineContext'
+import TimelineContext, { TimelineContextProvider } from "./TimelineContext";
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
         <Header />
         <div className="content flex">
           <Categories />
+          <OutsideClick>
+            <Sidebar />
+          </OutsideClick>
           <div className="column flex">
             <div className="row">
-              <Sidebar />
               <TimelineContext.Consumer>
                 {({data, selectedSectors, selectedYear}) => (
                   <Stage
