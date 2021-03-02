@@ -20,6 +20,7 @@
 .content {
   align-items: stretch;
   flex: 1;
+  overflow-x: hidden;
 }
 
 .column {
@@ -29,14 +30,16 @@
   width: auto;
   position: relative;
   overflow: hidden;
+
 }
 
 .column.fixed-270 {
-  width: 270px;
-  max-width: 270px;
+  width: 345px;
+  /* max-width: 270px; */
   position: absolute;
   z-index: 20;
   opacity: 0;
+  /* background-color: white; */
 }
 
 .row {
@@ -69,7 +72,7 @@ button {
 /* --------------- Nancy P. stage background -------------- */
 .content {
   position: relative;
-  height: 700px;
+  height: 710px;
 }
 .content img:nth-of-type(1),
 img:nth-of-type(2) {

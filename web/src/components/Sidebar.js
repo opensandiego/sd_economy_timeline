@@ -1,5 +1,5 @@
 import React from "react";
-import { BsInfoCircle } from "react-icons/bs";
+import { BsInfoCircle, BsInfoCircleFill } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
@@ -26,6 +26,8 @@ const Sidebar = (props) => {
           }
         >
           <div id="sidebar">
+          <div className="container-sidebar">
+            <div id="bkground"></div>
             {/* <div className="close">
               <button onClick={updateShowFilter}>
                 <VscChromeClose size={18} />
@@ -62,7 +64,7 @@ const Sidebar = (props) => {
 
             <div className="sidebar-label">
               <p>
-                Categories<span>(Select maximum of 5 at a time)</span>
+                Categories<span>(Maximum of 5 at a time)</span>
               </p>
 
               {/* {showAllSectors ? (
@@ -108,12 +110,13 @@ const Sidebar = (props) => {
                     />
                     <span className="checkbox-custom"></span>
                     <span className="all-sector-selector-item">{sector.name}</span>
-                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.description}</span></div>
+                    <div className="tooltip"><BsInfoCircle /><BsInfoCircleFill /><span className="tooltiptext">{sector.description}</span></div>
                   </div>
                 ))}
               </div>
             ) : null}
           </div>
+        </div>
         </div>
       )}
     </TimelineContext.Consumer>
