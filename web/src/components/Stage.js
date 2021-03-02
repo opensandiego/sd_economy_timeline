@@ -5,7 +5,7 @@ import React, {
 } from 'react'
 import './stage.scss'
 import backgroudImagePath from '../assets/sandag-background@3x.png'
-import teardrop from '../assets/teardrop@3x.png'
+import teardrop from '../assets/purple-teardrop@3x.png'
 import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
 import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
 import faHandPointUp from '../assets/fa-hand-point-up.svg'
