@@ -279,6 +279,7 @@ div#bkground {
 
 .container-sidebar {
   direction: ltr;
+  height: 100%;
 }
 
 /* width */

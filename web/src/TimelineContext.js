@@ -116,6 +116,10 @@ export const TimelineContextProvider = ({ children }) => {
     setSelectedDecade(value);
   };
 
+  const outsideClickUpdate = () => {
+    setShowFilter(false);
+  }
+
   const value = {
     loading,
     data,
@@ -134,6 +138,7 @@ export const TimelineContextProvider = ({ children }) => {
     updateShowAllSectors,
     updateSelectedDecade,
     handleYearSelector,
+    outsideClickUpdate
   };
 
   return (
