@@ -1,4 +1,7 @@
-import React from "react";
+import React, {
+  useEffect,
+  useRef
+} from "react";
 import "./App.css";
 import "./sdForward.css";
 
@@ -24,18 +27,19 @@ function App() {
           <div className="column flex">
             <div className="row">
               <TimelineContext.Consumer>
-                {({data, selectedSectors, selectedYear}) => (
+                {({data, selectedSectors, selectedYear, setTimelineScroll}) => (
                   <Stage
                     data={data}
                     selectedSectors={selectedSectors}
                     selectedYear={selectedYear}
+                    setTimelineScroll={setTimelineScroll}
                   />
                 )}
               </TimelineContext.Consumer>
             </div>
-            <div className="row fixed-100">
-              <YearSelector />
-            </div>
+            {/* <div className="row fixed-100" ref={containerRef}> */}
+            <YearSelector />
+            {/* </div> */}
           </div>
         </div>
       </div>

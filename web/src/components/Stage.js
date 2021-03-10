@@ -38,6 +38,7 @@ let eventTextBuilt = false
 let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
 let scrollTotal = 0
+let totalDraws = 0
 let yearPositions = {}
 const yIncrement = timeline3DLength / rectCount
 const initializePositions = (events = []) => {
@@ -115,9 +116,9 @@ const updatePositions = (change, positions) => {
 }
 let rects = initializePositions()
 
-const Stage = ({data, selectedSectors, selectedYear})=> {
+const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
   // console.log('selectedSectors', selectedSectors)
-  console.log({ selectedYear })
+  // console.log({ selectedYear })
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -136,7 +137,7 @@ const Stage = ({data, selectedSectors, selectedYear})=> {
         [cur.year]: cur.y
       }
     }, {})
-    console.log({ rects, yearPositions })
+    // console.log({ rects, yearPositions })
   }
   // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
@@ -415,7 +416,22 @@ const Stage = ({data, selectedSectors, selectedYear})=> {
 
       contextRef.current.globalAlpha = 1
     })
+    totalDraws += 1
     rects = nextRects
+
+    if (totalDraws % 5 === 0) {
+      const allPositions = Object.values(yearPositions)
+      const start = allPositions[0]
+      const end = allPositions[allPositions.length - 1]
+      const range = start - end
+      const scrollFraction = ((scrollTotal * 25) / range)
+      const scrollClamped = (scrollFraction >= 1) ?
+        1 :
+          (scrollFraction < 0) ?
+            0 :
+            scrollFraction
+      setTimelineScroll(scrollClamped)
+    }
   }
 
   useEffect(() => {
@@ -441,6 +457,10 @@ const Stage = ({data, selectedSectors, selectedYear})=> {
       info.image = createImage(path, width, height)
     })
     console.log('icons', iconInfo)
+
+    return () => {
+      console.log('UNMOUNTING!!!!')
+    }
   }, [])
 
   useEffect(() => {
