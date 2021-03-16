@@ -348,7 +348,9 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       // Draw the text for the event
-      contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
+      const eventTextImg = new Image()
+      eventTextImg.src = eventText
+      contextRef.current.drawImage(eventTextImg, dxText, dyText, cardWidth, textHolderHeight)
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
