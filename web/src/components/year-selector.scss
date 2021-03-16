@@ -304,6 +304,7 @@ $width: (100 - $menu-items) * 1%;
   // when the Nav item "is active", make the indicator line up with the navigation item.
   .year:nth-child(#{$i}).active ~ .year:last-child .left:before{
     // left:($width*$i)+($width/2)-$width;
+    font-size: #{$i}px;
     left: -100px;
   }
   

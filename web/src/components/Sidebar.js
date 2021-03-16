@@ -1,23 +1,19 @@
 import React from "react";
-import { BsInfoCircle, BsInfoCircleFill } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
 import TimelineContext from "../TimelineContext";
+import ScrollableFilter from "./ScrollableFilter"
 
 const Sidebar = (props) => {
   return (
     <TimelineContext.Consumer>
       {({
         selectedSectors,
-        keySectors,
-        allSectors,
         showAllSectors,
         showFilter,
-        updateSelectedSectors,
         removeSector,
         clearSelectedSectors,
-        updateShowAllSectors,
         updateShowFilter,
       }) => (
         <div
@@ -66,55 +62,9 @@ const Sidebar = (props) => {
               <p>
                 Categories<span>(Maximum of 5 at a time)</span>
               </p>
-
-              {/* {showAllSectors ? (
-                <button onClick={updateShowAllSectors}>
-                  <BiMinus size={15}/>
-                </button>
-              ) : (
-                <button onClick={updateShowAllSectors}>
-                  <BiPlus size={15}/>
-                </button>
-              )} */}
             </div>
-            {showAllSectors ? (
-              <div className="all-sectors">
-                {/* {keySectors.map((sector, index) => (
-                  <div className="key-sector-selector" key={index}>
-                    <input
-                      type="checkbox"
-                      className="checkbox-input"
-                      checked={selectedSectors.includes(sector.name)}
-                      value={sector.name}
-                      // disabled={selectedSectors.length < 5 ? false : true}
-                      onChange={(e) => {
-                        updateSelectedSectors(e, sector.name);
-                      }}
-                    />
-                    <span className="checkbox-custom"></span>
-                    <span className="key-sector-selector-item">{sector.name}</span>
-                    <div className="tooltip"><BsInfoCircle /><span className="tooltiptext">{sector.description}</span></div>
-                  </div>
-                ))} */}
-                {allSectors.map((sector, index) => (
-                  <div className="all-sector-selector" key={index}>
-                    <input
-                      type="checkbox"
-                      className="checkbox-input"
-                      value={sector.name}
-                      checked={selectedSectors.includes(sector.name)}
-                      // disabled={selectedSectors.length < 5 ? false : true}
-                      onChange={(e) => {
-                        updateSelectedSectors(e, sector);
-                      }}
-                    />
-                    <span className="checkbox-custom"></span>
-                    <span className="all-sector-selector-item">{sector.name}</span>
-                    <div className="tooltip"><BsInfoCircle /><BsInfoCircleFill /><span className="tooltiptext">{sector.description}</span></div>
-                  </div>
-                ))}
-              </div>
-            ) : null}
+            {showAllSectors ? 
+           <ScrollableFilter/> : null}
           </div>
         </div>
         </div>

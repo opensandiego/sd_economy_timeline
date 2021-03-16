@@ -29,13 +29,14 @@
   flex-direction: column;
   width: auto;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 
 }
 
 .column.fixed-270 {
-  width: 345px;
-  /* max-width: 270px; */
+  /* width: 345px; */
+  width: 270px;
+  /* width: 300px; */
   position: absolute;
   z-index: 20;
   opacity: 0;

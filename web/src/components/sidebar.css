@@ -2,9 +2,9 @@
   padding: 0 calc(100% - 260px) 20px 15px;
   position: relative;
   /* background-color: white; */
-  height: 703px;
+  height: 685px;
   z-index: 0;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   direction: rtl;
 }
 .fixed-270.show {
@@ -20,7 +20,7 @@
 .sidebar-label .close{
   height: 18px;
   position: fixed;
-  right: 85px;
+  right: 15px;
 }
 
 .close svg {
@@ -152,6 +152,8 @@ span.checkbox-custom {
   background: none;
   border: 1px solid #2B2B2B65;
   opacity: 1;
+  left: 0;
+  z-index: -1;
 }
 .checkbox-custom {
   position: relative;
@@ -186,7 +188,13 @@ span.checkbox-custom {
 
 .key-sector-selector, .all-sector-selector {
   margin: 15px 0px;
+  /* position: relative; */
+}
+
+.sector-left {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 div#sidebar .sidebar-label:nth-of-type(1) {
@@ -197,9 +205,8 @@ div#sidebar .sidebar-label:nth-of-type(1) {
 }
 
 #sidebar .tooltip {
-  position: relative;
-
-
+  /* position: relative; */
+  position: unset;
   /* resetting styles from Dereks background tooltip style */
   z-index: 0;
   border-radius: 0;
@@ -227,12 +234,13 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   padding: 10px 18px;
   position: absolute;
   /* z-index: 1; */
-  bottom: 150%;
-  left: 150%;
-  margin-left: -60px;
-  font: normal normal 600 8px/11px Montserrat !important;
-letter-spacing: 0px;
-color: #031620;
+  /* bottom: 150%;
+  left: 150%; */
+  margin-left: -45px;
+  font: normal normal 400 12px/16px Montserrat !important;
+  letter-spacing: 0px;
+  color: #031620;
+/* transform: translateY(calc(-100% + calc(-23px + 3px))); */
 }
 
 #sidebar .tooltip .tooltiptext::after {
@@ -265,6 +273,13 @@ color: #031620;
 .all-sectors {
   /* overflow-y: auto;
   height: calc(703px - 209px); */
+  overflow-y: auto;
+  height: 495px;
+  margin-right: -10px;
+}
+
+.all-sectors .all-sector-selector:nth-of-type(1) {
+  margin-top: 0;
 }
 
 div#bkground {
@@ -283,26 +298,27 @@ div#bkground {
 }
 
 /* width */
-#sidebar::-webkit-scrollbar {
-  width: 3px;
+.all-sectors::-webkit-scrollbar {
+  width: 5px;
 }
 
 /* Track */
-#sidebar::-webkit-scrollbar-track {
-  width: 3px;
+.all-sectors::-webkit-scrollbar-track {
+  width: 5px;
   background-color: white
 }
 
 /* Handle */
-#sidebar::-webkit-scrollbar-thumb {
+.all-sectors::-webkit-scrollbar-thumb {
   background: rgb(174, 174, 174);
   border-radius: 5px;
 }
 
 /* Handle on hover */
-#sidebar::-webkit-scrollbar-thumb:hover {
+.all-sectors::-webkit-scrollbar-thumb:hover {
   background: rgb(137, 137, 137);
 }
+
 
 #sidebar .tooltip svg:nth-of-type(2) {
   display: none;
