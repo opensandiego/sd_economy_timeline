@@ -2,7 +2,7 @@
   padding: 0 calc(100% - 260px) 20px 15px;
   position: relative;
   /* background-color: white; */
-  height: 703px;
+  height: 685px;
   z-index: 0;
   /* overflow-y: auto; */
   direction: rtl;
@@ -237,9 +237,9 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   /* bottom: 150%;
   left: 150%; */
   margin-left: -45px;
-  font: normal normal 600 8px/11px Montserrat !important;
-letter-spacing: 0px;
-color: #031620;
+  font: normal normal 400 12px/16px Montserrat !important;
+  letter-spacing: 0px;
+  color: #031620;
 /* transform: translateY(calc(-100% + calc(-23px + 3px))); */
 }
 
@@ -274,8 +274,12 @@ color: #031620;
   /* overflow-y: auto;
   height: calc(703px - 209px); */
   overflow-y: auto;
-  height: 500px;
+  height: 495px;
   margin-right: -10px;
+}
+
+.all-sectors .all-sector-selector:nth-of-type(1) {
+  margin-top: 0;
 }
 
 div#bkground {
