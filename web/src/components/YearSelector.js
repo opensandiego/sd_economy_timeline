@@ -17,7 +17,9 @@ const YearSelector = () => {
   return (
     <TimelineContext.Consumer>
       {({ selectedDec, showYears, handleYearSelector, decades, setSelectedYear, timelineScroll }) => {
-        updateTimelineScroll(timelineScroll)
+        if (!selectedDec) {
+          updateTimelineScroll(timelineScroll)
+        }
         return (
           <div className="row fixed-100" ref={containerRef}>
             <div className="years">
