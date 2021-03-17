@@ -37,9 +37,7 @@ function App() {
                 )}
               </TimelineContext.Consumer>
             </div>
-            {/* <div className="row fixed-100" ref={containerRef}> */}
             <YearSelector />
-            {/* </div> */}
           </div>
         </div>
       </div>
