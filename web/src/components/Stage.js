@@ -644,6 +644,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     const direction = (totalChangeNeeded < 0) ? -1 : 1
     const step = 1 * direction
     let steps = 0
+    const totalAnimationTime = 2000
+    const timePerStep = (totalAnimationTime / totalChangeNeeded > 50) ? 50 : totalAnimationTime / totalChangeNeeded
     const interval = setInterval(() => {
       const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
       contextRef.current.clearRect(0, 0, width, height)
@@ -654,7 +656,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       } else {
         clearInterval(interval)
       }
-    }, 50)
+    }, timePerStep)
   }, [
     selectedYear
   ])
