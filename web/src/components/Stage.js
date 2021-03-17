@@ -24,7 +24,6 @@ const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
 const timelinePaddingExpansion = 1.2
 const endToScreenRatio = 1.1
 const vanishTop = 0.3
-const font = 'Montserrat'
 let width = 600
 let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
@@ -196,7 +195,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
   const drawBoundaries = vanishingPoint => {
     // hint to click on background objects
-    contextRef.current.font = `14px ${font}`
+    contextRef.current.font = `14px sans-serif`
     contextRef.current.fillStyle = 'black'
     contextRef.current.fillText('Tap on objects to learn', 822, 345)
     contextRef.current.fillText('about iconic sites in the', 822, 362)
@@ -263,7 +262,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     const scaleFactor = sliceWidth / cardSize
     const xOffset = 180 * scaleFactor
     const yOffset = 5 * scaleFactor
-    contextRef.current.font = `${32 * scaleFactor}px ${font}`
+    // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
+    contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.fillStyle = 'white'
     contextRef.current.fillText(year, x - xOffset, y + yOffset)
     contextRef.current.strokeStyle = 'rgba(255, 255, 255, 0.5)'
@@ -376,7 +376,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         // Draw the event icon on the tear drop
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
-        contextRef.current.font = `${14 * scaleFactor}px ${font}`
+        contextRef.current.font = `${14 * scaleFactor}px sans-serif`
         const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
         // Draw the event's year under the icon
         contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
