@@ -119,6 +119,7 @@ export const TimelineContextProvider = ({ children }) => {
   const handleYearSelector = (decade) => {
     if (selectedDec === decade) {
       setShowYears(!showYears); //if user is "minimizing" the decade/selecting the same decade
+      updateSelectedDecade(null);
     } else {//if the user is selecting a new decade
       updateSelectedDecade(decade);
       setShowYears(true);

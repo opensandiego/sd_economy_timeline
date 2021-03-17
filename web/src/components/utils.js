@@ -50,7 +50,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
 
   // dynamically calculate text width/height
   if (!eventTextDimensions[textDimensionsKey]) {
-    const span = document.createElement('span')
+    let span = document.createElement('span')
     span.innerHTML = `${firstLine}<br>${secondLine}`
     span.style.opacity = 0
     span.style.fontSize = `${fontSize}px`
@@ -67,6 +67,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     }
     // if (firstLine !== 'California is') {
     document.body.removeChild(span)
+    // span = null
     // }
     // console.log(firstLine, eventTextDimensions[textDimensionsKey])
   }
@@ -77,7 +78,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   const rectWidth = textWidth
   const rectHeight = textHeight
 
-  const textCanvas = document.createElement('canvas')
+  let textCanvas = document.createElement('canvas')
   textCanvas.style = `width: ${rectWidth}px; height: ${rectHeight}px`
   textCanvas.width = rectWidth * deviceScale
   textCanvas.height = rectHeight * deviceScale
@@ -93,7 +94,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const categoryFillStyle = 'rgba(110, 110, 110, 1)'
-  const ctx = textCanvas.getContext('2d')
+  let ctx = textCanvas.getContext('2d')
   ctx.scale(deviceScale, deviceScale)
   roundedRect(ctx, 0, 0, rectWidth, rectHeight, 5 * multiplier)
   ctx.fillStyle = textFillStyle
@@ -104,7 +105,13 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   ctx.fillStyle = categoryFillStyle
   ctx.font = `${categorySize.fontSize}px ${fontFamily}`
   ctx.fillText(Category, categorySize.x, categorySize.y + (28 * multiplier))
+  // const png = textCanvas.toDataURL()
+  // ctx = null
+  // textCanvas.width = 0
+  // textCanvas.height = 0
+  // textCanvas = null
   return textCanvas
+  // return png
 }
 
 export const getDecade = ({Year}) => {
