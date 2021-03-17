@@ -105,12 +105,13 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   ctx.fillStyle = categoryFillStyle
   ctx.font = `${categorySize.fontSize}px ${fontFamily}`
   ctx.fillText(Category, categorySize.x, categorySize.y + (28 * multiplier))
-  const png = textCanvas.toDataURL()
-  ctx = null
-  textCanvas.width = 0
-  textCanvas.height = 0
-  textCanvas = null
-  return png
+  // const png = textCanvas.toDataURL()
+  // ctx = null
+  // textCanvas.width = 0
+  // textCanvas.height = 0
+  // textCanvas = null
+  return textCanvas
+  // return png
 }
 
 export const getDecade = ({Year}) => {
@@ -139,3 +140,18 @@ export const addFadeBorderForText = (textCanvas, width, height, borderWidth, dev
 
   return fadedBorderCanvas
 }
+
+export function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};

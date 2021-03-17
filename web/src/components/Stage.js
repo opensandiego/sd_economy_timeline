@@ -15,7 +15,8 @@ import {
   makeEventKey,
   createImage,
   drawEventText,
-  getDecade
+  getDecade,
+  debounce
 } from './utils'
 import Popup from './Popup'
 import BackgroundTooltip from './BackgroundTooltip'
@@ -35,6 +36,7 @@ let selectedEvents
 let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
+let eventTextImageCache = {}
 let eventTextBuilt = false
 let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
@@ -293,8 +295,11 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * scaleFactor
       const teardropWidth = 60 * scaleFactor
+      let eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
       if (cardWidth < 3) {
         selectedEvents[i].position.active = false
+        // delete eventTextImageCache[eventTextKey]
+        // console.log('cache delete')
         return
       }
 
@@ -308,14 +313,13 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       }
 
       // console.log('cardWidth', cardWidth, selectedEvents[i], ';text width', eventTextDimensions[selectedEvents[i].Category].width)
-      let eventTextKey
-      if (cardWidth > (1.5 * eventTextWidth)) {
-        // need higher res event text
-        eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
-        // console.log('...high-res', selectedEvents[i].Category)
-      } else {
-        eventTextKey = makeEventKey(selectedEvents[i])
-      }
+      // if (cardWidth > (1.5 * eventTextWidth)) {
+      //   // need higher res event text
+      //   eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
+      //   // console.log('...high-res', selectedEvents[i].Category)
+      // } else {
+      //   eventTextKey = makeEventKey(selectedEvents[i])
+      // }
       // console.log('selected event', selectedEvents[i])
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
@@ -348,9 +352,15 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       // Draw the text for the event
-      const eventTextImg = new Image()
-      eventTextImg.src = eventText
-      contextRef.current.drawImage(eventTextImg, dxText, dyText, cardWidth, textHolderHeight)
+      contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
+      // let eventTextImg
+      // if (eventTextImageCache.hasOwnProperty(eventTextKey)) {
+      //   eventTextImg = eventTextImageCache[eventTextKey]
+      // } else {
+      //   eventTextImg = new Image()
+      //   eventTextImg.src = eventText
+      //   eventTextImageCache[eventTextKey] = eventTextImg
+      // }
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
@@ -421,7 +431,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     totalDraws += 1
     rects = nextRects
 
-    if (totalDraws % 5 === 0) {
+    if (totalDraws % 10 === 0) {
       const allPositions = Object.values(yearPositions)
       const start = allPositions[0]
       const end = allPositions[allPositions.length - 1]
@@ -486,6 +496,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     drawBoundaries(vanishingPoint)
     drawEvents()
 
+    // const handler = debounce(function (event) {
     const handler = function (event) {
       let delta = 0
       if (event.wheelDelta) {
@@ -497,6 +508,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       contextRef.current.clearRect(0, 0, width, height)
       drawBoundaries(vanishingPoint)
       drawEvents(delta)
+    // }, 5)
     }
     containerRef.current.addEventListener('mousewheel', handler, {
       passive: false
