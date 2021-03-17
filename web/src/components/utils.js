@@ -67,7 +67,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     }
     // if (firstLine !== 'California is') {
     document.body.removeChild(span)
-    span = null
+    // span = null
     // }
     // console.log(firstLine, eventTextDimensions[textDimensionsKey])
   }

@@ -15,8 +15,7 @@ import {
   makeEventKey,
   createImage,
   drawEventText,
-  getDecade,
-  debounce
+  getDecade
 } from './utils'
 import Popup from './Popup'
 import BackgroundTooltip from './BackgroundTooltip'
@@ -36,7 +35,6 @@ let selectedEvents
 let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
-let eventTextImageCache = {}
 let eventTextBuilt = false
 let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
@@ -295,11 +293,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * scaleFactor
       const teardropWidth = 60 * scaleFactor
-      let eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
       if (cardWidth < 3) {
         selectedEvents[i].position.active = false
-        // delete eventTextImageCache[eventTextKey]
-        // console.log('cache delete')
         return
       }
 
@@ -313,13 +308,14 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       }
 
       // console.log('cardWidth', cardWidth, selectedEvents[i], ';text width', eventTextDimensions[selectedEvents[i].Category].width)
-      // if (cardWidth > (1.5 * eventTextWidth)) {
-      //   // need higher res event text
-      //   eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
-      //   // console.log('...high-res', selectedEvents[i].Category)
-      // } else {
-      //   eventTextKey = makeEventKey(selectedEvents[i])
-      // }
+      let eventTextKey
+      if (cardWidth > (1.5 * eventTextWidth)) {
+        // need higher res event text
+        eventTextKey = `${makeEventKey(selectedEvents[i])}-high-res`
+        // console.log('...high-res', selectedEvents[i].Category)
+      } else {
+        eventTextKey = makeEventKey(selectedEvents[i])
+      }
       // console.log('selected event', selectedEvents[i])
       // var numTextLines = (marker.lines3DText && marker.lines3DText.length > 2) ? marker.lines3DText.length : 2;
       const numTextLines = 4 // TODO:  calculate on a per event basis, see commented line above
@@ -353,14 +349,6 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       // Draw the text for the event
       contextRef.current.drawImage(eventText, dxText, dyText, cardWidth, textHolderHeight)
-      // let eventTextImg
-      // if (eventTextImageCache.hasOwnProperty(eventTextKey)) {
-      //   eventTextImg = eventTextImageCache[eventTextKey]
-      // } else {
-      //   eventTextImg = new Image()
-      //   eventTextImg.src = eventText
-      //   eventTextImageCache[eventTextKey] = eventTextImg
-      // }
 
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
