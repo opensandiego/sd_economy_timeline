@@ -34,7 +34,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   // console.log('desc and len', `${Description} (${Description.length})`)
   const textDimensionsKey = `${Description}-${multiplier}`
   const fontSize = 16
-  const fontFamily = 'Helvetica, sans-serif'
+  const fontFamily = 'Montserrat, Helvetica, sans-serif'
   const descriptionLimit = 27
   let desc
   if (Description.length >= descriptionLimit) {
