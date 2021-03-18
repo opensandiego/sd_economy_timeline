@@ -4,6 +4,8 @@ import React, {
 import { BiMinus, BiPlus } from "react-icons/bi";
 import TimelineContext from "../TimelineContext";
 import "./year-selector.scss";
+import { ReactComponent as Plussign } from '../assets/plusSignwcircle.svg';
+
 
 const YearSelector = () => {
   const containerRef = useRef(null)
@@ -48,7 +50,8 @@ const YearSelector = () => {
                         {selectedDec === decade && showYears ? (
                           <BiMinus />
                         ) : (
-                          <BiPlus />
+                          //<BiPlus />
+                          <Plussign />
                         )}
                       </button>
                     </div>
