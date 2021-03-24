@@ -29,7 +29,7 @@ let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const cardSize = 720
-let timeline3DLength = 3000
+let timeline3DLength = 4000
 let selectedEvents
 let currentHover
 let eventTextElements = {}
@@ -50,35 +50,63 @@ const initializePositions = (events = []) => {
     let currentRow = 0
     let rowCount = 0
     while (eventsProcessed < totalEvents) {
-      const previousRowHasOneEvent = positions.filter(p => p.row === currentRow - 2).length === 1
       positions.push({
-        x: 0.5,
+        x: 0.3,
         y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
         row: currentRow,
         year: events[eventsProcessed].Year
       })
+      eventsProcessed += 1
+      positions.push({
+        x: 0.7,
+        y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
+        row: currentRow,
+        year: events[eventsProcessed].Year
+      })
+      eventsProcessed += 1
+
+      if (currentRow % 2 === 0 && events[eventsProcessed]) {
+        positions[positions.length - 2].x = 0.2
+        positions[positions.length - 1].x = 0.5
+        positions.push({
+          x: 0.8,
+          y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
+          row: currentRow,
+          year: events[eventsProcessed].Year
+        })
+        eventsProcessed += 1
+      }
       currentRow += 1
-      if (rowCount === 0) {
-        rowCount = 1
-        const previousEventIsCentered = positions[positions.length - 2] && positions[positions.length - 2].x === 0.5
-        if (previousEventIsCentered) {
-          positions[positions.length - 1].x = 0.75
-        }
-      }
-      const currentDecade = getDecade(events[eventsProcessed])
-      if (positions.length > 1 && rowCount === 1 && previousRowHasOneEvent) {
-        const previousDecade = getDecade(events[eventsProcessed - 1])
-        if (currentDecade === previousDecade) {
-          positions[positions.length - 1].x = 0.75
-          positions[positions.length - 2].x = 0.25
-          positions[positions.length - 1].y = positions[positions.length - 2].y
-          positions[positions.length - 1].row = positions[positions.length - 2].row
-          currentRow -= 1
-          rowCount = 2
-        }
-      } else {
-        rowCount = 0
-      }
+
+      // const previousRowHasOneEvent = positions.filter(p => p.row === currentRow - 2).length === 1
+      // positions.push({
+      //   x: 0.5,
+      //   y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
+      //   row: currentRow,
+      //   year: events[eventsProcessed].Year
+      // })
+      // currentRow += 1
+      // if (rowCount === 0) {
+      //   rowCount = 1
+      //   const previousEventIsCentered = positions[positions.length - 2] && positions[positions.length - 2].x === 0.5
+      //   if (previousEventIsCentered) {
+      //     positions[positions.length - 1].x = 0.75
+      //   }
+      // }
+      // const currentDecade = getDecade(events[eventsProcessed])
+      // if (positions.length > 1 && rowCount === 1 && previousRowHasOneEvent) {
+      //   const previousDecade = getDecade(events[eventsProcessed - 1])
+      //   if (currentDecade === previousDecade) {
+      //     positions[positions.length - 1].x = 0.75
+      //     positions[positions.length - 2].x = 0.25
+      //     positions[positions.length - 1].y = positions[positions.length - 2].y
+      //     positions[positions.length - 1].row = positions[positions.length - 2].row
+      //     currentRow -= 1
+      //     rowCount = 2
+      //   }
+      // } else {
+      //   rowCount = 0
+      // }
       eventsProcessed += 1
     }
     return positions
@@ -222,11 +250,11 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
     // the stage
     const blPos = timelineToScreen({
-      x: 0,
+      x: -0.1,
       y: timeline3DLength
     })
     var brPos = timelineToScreen({
-      x: 1,
+      x: 1.1,
       y: timeline3DLength
     })
     const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
@@ -244,7 +272,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     contextRef.current.closePath()
     contextRef.current.fill()
     contextRef.current.drawImage(arrowsLeftImage, 328, 528, 47, 46)
-    contextRef.current.drawImage(arrowsRightImage, 656, 528, 47, 46)
+    contextRef.current.drawImage(arrowsRightImage, 618, 528, 47, 46)
   }
 
   const eventIsCurrentHover = e => {
