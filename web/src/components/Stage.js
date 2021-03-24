@@ -282,8 +282,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       return
     }
     const nextRects = updatePositions(change, rects)
-    let decade = getDecade(selectedEvents[0])
-    nextRects.forEach((rect, i) => {
+    for (let i = nextRects.length - 1; i >= 0; i--) {
+      const rect = nextRects[i]
       const screenPosition = timelineToScreen(rect)
       // console.log('screenPosition', screenPosition.x, screenPosition.y)
       const scaleFactor = screenPosition.sliceWidth / cardSize
@@ -295,15 +295,15 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       const teardropWidth = 60 * scaleFactor
       if (cardWidth < 3) {
         selectedEvents[i].position.active = false
-        return
+        continue
       }
 
       // add decade lines as necessary
-      if (nextRects[i + 2]) {
-        const eventDecade = getDecade(selectedEvents[i + 2])
-        if (eventDecade !== decade) {
-          drawDecadeMark(nextRects[i + 2], eventDecade)
-          decade = eventDecade
+      if (nextRects[i - 1]) {
+        const currentDecade = getDecade(selectedEvents[i])
+        const eventDecade = getDecade(selectedEvents[i - 1])
+        if (eventDecade !== currentDecade) {
+          drawDecadeMark(nextRects[i], currentDecade)
         }
       }
 
@@ -335,12 +335,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         opacity = screenPosition.sliceWidth * timelinePaddingExpansion / (0.3 * maxTimelineWidth);
       }
       contextRef.current.globalAlpha = opacity;
-      // contextRef.current.fillStyle = panelColor;
       contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
-      let startPos = {
-        x: screenPosition.x,
-        y: screenPosition.y - vShift
-      }
       const eventText = eventTextElements[eventTextKey]
       // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
@@ -388,7 +383,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
       }
 
-      startPos = {
+      const startPos = {
         x: screenPosition.x,
         y: screenPosition.y + vShift
       }
@@ -422,7 +417,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       contextRef.current.closePath()
 
       contextRef.current.globalAlpha = 1
-    })
+    }
     totalDraws += 1
     rects = nextRects
 
