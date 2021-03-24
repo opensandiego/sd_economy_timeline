@@ -520,18 +520,17 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         x: coords.x - horizontalOffset,
         y: coords.y - verticalOffset
       }
-      const v2 = 0
       const num = selectedEvents.length
       for (let c = num - 1; c >= 0; c--) {
-        var m = selectedEvents[c];
-        var ma = m.position;
+        const m = selectedEvents[c]
+        const ma = m.position
         if (!ma || m.searchHidden || m.madeInvisible) {
           continue
         }
         if (ma.active) {
-          const markerHit = scr.x > ma.x && scr.x < (ma.x + ma.width) && (scr.y - v2) > ma.y && (scr.y - v2) < (ma.y + ma.height)
+          const markerHit = scr.x > ma.x && scr.x < (ma.x + ma.width) && (scr.y) > ma.y && (scr.y) < (ma.y + ma.height)
           const { text } = ma
-          const textHit = scr.x > text.x && scr.x < (text.x + text.width) && (scr.y - v2) > text.y && (scr.y - v2) < (text.y + text.height)
+          const textHit = scr.x > text.x && scr.x < (text.x + text.width) && scr.y > text.y && scr.y < (text.y + text.height)
           if (markerHit || textHit) {
             clickedMarker = m;
             break;
