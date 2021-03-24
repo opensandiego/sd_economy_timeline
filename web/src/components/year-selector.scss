@@ -34,19 +34,19 @@ button.decade.show {
 }
 
 button.decade.hide {
-  background: transparent
-    linear-gradient(180deg, #89cdff 0%, #2ca5ff 31%, #1f74b3 69%, #175888 100%)
-    0% 0% no-repeat padding-box;
-  width: 26px;
+  // background: transparent
+  //   linear-gradient(180deg, #89cdff 0%, #2ca5ff 31%, #1f74b3 69%, #175888 100%)
+  //   0% 0% no-repeat padding-box;
+  // width: 26px;
   height: 26px;
-  border-radius: 13px;
-  border: 0px;
-  color: #072236;
-  font-size: 23px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // border-radius: 13px;
+  // border: 0px;
+  // color: #072236;
+  // font-size: 23px;
+  // padding: 0;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
 
 /* width */
@@ -86,7 +86,7 @@ button.decade {
   height: 0;
   left: 75px;
   /* z-index: -99999; */
-  top: 56px;
+  top: 57px;
   background: none;
 }
 .solid {
@@ -153,10 +153,8 @@ button.decade {
   padding: 2px;
 }
 .years .decade.hide svg {
-  /* position: absolute; */
-  top: 2px;
-  left: 1px;
-  padding: 1.5px;
+  width: 26px;
+  height: 26px;
 }
 
 .y-res {
