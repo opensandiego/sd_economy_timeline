@@ -398,10 +398,11 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       const centerY = y + (20 * scaleFactor)
       const width = 60 * scaleFactor
       const height = 5 * scaleFactor
-      const radialGradient = contextRef.current.createRadialGradient(x, y + radius + 5, 1, x, y + radius + 5, width)
-      radialGradient.addColorStop(0, 'rgba(51, 51, 51, 0.2)');
-      radialGradient.addColorStop(0.4, 'rgba(51, 51, 51, 0)');
-      radialGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      const radialGradient = contextRef.current.createRadialGradient(x, y + radius + 5, 0, x, y + radius + 5, width)
+      radialGradient.addColorStop(0, 'rgba(51, 51, 51, 0.4)')
+      radialGradient.addColorStop(0.2, 'rgba(51, 51, 51, 0.25)')
+      radialGradient.addColorStop(0.4, 'rgba(51, 51, 51, 0)')
+      radialGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
       contextRef.current.fillStyle = radialGradient;
 
       // draws the ellipse to use for the shadow under a teardrop
