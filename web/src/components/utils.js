@@ -38,7 +38,10 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   const descriptionLimit = 27
   let desc
   if (Description.length >= descriptionLimit) {
-    desc = `${Description.slice(0, descriptionLimit).replace(/\W$/g, '').trim()}...`
+    const shortened = Description.slice(0, descriptionLimit).replace(/\W$/g, '') // strip punctuation
+    const lastSpace = shortened.lastIndexOf(' ')
+    const fullWords = shortened.slice(0, lastSpace)
+    desc = `${fullWords}...`
   } else {
     desc = Description
   }
