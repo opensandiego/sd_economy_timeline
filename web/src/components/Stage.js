@@ -361,6 +361,12 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         y: dy,
         width: teardropWidth,
         height: teardropHeight,
+        text: {
+          x: dxText,
+          y: dyText,
+          width: cardWidth,
+          height: textHolderHeight
+        },
         active: true
       }
       // console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
@@ -520,11 +526,16 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         var m = selectedEvents[c];
         var ma = m.position;
         if (!ma || m.searchHidden || m.madeInvisible) {
-            continue
+          continue
         }
-        if (ma.active && scr.x > ma.x && scr.x < (ma.x + ma.width) && (scr.y - v2) > ma.y && (scr.y - v2) < (ma.y + ma.height)) {
-          clickedMarker = m;
-          break;
+        if (ma.active) {
+          const markerHit = scr.x > ma.x && scr.x < (ma.x + ma.width) && (scr.y - v2) > ma.y && (scr.y - v2) < (ma.y + ma.height)
+          const { text } = ma
+          const textHit = scr.x > text.x && scr.x < (text.x + text.width) && (scr.y - v2) > text.y && (scr.y - v2) < (text.y + text.height)
+          if (markerHit || textHit) {
+            clickedMarker = m;
+            break;
+          }
         }
       }
       return clickedMarker
