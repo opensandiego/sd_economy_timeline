@@ -283,12 +283,12 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
   const drawDecadeMark = (rect, year) => {
     const screenPosition = timelineToScreen({
-      x: 0,
+      x: -0.1,
       y: rect.y + 5
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
-    const xOffset = 180 * scaleFactor
+    const xOffset = 200 * scaleFactor
     const yOffset = 5 * scaleFactor
     // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
     contextRef.current.font = `${32 * scaleFactor}px sans-serif`
@@ -297,7 +297,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     contextRef.current.strokeStyle = 'rgba(255, 255, 255, 0.5)'
     contextRef.current.beginPath()
     contextRef.current.moveTo(x, y)
-    contextRef.current.lineTo(x + sliceWidth, y)
+    contextRef.current.lineTo(x + sliceWidth * 1.2, y)
     contextRef.current.closePath()
     contextRef.current.stroke()
   }
