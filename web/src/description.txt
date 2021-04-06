@@ -1,0 +1,4 @@
+[{
+  "summary": "The timeline represented here is an interactive data visualization tool that reflects San Diego region’s economy through the ages using historical data from various sources.",
+  "about": "The San Diego region is rich in history, with a vibrant economy built of diverse communities. Once characterized as a sleepy Navy town, later as a tourist destination, San Diego’s economy has diversified and matured over the last 75 years as the population has increased from under 300,000 to 3.4 million residents."
+}]

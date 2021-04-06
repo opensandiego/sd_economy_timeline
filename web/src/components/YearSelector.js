@@ -1,7 +1,7 @@
 import React, {
   useRef
 } from "react";
-import { BiMinus, BiPlus } from "react-icons/bi";
+import { BiMinus } from "react-icons/bi";
 import TimelineContext from "../TimelineContext";
 import "./year-selector.scss";
 import { ReactComponent as Plussign } from '../assets/plusSignwcircle.svg';

@@ -1,11 +1,9 @@
-import React, {
-  useEffect,
-  useRef
-} from "react";
+import React, { useEffect, useRef } from "react";
 import "./App.css";
 import "./sdForward.css";
 
 import Header from "./components/Header";
+import About from "./components/About";
 import Sidebar from "./components/Sidebar";
 import Stage from "./components/Stage";
 import YearSelector from "./components/YearSelector";
@@ -19,6 +17,11 @@ function App() {
     <TimelineContextProvider>
       <div className="container flex">
         <Header />
+        <TimelineContext.Consumer>
+          {({ getAboutDescription }) => (
+            <About getAboutDescription={getAboutDescription} />
+          )}
+        </TimelineContext.Consumer>
         <div className="content flex">
           <Categories />
           <OutsideClick>
@@ -27,7 +30,12 @@ function App() {
           <div className="column flex">
             <div className="row">
               <TimelineContext.Consumer>
-                {({data, selectedSectors, selectedYear, setTimelineScroll}) => (
+                {({
+                  data,
+                  selectedSectors,
+                  selectedYear,
+                  setTimelineScroll,
+                }) => (
                   <Stage
                     data={data}
                     selectedSectors={selectedSectors}

@@ -1,0 +1,94 @@
+.tl-summ {
+  font: normal normal normal 20px/24px Montserrat;
+  letter-spacing: 0px;
+  color: #000000;
+  text-align: center;
+  max-width: 869px;
+  margin: 0 auto 26px;
+}
+
+button.about {
+  font: normal normal 600 22px/26px Montserrat;
+  letter-spacing: 0px;
+  color: #9A2477;
+  padding-left: 0;
+}
+
+.about span {
+  position: relative;
+  margin-left: 10px;
+}
+
+.about span svg {
+  position: absolute;
+  top: 9px;
+}
+.about span.arrow-down svg {
+  transform: rotate(180deg);
+}
+
+.about-container h1 {
+  font: normal normal 600 40px/49px Montserrat;
+letter-spacing: 0.72px;
+color: #196AA9;
+text-align: center;
+}
+
+.abt-desc {
+  position: relative;
+  margin-left: 50px;
+  margin-bottom: 38px;
+  height: 26px;
+  margin-top: 12px;
+}
+
+
+p.tl-desc {
+  position: absolute;
+  z-index: 9999;
+  background: white;
+  box-shadow: 0px 6px 9px #0000004e;
+  border-radius: 0px 0px 10px 10px;
+  font: normal normal normal 12px/22px Montserrat;
+  padding: 17px;
+  width: 368px;
+  overflow-y: auto;
+  /* height: 105px; */
+  height: 170px;
+  opacity: 0;
+  transition: all ease-in .3s;
+}
+
+p.tl-desc.open {
+  opacity: 1;
+  margin-top: 0;
+}
+.bottom-container {
+  display: flex;
+  justify-content: space-between;
+}
+.download {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* .download button,  */
+.download a {
+  text-decoration: underline;
+font: normal normal 600 15px/19px Montserrat;
+letter-spacing: 0px;
+color: #9A2477;
+margin-bottom: 18px;
+position: relative;
+}
+
+.download a:nth-of-type(1) svg {
+  position: absolute;
+  left: -22px;
+  top: 2px;
+}
+/* .download button:hover,  */
+.download a:hover {
+  color: #196AA9;
+}
