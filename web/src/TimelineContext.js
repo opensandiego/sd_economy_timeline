@@ -33,6 +33,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [timelineScroll, setTimelineScroll] = useState(0);
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
+  const [showAbout, setShowAbout] = useState(false);
 
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
@@ -66,9 +67,7 @@ export const TimelineContextProvider = ({ children }) => {
   const getCategoryData = async () => {
     const response = await timelineService.readCategories();
     setSelectedSectors(response.slice(0, 5).map(sector => sector.name))
-    console.log(response)
     setAllSectors(response)
-    console.log("all Sectors",allSectors)
   }
 
   useEffect(() => {
@@ -150,6 +149,10 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription();
   }, [])
 
+  const toggleShowAbout = () => {
+    setShowAbout(!showAbout);
+  }
+
   const value = {
     loading,
     data,
@@ -164,6 +167,7 @@ export const TimelineContextProvider = ({ children }) => {
     timelineScroll,
     aboutDescription,
     summaryDescription,
+    showAbout,
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
@@ -174,7 +178,8 @@ export const TimelineContextProvider = ({ children }) => {
     updateSelectedDecade,
     handleYearSelector,
     outsideClickUpdate,
-    getAboutDescription
+    getAboutDescription,
+    toggleShowAbout
   };
 
   return (
