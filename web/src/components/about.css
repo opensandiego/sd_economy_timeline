@@ -57,6 +57,7 @@ p.tl-desc {
   height: 170px;
   opacity: 0;
   transition: all ease-in .3s;
+  pointer-events: none;
 }
 
 p.tl-desc.open {
