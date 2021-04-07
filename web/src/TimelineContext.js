@@ -14,6 +14,8 @@ const TimelineContext = createContext({
   showFilter: false,
   decades: [],
   showYears: false,
+  aboutDescription: null
+
 });
 export default TimelineContext;
 
@@ -29,6 +31,9 @@ export const TimelineContextProvider = ({ children }) => {
   const [showYears, setShowYears] = useState(false);
   const [selectedYear, setSelectedYear] = useState(null);
   const [timelineScroll, setTimelineScroll] = useState(0);
+  const [summaryDescription, setSummaryDescription] = useState(null);
+  const [aboutDescription, setAboutDescription] = useState(null);
+  const [showAbout, setShowAbout] = useState(false);
 
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
@@ -135,6 +140,19 @@ export const TimelineContextProvider = ({ children }) => {
     setShowFilter(false);
   }
 
+  const getAboutDescription = async () => {
+    const res = await timelineService.readDescription();
+    setSummaryDescription(res[0].summary);
+    setAboutDescription(res[0].about);
+  }
+  useEffect(() => {
+    getAboutDescription();
+  }, [])
+
+  const toggleShowAbout = () => {
+    setShowAbout(!showAbout);
+  }
+
   const value = {
     loading,
     data,
@@ -147,6 +165,9 @@ export const TimelineContextProvider = ({ children }) => {
     showYears,
     selectedYear,
     timelineScroll,
+    aboutDescription,
+    summaryDescription,
+    showAbout,
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
@@ -156,7 +177,9 @@ export const TimelineContextProvider = ({ children }) => {
     updateShowAllSectors,
     updateSelectedDecade,
     handleYearSelector,
-    outsideClickUpdate
+    outsideClickUpdate,
+    getAboutDescription,
+    toggleShowAbout
   };
 
   return (

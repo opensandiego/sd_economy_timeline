@@ -1,5 +1,4 @@
 import React from "react";
-import { BiMinus, BiPlus } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import "./sidebar.css";
 import TimelineContext from "../TimelineContext";
