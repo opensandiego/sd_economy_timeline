@@ -74,6 +74,11 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     // }
     // console.log(firstLine, eventTextDimensions[textDimensionsKey])
   }
+  if (secondLine === '') {
+    eventTextDimensions[textDimensionsKey].lineCount = 1
+  } else {
+    eventTextDimensions[textDimensionsKey].lineCount = 2
+  }
   const {
     width: textWidth,
     height: textHeight
@@ -97,17 +102,22 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   }
   const textFillStyle = 'rgba(60, 60, 60, 1)'
   const categoryFillStyle = 'rgba(110, 110, 110, 1)'
+  let verticalPosition = 2
   let ctx = textCanvas.getContext('2d')
   ctx.scale(deviceScale, deviceScale)
   roundedRect(ctx, 0, 0, rectWidth, rectHeight, 5 * multiplier)
   ctx.fillStyle = textFillStyle
   ctx.textAlign = 'center'
   ctx.font = `${textSize.fontSize}px ${fontFamily}`
-  ctx.fillText(firstLine, textSize.x, textSize.y + (2 * multiplier))
-  ctx.fillText(secondLine, textSize.x, textSize.y + (18 * multiplier))
+  ctx.fillText(firstLine, textSize.x, textSize.y + (verticalPosition * multiplier))
+  if (secondLine) {
+    verticalPosition += 16
+    ctx.fillText(secondLine, textSize.x, textSize.y + (verticalPosition * multiplier))
+  }
   ctx.fillStyle = categoryFillStyle
   ctx.font = `${categorySize.fontSize}px ${fontFamily}`
-  ctx.fillText(Category, categorySize.x, categorySize.y + (28 * multiplier))
+  verticalPosition += 10
+  ctx.fillText(Category, categorySize.x, categorySize.y + (verticalPosition * multiplier))
   // const png = textCanvas.toDataURL()
   // ctx = null
   // textCanvas.width = 0

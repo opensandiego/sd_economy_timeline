@@ -318,6 +318,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       // console.log('scaleFactor', scaleFactor, `(${screenPosition.sliceWidth})`)
       const eventTextWidth = eventTextDimensions[`${selectedEvents[i].Description}-1`].width
       const eventTextHeight = eventTextDimensions[`${selectedEvents[i].Description}-1`].height
+      const eventTextLines = eventTextDimensions[`${selectedEvents[i].Description}-1`].lineCount
+      const oneLineDescription = eventTextLines === 1 ? 19 * scaleFactor : 0 // line height is 19px, used to move one line description up so it's visible
       // console.log('eventText dims', eventTextWidth, eventTextHeight)
       const cardWidth = eventTextWidth * scaleFactor
       const teardropWidth = 60 * scaleFactor
@@ -365,9 +367,8 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       contextRef.current.globalAlpha = opacity;
       contextRef.current.fillStyle = `rgba(255,255,255,${opacity})`
       const eventText = eventTextElements[eventTextKey]
-      // console.log('event text', eventText, selectedEvents[i].Category)
       const dxText = screenPosition.x - 0.5 * cardWidth
-      const dyText = screenPosition.y - arrowHeight - textHolderHeight - vShift
+      const dyText = screenPosition.y - arrowHeight - textHolderHeight - vShift - oneLineDescription
       // console.log('draw image params', dx, dy, cardWidth, textHolderHeight)
       // console.log(selectedEvents[i].Category, eventTextWidth, cardWidth, eventTextHeight, textHolderHeight)
       // Draw the text for the event
@@ -516,6 +517,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
     // const handler = debounce(function (event) {
     const handler = function (event) {
+      event.preventDefault() // stop scroll so entire page doesn't scroll
       let delta = 0
       if (event.wheelDelta) {
           delta = event.wheelDelta / 120;
