@@ -4,7 +4,7 @@ import React, {
   useState
 } from 'react'
 import './stage.scss'
-import backgroudImagePath from '../assets/sandag-background@3x.png'
+import backgroudImagePath from '../assets/Background-kth.png'
 import teardrop from '../assets/purple-teardrop@3x.png'
 import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
 import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
