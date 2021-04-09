@@ -225,26 +225,26 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     // hint to click on background objects
     contextRef.current.font = `14px sans-serif`
     contextRef.current.fillStyle = 'black'
-    contextRef.current.fillText('Tap on objects to learn', 822, 345)
-    contextRef.current.fillText('about iconic sites in the', 822, 362)
-    contextRef.current.fillText('San Diego region!', 822, 379)
-    contextRef.current.drawImage(faHandPointUpImage, 800, 352, 18, 18)
+    contextRef.current.fillText('Tap on objects to learn', 822, 305)
+    contextRef.current.fillText('about iconic sites in the', 822, 322)
+    contextRef.current.fillText('San Diego region!', 822, 339)
+    contextRef.current.drawImage(faHandPointUpImage, 800, 312, 18, 18)
     contextRef.current.strokeStyle = 'white'
     contextRef.current.beginPath()
-    contextRef.current.moveTo(806.5, 349)
-    contextRef.current.lineTo(806.5, 344)
+    contextRef.current.moveTo(806.5, 309)
+    contextRef.current.lineTo(806.5, 304)
     contextRef.current.closePath()
     contextRef.current.stroke()
     const r = 5
     contextRef.current.beginPath()
-    contextRef.current.moveTo(812, 341 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(812 - Math.cos(65 * Math.PI / 180) * r, 345 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(812, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(812 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
     contextRef.current.beginPath()
-    contextRef.current.moveTo(801, 341 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(801 + Math.cos(65 * Math.PI / 180) * r, 345 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(801, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(801 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
