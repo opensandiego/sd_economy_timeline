@@ -494,11 +494,6 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       const { path, width, height } = info
       info.image = createImage(path, width, height)
     })
-    console.log('icons', iconInfo)
-
-    return () => {
-      console.log('UNMOUNTING!!!!')
-    }
   }, [])
 
   useEffect(() => {

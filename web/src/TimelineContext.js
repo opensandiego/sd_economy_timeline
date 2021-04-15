@@ -38,7 +38,6 @@ export const TimelineContextProvider = ({ children }) => {
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
     let decades = {}
-    console.log({ after1850, events })
     if (after1850.length) {
       after1850.forEach(event => {
         const year = event.Year
@@ -55,7 +54,6 @@ export const TimelineContextProvider = ({ children }) => {
         decades[`${i}0`] = []
       }
     }
-    console.log('decades', decades)
     return decades
   }
 
@@ -140,7 +138,6 @@ export const TimelineContextProvider = ({ children }) => {
   };
 
   const updateSelectedDecade = (value) => {
-    console.log("beep boop bop - you've selected this decade:", value)
     setSelectedDecade(value);
   };
 
