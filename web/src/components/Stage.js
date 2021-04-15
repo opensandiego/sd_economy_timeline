@@ -57,6 +57,10 @@ const initializePositions = (events = []) => {
         year: events[eventsProcessed].Year
       })
       eventsProcessed += 1
+      if (!events[eventsProcessed]) {
+        continue
+      }
+
       positions.push({
         x: 0.7,
         y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
@@ -64,6 +68,9 @@ const initializePositions = (events = []) => {
         year: events[eventsProcessed].Year
       })
       eventsProcessed += 1
+      if (!events[eventsProcessed]) {
+        continue
+      }
 
       if (currentRow % 2 === 0 && events[eventsProcessed]) {
         positions[positions.length - 2].x = 0.2
