@@ -20,14 +20,16 @@ const YearSelector = () => {
     <TimelineContext.Consumer>
       {({ selectedDec, showYears, handleYearSelector, decades, setSelectedYear, timelineScroll }) => {
         if (!selectedDec) {
-          updateTimelineScroll(timelineScroll)
+          updateTimelineScroll(timelineScroll.fraction)
         }
         return (
           <div className="row fixed-100" ref={containerRef}>
             <div className="years">
               {Object.entries(decades).map(([decade, years], index) => {
+                const scrolledDecade = timelineScroll.stageDecade === decade ? 'selected' : ''
+                const classes = selectedDec === decade ? `year active counts-${years.length} ${scrolledDecade}`: `year ${scrolledDecade}`
                 return (
-                  <div key={index} className={selectedDec === decade ? `year active counts-${years.length}`: "year"}>
+                  <div key={index} className={classes}>
                     <div className="left">
                       <p
                         style={

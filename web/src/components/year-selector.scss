@@ -240,7 +240,7 @@ $yearCounts: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
   }
 
   .year:last-of-type.active .right.open-#{$count} hr.dash {
-    display: block; 
+    display: block;
     width: 75%;
   }
 
@@ -279,7 +279,7 @@ $menu-items-loop-offset: $menu-items - 1;
 }
 
 .year {
-  &:last-child .left {
+  &.selected .left {
     &::before {
       content: "";
       display: block;
@@ -291,7 +291,7 @@ $menu-items-loop-offset: $menu-items - 1;
       width: 0;
       height: 0;
       top: 0;
-      left: 74px; 
+      left: 68px;
       margin-left: -3px;
     }
   }
@@ -305,7 +305,7 @@ $width: (100 - $menu-items) * 1%;
     font-size: #{$i}px;
     left: -100px;
   }
-  
+
   // ~ .year:last-child .left:before
   // {
   //   left:-200px; // this ensures the triangle lines up to the menu.

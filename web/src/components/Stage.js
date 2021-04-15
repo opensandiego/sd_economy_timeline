@@ -40,6 +40,7 @@ let rectCount = 30
 let scrollTotal = 0
 let totalDraws = 0
 let yearPositions = {}
+let yearsToTrackScrolling = []
 const yIncrement = timeline3DLength / rectCount
 const initializePositions = (events = []) => {
   let rows = Math.ceil(rectCount / 1.5)
@@ -114,7 +115,7 @@ const initializePositions = (events = []) => {
       // } else {
       //   rowCount = 0
       // }
-      eventsProcessed += 1
+      // eventsProcessed += 1
     }
     return positions
   }
@@ -144,6 +145,7 @@ const initializePositions = (events = []) => {
 const updatePositions = (change, positions) => {
   return positions.map(position => ({
     row: position.row,
+    year: position.year,
     x: position.x,
     y: position.y - (-change * 25) // <-- flip scroll direction
     // y: rect.y - (change * 25)
@@ -152,8 +154,6 @@ const updatePositions = (change, positions) => {
 let rects = initializePositions()
 
 const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
-  // console.log('selectedSectors', selectedSectors)
-  // console.log({ selectedYear })
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -172,6 +172,12 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         [cur.year]: cur.y
       }
     }, {})
+    yearsToTrackScrolling = rects.map(rect => {
+      return {
+        year: rect.year,
+        position: rect.y
+      }
+    })
     // console.log({ rects, yearPositions })
   }
   // console.log('stage updated selectedEvents', selectedEvents)
@@ -458,7 +464,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     rects = nextRects
 
     if (totalDraws % 10 === 0) {
-      const allPositions = Object.values(yearPositions)
+      const allPositions = yearsToTrackScrolling.map(o => o.position)
       const start = allPositions[0]
       const end = allPositions[allPositions.length - 1]
       const range = start - end
@@ -468,7 +474,19 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
           (scrollFraction < 0) ?
             0 :
             scrollFraction
-      setTimelineScroll(scrollClamped)
+
+      const allYears = yearsToTrackScrolling.map(o => o.year)
+      const currentScroll = scrollTotal * 25
+      let distance = 0
+      let position = 0
+      while (distance < currentScroll) {
+        position += 1
+        distance += allPositions[position - 1] - allPositions[position]
+      }
+      position = (position > 1) ? position - 2 : position - 1
+      const currentYear = allYears[position] ?? allYears[0]
+      const stageDecade = `${currentYear.slice(0,3)}0`
+      setTimelineScroll({ fraction: scrollClamped, stageDecade })
     }
   }
 
@@ -697,6 +715,16 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     }, timePerStep)
   }, [
     selectedYear
+  ])
+
+  useEffect(() => {
+    if (yearsToTrackScrolling.length) {
+      scrollTotal = 0
+      const resetDecade = `${yearsToTrackScrolling[0].year}0`
+      setTimelineScroll({ fraction: 0, stageDecade: resetDecade })
+    }
+  }, [
+    selectedSectors
   ])
 
   return (

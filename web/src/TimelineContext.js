@@ -30,7 +30,10 @@ export const TimelineContextProvider = ({ children }) => {
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
   const [selectedYear, setSelectedYear] = useState(null);
-  const [timelineScroll, setTimelineScroll] = useState(0);
+  const [timelineScroll, setTimelineScroll] = useState({
+    fraction: 0,
+    currentDecade: null
+  });
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
   const [showAbout, setShowAbout] = useState(false);
@@ -83,7 +86,9 @@ export const TimelineContextProvider = ({ children }) => {
   useEffect(() => {
     if (!data) return
     const eventsForSelectedSectors = data.filter(event => selectedSectors.includes(event.Category))
-    setDecades(buildDecades(eventsForSelectedSectors))
+    const decades = buildDecades(eventsForSelectedSectors)
+    setDecades(decades)
+    setTimelineScroll({ fraction: 0, stageDecade: Object.keys(decades)[0] })
   }, [
     data,
     selectedSectors
