@@ -38,17 +38,24 @@ export const TimelineContextProvider = ({ children }) => {
   const buildDecades = events => {
     const after1850 = events.filter(event => +event.Year >= 1850)
     let decades = {}
-    after1850.forEach(event => {
-      const year = event.Year
-      const decadeStart = `${year.slice(0, 3)}0`
-      if (!Object.keys(decades).includes(decadeStart)) {
-        decades[decadeStart] = [year]
+    console.log({ after1850, events })
+    if (after1850.length) {
+      after1850.forEach(event => {
+        const year = event.Year
+        const decadeStart = `${year.slice(0, 3)}0`
+        if (!Object.keys(decades).includes(decadeStart)) {
+          decades[decadeStart] = [year]
+        }
+        if (!decades[decadeStart].includes(year)) {
+          decades[decadeStart].push(year)
+        }
+      })
+    } else {
+      for (let i = 185; i <= 202; i++){
+        decades[`${i}0`] = []
       }
-      if (!decades[decadeStart].includes(year)) {
-        decades[decadeStart].push(year)
-      }
-    })
-    // console.log('decades', decades)
+    }
+    console.log('decades', decades)
     return decades
   }
 
@@ -67,6 +74,7 @@ export const TimelineContextProvider = ({ children }) => {
   const getCategoryData = async () => {
     const response = await timelineService.readCategories();
     setSelectedSectors(response.slice(0, 5).map(sector => sector.name))
+    // setSelectedSectors(["Education"])
     setAllSectors(response)
   }
 
