@@ -51,13 +51,17 @@ const initializePositions = (events = []) => {
     let currentRow = 0
     let rowCount = 0
     while (eventsProcessed < totalEvents) {
+      let rowYears = []
+      rowCount = 0
       positions.push({
         x: 0.3,
         y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
         row: currentRow,
         year: events[eventsProcessed].Year
       })
+      rowYears.push(events[eventsProcessed].Year)
       eventsProcessed += 1
+      rowCount += 1
       if (!events[eventsProcessed]) {
         continue
       }
@@ -68,7 +72,9 @@ const initializePositions = (events = []) => {
         row: currentRow,
         year: events[eventsProcessed].Year
       })
+      rowYears.push(events[eventsProcessed].Year)
       eventsProcessed += 1
+      rowCount += 1
       if (!events[eventsProcessed]) {
         continue
       }
@@ -82,9 +88,44 @@ const initializePositions = (events = []) => {
           row: currentRow,
           year: events[eventsProcessed].Year
         })
+        rowYears.push(events[eventsProcessed].Year)
         eventsProcessed += 1
+        rowCount += 1
       }
       currentRow += 1
+
+      let rowsAdded = 0
+      rowYears.forEach((year, index) => {
+        const oneAhead = index + 1
+        if (rowYears[oneAhead]) {
+          const currentDecade = year.slice(0, 3)
+          const nextDecade = rowYears[index + 1].slice(0, 3)
+          if (currentDecade !== nextDecade) {
+            const updatedY = timeline3DLength - (yIncrement + ((currentRow + rowsAdded) * yIncrement))
+            if (index === 0) {
+              // going to be a single event in the row, center it
+              positions[positions.length - (rowYears.length)].x = 0.5
+              // move additional event in this row to the next row since the decade changed
+              positions[positions.length - (rowYears.length - 1 - index)].x = 0.3
+              positions[positions.length - (rowYears.length - 1 - index)].y = updatedY
+              if (rowYears.length === 3){
+                positions[positions.length - 1].x = 0.7
+                positions[positions.length - 1].y = updatedY
+              }
+            }
+            if (index === 1) {
+              // two events in this row after adjustment
+              positions[positions.length - (rowYears.length)].x = 0.3
+              positions[positions.length - (rowYears.length - 1)].x = 0.7
+              // third event in this row is in a different decade, move to a new row
+              positions[positions.length - 1].x = 0.5
+              positions[positions.length - 1].y = updatedY
+            }
+            rowsAdded += 1
+          }
+        }
+      })
+      currentRow += rowsAdded
 
       // const previousRowHasOneEvent = positions.filter(p => p.row === currentRow - 2).length === 1
       // positions.push({
