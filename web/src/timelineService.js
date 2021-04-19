@@ -6,6 +6,27 @@ import description from "./description.txt"
 const TimelineService = {
   async readCSV() {
     const rows = await d3.csv(data)
+    // convert decades to start of the decade and update description
+    const decade = /(\d{4})s/
+    rows.forEach(row => {
+      const isDecade = decade.exec(row.Year)
+      if (isDecade) {
+        row.Description = `${row.Description} (${row.Year})`
+        row.Year = isDecade[1]
+      }
+    })
+    // sort data by year
+    rows.sort((a, b) => {
+      const firstYear = +a.Year
+      const secondYear = +b.Year
+      if (firstYear < secondYear) {
+        return -1
+      }
+      if (firstYear > secondYear) {
+        return 1
+      }
+      return 0
+    })
     return rows
   },
 
