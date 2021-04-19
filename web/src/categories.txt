@@ -35,7 +35,7 @@
   "name": "Manufacturing",
   "description": "A historic look at the evolution of Manufacturing in the San Diego region. The manufacturing sector currently accounts for 3.6% of jobs in the region."
 }, {
-  "name": "Goods",
+  "name": "Goods Movement",
   "description": "Beyond people, the movement of goods and freight throughout the San Diego region is an important component for continued economic development. "
 }, {
   "name": "Professional",
