@@ -58,6 +58,7 @@
   max-width: 994px;
   overflow: auto;
   /* margin-bottom: 100px; */
+  overflow-y: hidden;
 }
 
 body {
