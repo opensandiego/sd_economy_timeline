@@ -277,7 +277,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
   const drawBoundaries = vanishingPoint => {
     // hint to click on background objects
-    contextRef.current.font = `14px sans-serif`
+    contextRef.current.font = `14px Montserrat`
     contextRef.current.fillStyle = 'black'
     contextRef.current.fillText('Tap on objects to learn', 822, 305)
     contextRef.current.fillText('about iconic sites in the', 822, 322)
@@ -342,10 +342,10 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     })
     const { x, y, sliceWidth } = screenPosition
     const scaleFactor = sliceWidth / cardSize
+    if (scaleFactor < 0.15 || scaleFactor > 3) return
     const xOffset = 200 * scaleFactor
     const yOffset = 5 * scaleFactor
-    // contextRef.current.font = `${32 * scaleFactor}px sans-serif`
-    contextRef.current.font = `${32 * scaleFactor}px sans-serif`
+    contextRef.current.font = `${32 * scaleFactor}px Montserrat`
     contextRef.current.fillStyle = 'white'
     contextRef.current.fillText(year, x - xOffset, y + yOffset)
     contextRef.current.strokeStyle = 'rgba(255, 255, 255, 0.5)'
@@ -460,7 +460,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         // Draw the event icon on the tear drop
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
-        contextRef.current.font = `${14 * scaleFactor}px sans-serif`
+        contextRef.current.font = `${14 * scaleFactor}px Montserrat`
         const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
         // Draw the event's year under the icon
         contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
