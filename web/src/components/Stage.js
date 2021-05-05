@@ -451,7 +451,7 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
-      if (eventIcon) {
+      if (eventIcon && opacity > 0) {
         const iconWidth = eventIcon.width * scaleFactor
         const iconHeight = eventIcon.height * scaleFactor
         const iconVerticalShift = 10 - (eventIcon.verticalShift || 0)
