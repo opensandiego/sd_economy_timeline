@@ -36,7 +36,7 @@ text-align: center;
 
 .abt-desc {
   position: relative;
-  margin-left: 50px;
+  /* margin-left: 50px; NP */
   margin-bottom: 38px;
   height: 26px;
   margin-top: 12px;
@@ -53,16 +53,21 @@ p.tl-desc {
   padding: 17px;
   width: 368px;
   overflow-y: auto;
-  /* height: 105px; */
   height: 170px;
   opacity: 0;
   transition: all ease-in .3s;
-  pointer-events: none;
+  /* pointer-events: none; commented out for the overflow description */
+  margin-top: 0;
+
+  /* fix the "categories button not clickable" ?*/
+  z-index: 9;
 }
 
 p.tl-desc.open {
+  /* fix the "categories button not clickable" ?*/
+  z-index: 11; 
   opacity: 1;
-  margin-top: 0;
+
 }
 .bottom-container {
   display: flex;

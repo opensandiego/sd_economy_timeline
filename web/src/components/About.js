@@ -14,7 +14,7 @@ const About = () => {
     <TimelineContext.Consumer>
       {({ summaryDescription, aboutDescription, showAbout, toggleShowAbout }) => (
         <div className="about-container">
-          <h1>San Diego Regional Timeline</h1>
+          <h1>The San Diego Region - A Special Place, Built by People Focused on the Future</h1>
           <p className="tl-summ">{summaryDescription}</p>
           <div className="bottom-container">
             <div className="abt-desc">

@@ -59,6 +59,7 @@
   overflow: auto;
   /* margin-bottom: 100px; */
   overflow-y: hidden;
+  padding-bottom: 15px;
 }
 
 body {
