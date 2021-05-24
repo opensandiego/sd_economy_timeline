@@ -2,7 +2,7 @@
   padding: 0 calc(100% - 260px) 20px 15px;
   position: relative;
   /* background-color: white; */
-  height: 685px;
+  height: 690px;
   z-index: 0;
   /* overflow-y: auto; */
   direction: rtl;
@@ -11,6 +11,8 @@
   transform: translate3d(0vw, 0, 0);
   opacity: 1;
   transition: all 300ms ease;
+  -webkit-box-shadow: 7px 0px 8px 0px rgb(0 0 0 / 25%);
+  box-shadow: 7px 0px 8px 0px rgb(0 0 0 / 25%);
 }
 .fixed-270.hide {
   transform: translate3d(-100vw, 0, 0);
@@ -51,6 +53,7 @@
 .selected-sectors {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .sector-filter-tag, .key-sector-selector, .all-sector-selector {
@@ -93,8 +96,11 @@
   font: normal normal normal 12px/15px Montserrat;
   letter-spacing: 0px;
   color: #196CAA;
-  padding-left: 45px;
-  padding-right: 50px;
+  /* padding-left: 45px;
+  padding-right: 50px; */
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
 }
 
 
@@ -131,7 +137,7 @@ color: #186BA9;
 }
 
 .sidebar-label span {
-  font: normal normal normal 9px/11px Montserrat !important;
+  font: normal normal normal 11px/14px Montserrat !important;
   padding-left: 10px;
 }
 
@@ -181,9 +187,9 @@ span.checkbox-custom {
 
 .selected-sectors:after {
   content: "";
-  width: 80%;
+  width: calc(100% - 16px);
   border-bottom: 1px solid #2B2B2B66;
-  margin-top: 17px;
+  margin-top: 25px;
 }
 
 .key-sector-selector, .all-sector-selector {
@@ -274,7 +280,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   /* overflow-y: auto;
   height: calc(703px - 209px); */
   overflow-y: auto;
-  height: 495px;
+  height: 470px;
   margin-right: -10px;
 }
 

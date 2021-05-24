@@ -51,14 +51,15 @@
 }
 
 .row.fixed-100 {
-  height: 100px;
-  max-height: 100px;
+  height: 110px;
+  max-height: 110px;
   /* z-index: 99; NP*/
   background: black;
   max-width: 994px;
   overflow: auto;
   /* margin-bottom: 100px; */
   overflow-y: hidden;
+  padding-bottom: 15px;
 }
 
 body {
