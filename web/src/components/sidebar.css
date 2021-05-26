@@ -277,8 +277,6 @@ div#sidebar .sidebar-label:nth-of-type(1) {
 }
 
 .all-sectors {
-  /* overflow-y: auto;
-  height: calc(703px - 209px); */
   overflow-y: auto;
   height: 470px;
   margin-right: -10px;

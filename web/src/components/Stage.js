@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import './stage.scss'
 import backgroudImagePath from '../assets/Background-kth.png'
 import teardrop from '../assets/purple-teardrop@3x.png'
 import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
@@ -785,25 +784,23 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
           setSelectedBackgroundRegion={setSelectedBackgroundRegion}
         />
       }
-      <div className='viewport'>
-        <div className='scene3D-container'>
-          <img
-            alt='Various landmarks and components of the San Diego region'
-            src={backgroudImagePath}
-            width={width}
-            height={height}
-          />
-          <div className='scene3D' ref={sceneRef}>
-            <canvas
-              ref={canvasRef}
-              style={{
-                width: `${sceneSize.width}px`,
-                height: `${sceneSize.height}px`
-              }}
-              width={`${sceneSize.width * deviceScale}`}
-              height={`${sceneSize.height * deviceScale}`}
-            ></canvas>
-          </div>
+      <div className='scene-container'>
+        <img
+          alt='Various landmarks and components of the San Diego region'
+          src={backgroudImagePath}
+          width={width}
+          height={height}
+        />
+        <div className='scene' ref={sceneRef}>
+          <canvas
+            ref={canvasRef}
+            style={{
+              width: `${sceneSize.width}px`,
+              height: `${sceneSize.height}px`
+            }}
+            width={`${sceneSize.width * deviceScale}`}
+            height={`${sceneSize.height * deviceScale}`}
+          ></canvas>
         </div>
       </div>
     </div>
