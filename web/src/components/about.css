@@ -33,6 +33,10 @@ letter-spacing: 0.72px;
 color: #196AA9;
 text-align: center;
 }
+.about-container h1 span {
+  font: normal normal 600 30px/49px Montserrat;
+  display: block;
+}
 
 .abt-desc {
   position: relative;

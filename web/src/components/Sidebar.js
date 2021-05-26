@@ -63,7 +63,7 @@ const Sidebar = (props) => {
 
               <div className="sidebar-label">
                 <p>
-                  Categories<span>(Maximum of 5 at a time)</span>
+                  Categories<span>(Select 5 Max)</span>
                 </p>
               </div>
               {showAllSectors ? <ScrollableFilter /> : null}
