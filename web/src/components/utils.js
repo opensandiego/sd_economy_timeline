@@ -154,6 +154,27 @@ export const addFadeBorderForText = (textCanvas, width, height, borderWidth, dev
   return fadedBorderCanvas
 }
 
+export const createTeardropImages = eras => {
+  const images = eras.reduce((all, era) => {
+    all[era.name] = createImage(era.teardrop, 95, 137)
+    return all
+  }, {})
+  return images
+}
+
+export const createEraLookup = eras => {
+  const yearLookup = eras.reduce((years, era) => {
+    const { start, end, name } = era
+    let current = start
+    while (current <= end) {
+      years[current] = name
+      current += 1
+    }
+    return years
+  }, {})
+  return yearLookup
+}
+
 export function debounce(func, wait, immediate) {
   var timeout;
   return function() {

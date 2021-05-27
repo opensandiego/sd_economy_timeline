@@ -4,7 +4,7 @@ import React, {
   useState
 } from 'react'
 import backgroudImagePath from '../assets/Background-kth.png'
-import teardrop from '../assets/purple-teardrop@3x.png'
+import eras from './eras'
 import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
 import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
 import faHandPointUp from '../assets/fa-hand-point-up.svg'
@@ -14,7 +14,9 @@ import {
   makeEventKey,
   createImage,
   drawEventText,
-  getDecade
+  getDecade,
+  createTeardropImages,
+  createEraLookup
 } from './utils'
 import Popup from './Popup'
 import BackgroundTooltip from './BackgroundTooltip'
@@ -27,6 +29,9 @@ let width = 600
 let height = 600
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
+const eraTeardrops = createTeardropImages(eras)
+const eraLookupByYear = createEraLookup(eras)
+
 const cardSize = 720
 let timeline3DLength = 4000
 let selectedEvents
@@ -34,7 +39,7 @@ let currentHover
 let eventTextElements = {}
 let eventTextDimensions = {}
 let eventTextBuilt = false
-let eventTeardrop, arrowsLeftImage, arrowsRightImage, faHandPointUpImage
+let arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
 let scrollTotal = 0
 let totalDraws = 0
@@ -430,7 +435,10 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
       // Draw the tear drop
-      contextRef.current.drawImage(eventTeardrop, dx, dy, teardropWidth, teardropHeight)
+      const eventYear = selectedEvents[i].Year
+      const eventEra = eraLookupByYear[eventYear]
+      const eraTeardrop = eraTeardrops[eventEra]
+      contextRef.current.drawImage(eraTeardrop, dx, dy, teardropWidth, teardropHeight)
 
       // keep track of dimensions to test if a timeline item is clicked
       selectedEvents[i].position = {
@@ -544,7 +552,6 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       height
     })
     setSceneSizeEstablished(true)
-    eventTeardrop = createImage(teardrop, 95, 137)
     arrowsLeftImage = createImage(arrowsLeft, 47, 46)
     arrowsRightImage = createImage(arrowsRight, 47, 46)
     faHandPointUpImage = createImage(faHandPointUp, 18, 18)
