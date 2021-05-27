@@ -93,7 +93,7 @@
 .clear{
   text-decoration: underline;
   cursor: pointer;
-  font: normal normal normal 12px/15px Montserrat;
+  font: normal normal normal 16px/19px Montserrat;
   letter-spacing: 0px;
   color: #196CAA;
   /* padding-left: 45px;
@@ -106,8 +106,9 @@
 
 .empty {
   color: #9a2577;
-  font-size: 0.5em;
+  font-size: 16px;
   font-style: italic;
+  line-height: 23px;
 }
 
 .active-sectors svg, .all-sectors svg {
@@ -120,13 +121,13 @@
   content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' width='181' height='1' viewBox='0 0 181 1'><defs><style>.a{fill:none;stroke:rgba(43,43,43,0.4);stroke-linecap:round;}</style></defs><line class='a' x1='180' transform='translate(0.5 0.5)'/></svg>");
 } */
 #sidebar span, .sector-filter-tag {
-  font: normal normal normal 13px/16px Montserrat;
+  font: normal normal normal 16px/19px Montserrat;
 letter-spacing: 0px;
 color: #2B2B2B;
 }
 
 .sidebar-label > p {
-  font: normal normal 600 15px/19px Montserrat;
+  font: normal normal 600 16px/20px Montserrat;
 letter-spacing: 0px;
 color: #186BA9;
 }
@@ -137,7 +138,7 @@ color: #186BA9;
 }
 
 .sidebar-label span {
-  font: normal normal normal 11px/14px Montserrat !important;
+  font: normal normal normal 16px/19px Montserrat !important;
   padding-left: 10px;
 }
 
@@ -189,7 +190,7 @@ span.checkbox-custom {
   content: "";
   width: calc(100% - 16px);
   border-bottom: 1px solid #2B2B2B66;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
 .key-sector-selector, .all-sector-selector {
@@ -233,7 +234,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   visibility: hidden;
   box-shadow: 0px 1px 2px #00000029;
   border-radius: 6px;
-  width: 200px;
+  width: 350px;
   background-color: white;
   text-align: left;
   border-radius: 6px;
@@ -243,13 +244,13 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   /* bottom: 150%;
   left: 150%; */
   margin-left: -45px;
-  font: normal normal 400 12px/16px Montserrat !important;
+  font: normal normal 400 16px/23px Montserrat !important;
   letter-spacing: 0px;
   color: #031620;
 /* transform: translateY(calc(-100% + calc(-23px + 3px))); */
 }
 
-#sidebar .tooltip .tooltiptext::after {
+/* #sidebar .tooltip .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -258,18 +259,20 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   border-width: 8px;
   border-style: solid;
   border-color: white transparent transparent transparent;
-}
-#sidebar .tooltip .tooltiptext::before{
+} */
+
+/* #sidebar .tooltip .tooltiptext::before{ */
+#sidebar .tooltip .tooltiptext::after{
   content: "";
   position: absolute;
   background: white;
   width: 10px;
   height: 10px;
   z-index: -1;
-  bottom: -6px;
+  bottom: -5px;
   transform: rotate(45deg);
   left: 23%;
-  box-shadow: 0px 1.5px 2px #00000029;
+  box-shadow: 1.5px 1.5px 2px #00000029;
 }
 
 #sidebar .tooltip:hover .tooltiptext {
