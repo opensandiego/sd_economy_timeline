@@ -31,6 +31,10 @@ let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const eraTeardrops = createTeardropImages(eras)
 const eraLookupByYear = createEraLookup(eras)
+const eraInfo = eras.reduce((all, era) => {
+  all[era.name] = era
+  return all
+}, {})
 
 const cardSize = 720
 let timeline3DLength = 4000
@@ -245,6 +249,9 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
   })
   const [eventForPopup, setEventForPopup] = useState(null)
   const [selectedBackgroundRegion, setSelectedBackgroundRegion] = useState(null)
+  const [eraTitle, setEraTitle] = useState(null)
+  const [eraPeriod, setEraPeriod] = useState(null)
+  const [eraColor, setEraColor] = useState(null)
 
   const timelineToScreen = position => {
     // console.log('timelineToScreen', width)
@@ -534,6 +541,13 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
       position = (position > 1) ? position - 2 : position - 1
       const currentYear = allYears[position] ?? allYears[0]
       const stageDecade = `${currentYear.slice(0,3)}0`
+
+      const nextEra = eraInfo[eraLookupByYear[stageDecade]]
+      const nextTitle = nextEra.title
+      const nextPeriod = `(${nextEra.start} - ${nextEra.end})`
+      setEraTitle(nextTitle)
+      setEraPeriod(nextPeriod)
+      setEraColor(nextEra.color)
       setTimelineScroll({ fraction: scrollClamped, stageDecade })
     }
   }
@@ -792,6 +806,10 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         />
       }
       <div className='scene-container'>
+        <div className='current-era' style={{ color: eraColor }}>
+          <div>{eraTitle}</div>
+          <div>{eraPeriod}</div>
+        </div>
         <img
           alt='Various landmarks and components of the San Diego region'
           src={backgroudImagePath}

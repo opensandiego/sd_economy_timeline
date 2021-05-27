@@ -169,3 +169,12 @@ img:nth-of-type(2) {
 .year:last-of-type hr {
   display: none;
 }
+
+.current-era {
+  font-family: Montserrat;
+  font-size: 1.4em;
+  position: absolute;
+  padding: 30px 0;
+  width: 100%;
+  text-align: center;
+}
