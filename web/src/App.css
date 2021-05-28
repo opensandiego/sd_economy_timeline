@@ -172,9 +172,14 @@ img:nth-of-type(2) {
 
 .current-era {
   font-family: Montserrat;
-  font-size: 1.4em;
+  font-size: 18px;
   position: absolute;
-  padding: 30px 0;
+  padding: 20px 0;
   width: 100%;
   text-align: center;
+
+}
+
+.current-era div:first-child {
+  font-weight: bold
 }
