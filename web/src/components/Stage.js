@@ -475,7 +475,9 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
         // Draw the event icon on the tear drop
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
         contextRef.current.font = `${14 * scaleFactor}px Montserrat`
-        const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
+        const ones = (`${selectedEvents[i].Year}`.match(/1/g) || []).length
+        // const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
+        const xNudge = 14 + ones
         // Draw the event's year under the icon
         contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
       }
