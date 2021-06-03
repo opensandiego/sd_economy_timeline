@@ -34,12 +34,14 @@ function App() {
                   data,
                   selectedSectors,
                   selectedYear,
+                  setSelectedYear,
                   setTimelineScroll,
                 }) => (
                   <Stage
                     data={data}
                     selectedSectors={selectedSectors}
                     selectedYear={selectedYear}
+                    setSelectedYear={setSelectedYear}
                     setTimelineScroll={setTimelineScroll}
                   />
                 )}

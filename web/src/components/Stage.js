@@ -202,7 +202,7 @@ const updatePositions = (change, positions) => {
 }
 let rects = initializePositions()
 
-const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
+const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll})=> {
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -673,6 +673,10 @@ const Stage = ({data, selectedSectors, selectedYear, setTimelineScroll})=> {
     const canvasClickHandler = clickEvent => {
       const { offsetX: x, offsetY: y } = clickEvent
       const clickedMarker = hitTest(clickEvent)
+      if (y < 320 && clickedMarker) {
+        setSelectedYear(clickedMarker.Year)
+        return
+      }
       if (clickedMarker) {
         setEventForPopup(clickedMarker)
         setSelectedBackgroundRegion(null)
