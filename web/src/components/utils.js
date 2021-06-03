@@ -62,14 +62,26 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     span.style.padding = '10px'
     document.body.appendChild(span)
     const { width, height } = span.getBoundingClientRect()
+
+    let spanCategory = document.createElement('span')
+    spanCategory.innerHTML = Category
+    spanCategory.style.opacity = 0
+    spanCategory.style.fontSize = `${fontSize}px`
+    spanCategory.style.fontFamily = fontFamily
+    spanCategory.style.textAlign = 'center'
+    spanCategory.style.padding = '10px'
+    document.body.appendChild(spanCategory)
+    const { width: categoryWidth } = spanCategory.getBoundingClientRect()
+
     eventTextDimensions[textDimensionsKey] = {
       // width: (width + padx) * multiplier,
-      width: width * multiplier,
+      width: (width > categoryWidth ? width : categoryWidth) * multiplier,
       // height: (height + pady) * multiplier
       height: height * multiplier
     }
     // if (firstLine !== 'California is') {
     document.body.removeChild(span)
+    document.body.removeChild(spanCategory)
     // span = null
     // }
     // console.log(firstLine, eventTextDimensions[textDimensionsKey])
