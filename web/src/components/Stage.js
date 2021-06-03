@@ -5,8 +5,8 @@ import React, {
 } from 'react'
 import backgroudImagePath from '../assets/Background-kth.png'
 import eras from './eras'
-import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
-import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
+import arrowsLeft from '../assets/stage-arrows-left.png'
+import arrowsRight from '../assets/stage-arrows-right.png'
 import faHandPointUp from '../assets/fa-hand-point-up.svg'
 import { iconInfo, categoryToIcon } from './icons'
 import { regions, descriptions } from './regions'
@@ -323,11 +323,12 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       y: timeline3DLength
     })
     const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
-    gradient.addColorStop(0, `rgb(69,109,131,0)`)
-    gradient.addColorStop(0.13, `rgb(12,70,110,0.31)`)
-    gradient.addColorStop(0.32, `rgb(12,70,110,0.67)`)
-    gradient.addColorStop(0.59, `rgb(12,70,110,0.82)`)
-    gradient.addColorStop(1, `rgb(8,36,56,1)`)
+    // gradient.addColorStop(0, `rgb(230,200,173,0)`)
+    gradient.addColorStop(0.096, `rgb(230,200,173,0)`)
+    gradient.addColorStop(0.10, `rgb(213,185,161,.8)`)
+    gradient.addColorStop(0.32, `rgb(213,185,161,.9)`)
+    gradient.addColorStop(0.59, `rgb(213,185,161,1)`)
+    gradient.addColorStop(1, `rgb(204,180,156,1)`)
     contextRef.current.fillStyle = gradient
     contextRef.current.beginPath()
     contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
