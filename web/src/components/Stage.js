@@ -763,7 +763,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     const selectedYearPosition = yearPositions[selectedYear]
     const currentPosition = Object.values(yearPositions)[0] - (scrollTotal * 25)
     // the + 3 in the next line moves the selected year slightly closer to the foreground
-    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 3
+    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 1
     const direction = (totalChangeNeeded < 0) ? -1 : 1
     const step = 1 * direction
     let steps = 0
