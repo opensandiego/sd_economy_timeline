@@ -5,8 +5,8 @@ import React, {
 } from 'react'
 import backgroudImagePath from '../assets/Background-kth.png'
 import eras from './eras'
-import arrowsLeft from '../assets/sandag-timeline-arrows-left.svg'
-import arrowsRight from '../assets/sandag-timeline-arrows-right.svg'
+import arrowsLeft from '../assets/stage-arrows-left.png'
+import arrowsRight from '../assets/stage-arrows-right.png'
 import faHandPointUp from '../assets/fa-hand-point-up.svg'
 import { iconInfo, categoryToIcon } from './icons'
 import { regions, descriptions } from './regions'
@@ -288,28 +288,30 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
 
   const drawBoundaries = vanishingPoint => {
     // hint to click on background objects
-    contextRef.current.font = `14px Montserrat`
+    contextRef.current.font = `12px Montserrat`
     contextRef.current.fillStyle = 'black'
-    contextRef.current.fillText('Tap on objects to learn', 822, 305)
-    contextRef.current.fillText('about iconic sites in the', 822, 322)
-    contextRef.current.fillText('San Diego region!', 822, 339)
-    contextRef.current.drawImage(faHandPointUpImage, 800, 312, 18, 18)
+    contextRef.current.fillText('Tap on objects', 850, 305)
+    contextRef.current.fillText('to learn about', 850, 322)
+    contextRef.current.fillText('iconic sites in', 850, 339)
+    contextRef.current.fillText('the San Diego', 850, 356)
+    contextRef.current.fillText('region!', 850, 373)
+    contextRef.current.drawImage(faHandPointUpImage, 828, 312, 18, 26)
     contextRef.current.strokeStyle = 'white'
     contextRef.current.beginPath()
-    contextRef.current.moveTo(806.5, 309)
-    contextRef.current.lineTo(806.5, 304)
+    contextRef.current.moveTo(834.5, 309)
+    contextRef.current.lineTo(834.5, 304)
     contextRef.current.closePath()
     contextRef.current.stroke()
     const r = 5
     contextRef.current.beginPath()
-    contextRef.current.moveTo(812, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(812 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(840, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(840 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
     contextRef.current.beginPath()
-    contextRef.current.moveTo(801, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(801 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(829, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(829 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
@@ -323,11 +325,12 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       y: timeline3DLength
     })
     const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
-    gradient.addColorStop(0, `rgb(69,109,131,0)`)
-    gradient.addColorStop(0.13, `rgb(12,70,110,0.31)`)
-    gradient.addColorStop(0.32, `rgb(12,70,110,0.67)`)
-    gradient.addColorStop(0.59, `rgb(12,70,110,0.82)`)
-    gradient.addColorStop(1, `rgb(8,36,56,1)`)
+    // gradient.addColorStop(0, `rgb(230,200,173,0)`)
+    gradient.addColorStop(0.096, `rgb(230,200,173,0)`)
+    gradient.addColorStop(0.10, `rgb(213,185,161,.8)`)
+    gradient.addColorStop(0.32, `rgb(213,185,161,.9)`)
+    gradient.addColorStop(0.59, `rgb(213,185,161,1)`)
+    gradient.addColorStop(1, `rgb(204,180,156,1)`)
     contextRef.current.fillStyle = gradient
     contextRef.current.beginPath()
     contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
@@ -570,7 +573,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     setSceneSizeEstablished(true)
     arrowsLeftImage = createImage(arrowsLeft, 47, 46)
     arrowsRightImage = createImage(arrowsRight, 47, 46)
-    faHandPointUpImage = createImage(faHandPointUp, 18, 18)
+    faHandPointUpImage = createImage(faHandPointUp, 18, 26)
     Object.values(iconInfo).forEach(info => {
       const { path, width, height } = info
       info.image = createImage(path, width, height)
