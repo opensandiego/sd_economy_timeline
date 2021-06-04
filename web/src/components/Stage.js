@@ -290,28 +290,28 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     // hint to click on background objects
     contextRef.current.font = `12px Montserrat`
     contextRef.current.fillStyle = 'black'
-    contextRef.current.fillText('Tap on objects', 850, 305)
-    contextRef.current.fillText('to learn about', 850, 322)
-    contextRef.current.fillText('iconic sites in', 850, 339)
-    contextRef.current.fillText('the San Diego', 850, 356)
-    contextRef.current.fillText('region!', 850, 373)
-    contextRef.current.drawImage(faHandPointUpImage, 828, 312, 18, 26)
+    contextRef.current.fillText('Tap on objects', 880, 305)
+    contextRef.current.fillText('to learn about', 880, 322)
+    contextRef.current.fillText('iconic sites in', 880, 339)
+    contextRef.current.fillText('the San Diego', 880, 356)
+    contextRef.current.fillText('region!', 880, 373)
+    contextRef.current.drawImage(faHandPointUpImage, 858, 312, 20, 20)
     contextRef.current.strokeStyle = 'white'
     contextRef.current.beginPath()
-    contextRef.current.moveTo(834.5, 309)
-    contextRef.current.lineTo(834.5, 304)
+    contextRef.current.moveTo(864.5, 309)
+    contextRef.current.lineTo(864.5, 304)
     contextRef.current.closePath()
     contextRef.current.stroke()
     const r = 5
     contextRef.current.beginPath()
-    contextRef.current.moveTo(840, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(840 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(870, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(870 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
     contextRef.current.beginPath()
-    contextRef.current.moveTo(829, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(829 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(859, 301 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(859 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
@@ -327,7 +327,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     const gradient = contextRef.current.createLinearGradient(0, height * vanishTop, 0, height);
     // gradient.addColorStop(0, `rgb(230,200,173,0)`)
     gradient.addColorStop(0.096, `rgb(230,200,173,0)`)
-    gradient.addColorStop(0.10, `rgb(213,185,161,.8)`)
+    gradient.addColorStop(0.10, `rgb(230,200,173,.8)`)
     gradient.addColorStop(0.32, `rgb(213,185,161,.9)`)
     gradient.addColorStop(0.59, `rgb(213,185,161,1)`)
     gradient.addColorStop(1, `rgb(204,180,156,1)`)
@@ -573,7 +573,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     setSceneSizeEstablished(true)
     arrowsLeftImage = createImage(arrowsLeft, 47, 46)
     arrowsRightImage = createImage(arrowsRight, 47, 46)
-    faHandPointUpImage = createImage(faHandPointUp, 18, 26)
+    faHandPointUpImage = createImage(faHandPointUp, 20, 20)
     Object.values(iconInfo).forEach(info => {
       const { path, width, height } = info
       info.image = createImage(path, width, height)
