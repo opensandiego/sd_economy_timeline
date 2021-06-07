@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
+import { BsInfoCircle, BsInfoCircleFill } from 'react-icons/bs'
 import backgroudImagePath from '../assets/Background-kth.png'
 import eras from './eras'
 import arrowsLeft from '../assets/stage-arrows-left.png'
@@ -264,6 +265,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
   const [selectedBackgroundRegion, setSelectedBackgroundRegion] = useState(null)
   const [eraTitle, setEraTitle] = useState(null)
   const [eraPeriod, setEraPeriod] = useState(null)
+  const [eraDescription, setEraDescription] = useState(null)
   const [eraColor, setEraColor] = useState(null)
 
   const timelineToScreen = position => {
@@ -565,6 +567,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       const nextPeriod = `(${nextEra.start} - ${nextEra.end})`
       setEraTitle(nextTitle)
       setEraPeriod(nextPeriod)
+      setEraDescription(nextEra.description)
       setEraColor(nextEra.color)
       setTimelineScroll({ fraction: scrollClamped, stageDecade })
     }
@@ -830,8 +833,18 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       <div className='scene-container'>
         <div className='current-era' style={{ color: eraColor }}>
           <div>{eraTitle}</div>
-          <div>{eraPeriod}</div>
+          <div className='current-era-tooltip-container'>
+            <span>{eraPeriod}</span>
+            {eraTitle &&
+              <span className="tooltip">
+                <BsInfoCircle />
+                <BsInfoCircleFill />
+                <span className="tooltiptext">{eraDescription}</span>
+              </span>
+            }
+          </div>
         </div>
+
         <img
           alt='Various landmarks and components of the San Diego region'
           src={backgroudImagePath}

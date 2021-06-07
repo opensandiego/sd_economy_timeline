@@ -180,6 +180,71 @@ img:nth-of-type(2) {
 
 }
 
+.current-era-tooltip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .current-era div:first-child {
   font-weight: bold
+}
+
+.current-era .tooltip {
+  position: relative;
+  background: transparent;
+  display: flex;
+  padding: 0 10px;
+}
+
+.current-era .tooltiptext {
+  position: absolute;
+  top: 150%;
+  left: 56%;
+  visibility: hidden;
+  box-shadow: 0px 1px 2px #00000029;
+  border-radius: 6px;
+  width: 350px;
+  background-color: white;
+  text-align: left;
+  border-radius: 6px;
+  padding: 10px 18px;
+  position: absolute;
+  margin-left: -45px;
+  font: normal normal 400 16px/23px Montserrat !important;
+  letter-spacing: 0px;
+  color: #031620;
+}
+
+.current-era .tooltiptext::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  z-index: -1;
+  bottom: -5px;
+  transform: rotate(45deg);
+  box-shadow: 1.5px 1.5px 2px #00000029;
+  top: -3px;
+  left: 36px;
+  position: absolute;
+  background: white;
+}
+
+.current-era .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.current-era .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.current-era .tooltip svg:nth-of-type(2) {
+  display: none;
+}
+
+.current-era .tooltip:hover svg:nth-of-type(1) {
+  display: none;
+}
+.current-era .tooltip:hover svg:nth-of-type(2) {
+  display: block !important;
 }
