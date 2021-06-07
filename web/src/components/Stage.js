@@ -135,37 +135,6 @@ const initializePositions = (events = []) => {
         }
       })
       currentRow += rowsAdded
-
-      // const previousRowHasOneEvent = positions.filter(p => p.row === currentRow - 2).length === 1
-      // positions.push({
-      //   x: 0.5,
-      //   y: timeline3DLength - (yIncrement + (currentRow * yIncrement)),
-      //   row: currentRow,
-      //   year: events[eventsProcessed].Year
-      // })
-      // currentRow += 1
-      // if (rowCount === 0) {
-      //   rowCount = 1
-      //   const previousEventIsCentered = positions[positions.length - 2] && positions[positions.length - 2].x === 0.5
-      //   if (previousEventIsCentered) {
-      //     positions[positions.length - 1].x = 0.75
-      //   }
-      // }
-      // const currentDecade = getDecade(events[eventsProcessed])
-      // if (positions.length > 1 && rowCount === 1 && previousRowHasOneEvent) {
-      //   const previousDecade = getDecade(events[eventsProcessed - 1])
-      //   if (currentDecade === previousDecade) {
-      //     positions[positions.length - 1].x = 0.75
-      //     positions[positions.length - 2].x = 0.25
-      //     positions[positions.length - 1].y = positions[positions.length - 2].y
-      //     positions[positions.length - 1].row = positions[positions.length - 2].row
-      //     currentRow -= 1
-      //     rowCount = 2
-      //   }
-      // } else {
-      //   rowCount = 0
-      // }
-      // eventsProcessed += 1
     }
     return positions
   }
