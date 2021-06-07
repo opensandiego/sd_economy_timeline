@@ -211,6 +211,19 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position: event.position || {}
       }
     })
+  if (selectedEvents && selectedEvents.length) {
+    selectedEvents.sort((a, b) => {
+      const firstYear = +a.Year
+      const secondYear = +b.Year
+      if (firstYear < secondYear) {
+        return -1
+      }
+      if (firstYear > secondYear) {
+        return 1
+      }
+      return 0
+    })
+  }
   if (data && data.length && (selectedEvents.length - 1 !== rectCount)) {
     rectCount = (selectedEvents.length) ? selectedEvents.length - 1 : 3000
     timeline3DLength = rectCount * yIncrement
