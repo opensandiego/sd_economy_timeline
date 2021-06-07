@@ -15,8 +15,9 @@ const TimelineService = {
         row.Year = isDecade[1]
       }
     })
+    const rowsWithYear = rows.filter(row => !!row.Year)
     // sort data by year
-    rows.sort((a, b) => {
+    rowsWithYear.sort((a, b) => {
       const firstYear = +a.Year
       const secondYear = +b.Year
       if (firstYear < secondYear) {
@@ -27,7 +28,7 @@ const TimelineService = {
       }
       return 0
     })
-    return rows
+    return rowsWithYear
   },
 
   async readCategories() {
