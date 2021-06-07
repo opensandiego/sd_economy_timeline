@@ -1,5 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 import timelineService from "./timelineService";
+import eras from './components/eras'
+
+const earliestEraStart = eras
+  .map(era => era.start)
+  .reduce((oldest, current) => {
+    return current < oldest ? current : oldest
+  }, new Date().getFullYear())
 
 const decadesDefault = { 1850: [], 1860: [], 1870: [], 1880: [], 1890: [], 1900: [], 1910: [], 1920: [], 1930: [], 1940: [], 1950: [], 1960: [], 1970: [], 1980: [], 1990: [], 2000: [], 2010: [], 2020: [] };
 
@@ -39,10 +46,10 @@ export const TimelineContextProvider = ({ children }) => {
   const [showAbout, setShowAbout] = useState(false);
 
   const buildDecades = events => {
-    const after1850 = events.filter(event => +event.Year >= 1850)
+    const numericYears = events.filter(event => +event.Year >= earliestEraStart)
     let decades = {}
-    if (after1850.length) {
-      after1850.forEach(event => {
+    if (numericYears.length) {
+      numericYears.forEach(event => {
         const year = event.Year
         const decadeStart = `${year.slice(0, 3)}0`
         if (!Object.keys(decades).includes(decadeStart)) {

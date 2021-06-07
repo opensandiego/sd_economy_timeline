@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import data from "./all-data-by-date-and-category.csv";
+import data from "./SD-Regional-Economy-Timeline-Data_V2_6-03-21.csv";
 import categories from "./categories.txt";
 import description from "./description.txt"
 
