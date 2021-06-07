@@ -20,24 +20,24 @@
   "name": "Binational",
   "description": "The San Diego region’s borders are an important part of the economy with strong ties to its neighboring counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 18 tribal governments."
 }, {
-  "name": "Historic Land Use",
-  "description": "The San Diego region is located in the southwestern corner of the United States and is bordered by Mexico to the south, the Pacific Ocean to the west, Orange, and Riverside counties to the north, and Imperial County to the east. The San Diego region encompasses over 4,260 square miles and includes 18 incorporated cities, 17 tribal reservations, and unincorporated San Diego County."
+  "name": "Protecting our Environment",
+  "description": "Over the past several decades, the San Diego region has taken concrete steps to protect the environment. These include efforts to protect our invaluable shoreline and natural habitats for plants and animals, replenish sand at our beaches, slow suburban sprawl by concentrating development in urban areas, promote alternative fuels and zero emission vehicles (ZEVs), make communities more resilient to the consequences of climate change, and better control stormwater runoff. "
 }, {
   "name": "Education",
-  "description": "The San Diego region has a history of iconic and innovative educational institutes. The education sector currently accounts for 8.6% of jobs in the region."
+  "description": "The San Diego region has invested significantly in world-class institutions of higher learning, which have become engines of economic growth and centers of culture. The education sector currently accounts for 8.6% of jobs in the region."
 }, {
   "name": "Retail",
-  "description": "As a large tourist destination, the San Diego region has multiple shopping centers, providing employmet, and serving the needs of the tourists as well as the local population. The retail sector currently accounts for 14.7% of jobs in the region."
+  "description": "Our region's shopping destinations are wildly popular with residents and tourists alike. They are also a major center of employment, contributing more than 14% of jobs regionwide."
 }, {
   "name": "Healthcare",
-  "description": "The San Diego region has provided healthcare services since the opening of the San Diego County Hospital in 1904. With the expansion of military bases and innovating industries within the region, healthcare is one of the most innovative industries in San Diego. The healthcare sector currently accounts for 11.9% of jobs in the region."
+  "description": "Our region's healthcare heritage began with the opening of the San Diego County Hospital in 1904. Today healthcare is one of the most innovative economic sectors in the region, supporting nearly 12 percent of its jobs."
 }, {
   "name": "Manufacturing",
-  "description": "A historic look at the evolution of Manufacturing in the San Diego region. The manufacturing sector currently accounts for 3.6% of jobs in the region."
+  "description": "Manufacturing has always played a significant role in our regional economy. During World War II, the region was a major player in aircraft manufacturing. In more recent years, defense, telecommunications, and biotechnology have been centers of manufacturing. Today, the sector accounts for 3.6% of jobs in the region."
 }, {
   "name": "Goods Movement",
-  "description": "Beyond people, the movement of goods and freight throughout the San Diego region is an important component for continued economic development. "
+  "description": "The movement of freight to and from the San Diego region and the transport of goods throughout it is vital for continued economic development."
 }, {
   "name": "Professional",
-  "description": "The San Diego region has a growing professional workforce. The finance, insurance, real estate, and professional sector currently accounts for 16.3% of jobs in the region."
+  "description": "The San Diego region has a growing professional workforce. Finance, insurance, real estate, and professional sectors currently account for 16.3% of jobs in the region."
 }]
