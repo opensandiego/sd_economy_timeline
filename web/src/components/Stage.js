@@ -172,9 +172,15 @@ const updatePositions = (change, positions) => {
 }
 let rects = initializePositions()
 
+const earliestEraStart = eras
+  .map(era => era.start)
+  .reduce((oldest, current) => {
+    return current < oldest ? current : oldest
+  }, new Date().getFullYear())
+
 const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll})=> {
   selectedEvents = data && data
-    .filter(event => selectedSectors.includes(event.Category))
+    .filter(event => selectedSectors.includes(event.Category) && event.Year >= earliestEraStart)
     .map(event => {
       return {
         ...event,
@@ -431,7 +437,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       // Draw the tear drop
       const eventYear = selectedEvents[i].Year
       const eventEra = eraLookupByYear[eventYear]
-      const eraTeardrop = eraTeardrops[eventEra]
+      const eraTeardrop = eraTeardrops[eventEra] || eraTeardrops.life // fallback to pink teardrop when none exists
       contextRef.current.drawImage(eraTeardrop, dx, dy, teardropWidth, teardropHeight)
 
       // keep track of dimensions to test if a timeline item is clicked
