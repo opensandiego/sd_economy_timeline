@@ -23,18 +23,9 @@ const Sidebar = (props) => {
           <div id="sidebar">
             <div className="container-sidebar">
               <div id="bkground"></div>
-              {/* <div className="close">
-              <button onClick={updateShowFilter}>
-                <VscChromeClose size={18} />
-              </button>
-            </div> */}
-              {/* <div className="sidebar-title">A History of San Diego</div> */}
 
               <div className="sidebar-label">
                 <p>Filtered By</p>
-                {/* <button className="clear" onClick={clearSelectedSectors}>
-                  Clear all
-                </button> */}
                 <div className="close">
                   <button onClick={updateShowFilter}>
                     <VscChromeClose size={18} />

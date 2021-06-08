@@ -112,7 +112,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     x: rectWidth / 2,
     y: 22 * multiplier
   }
-  const textFillStyle = 'rgba(60, 60, 60, 1)'
+  const textFillStyle = 'rgba(0, 0, 0, 1)'
   const categoryFillStyle = 'rgba(110, 110, 110, 1)'
   let verticalPosition = 2
   let ctx = textCanvas.getContext('2d')
@@ -127,9 +127,9 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     ctx.fillText(secondLine, textSize.x, textSize.y + (verticalPosition * multiplier))
   }
   ctx.fillStyle = categoryFillStyle
-  ctx.font = `${categorySize.fontSize}px ${fontFamily}`
+  ctx.font = `500 ${categorySize.fontSize}px ${fontFamily}`
   verticalPosition += 10
-  ctx.fillText(Category, categorySize.x, categorySize.y + (verticalPosition * multiplier))
+  ctx.fillText(`(${Category})`, categorySize.x, categorySize.y + (verticalPosition * multiplier))
   // const png = textCanvas.toDataURL()
   // ctx = null
   // textCanvas.width = 0

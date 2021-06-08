@@ -1,10 +1,8 @@
 #sidebar{
   padding: 0 calc(100% - 260px) 20px 15px;
   position: relative;
-  /* background-color: white; */
   height: 690px;
   z-index: 0;
-  /* overflow-y: auto; */
   direction: rtl;
 }
 .fixed-270.show {
@@ -72,7 +70,6 @@
 }
 
 .sector-filter-tag svg {
-  /* padding: 0 0.25em 0 0; */
   margin-top: 3px;
 }
 
@@ -96,8 +93,6 @@
   font: normal normal normal 16px/19px Montserrat;
   letter-spacing: 0px;
   color: #196CAA;
-  /* padding-left: 45px;
-  padding-right: 50px; */
   position: absolute;
   bottom: 15px;
   right: 10px;
@@ -117,9 +112,6 @@
   width: 11px;
 }
 
-/* .selected-sectors::after {
-  content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' width='181' height='1' viewBox='0 0 181 1'><defs><style>.a{fill:none;stroke:rgba(43,43,43,0.4);stroke-linecap:round;}</style></defs><line class='a' x1='180' transform='translate(0.5 0.5)'/></svg>");
-} */
 #sidebar span, .sector-filter-tag {
   font: normal normal normal 16px/19px Montserrat;
 letter-spacing: 0px;
@@ -165,8 +157,6 @@ span.checkbox-custom {
 .checkbox-custom {
   position: relative;
   display: inline-block;
-  /* width: 20px;
-  height: 20px; */
   margin-right: 12px;
   vertical-align: middle;
   background-color: inherit;
@@ -212,9 +202,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
 }
 
 #sidebar .tooltip {
-  /* position: relative; */
   position: unset;
-  /* resetting styles from Dereks background tooltip style */
   z-index: 0;
   border-radius: 0;
   background: none;
@@ -223,12 +211,6 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   flex-flow: unset;
   justify-content: unset;
 }
-
-/* .tooltip:hover svg{
-  fill: white;
-  background-color: #9a2577;
-  border-radius: .5em;
-} */
 
 #sidebar .tooltip .tooltiptext {
   visibility: hidden;
@@ -240,28 +222,13 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   border-radius: 6px;
   padding: 10px 18px;
   position: absolute;
-  /* z-index: 1; */
-  /* bottom: 150%;
-  left: 150%; */
+
   margin-left: -45px;
   font: normal normal 400 16px/23px Montserrat !important;
   letter-spacing: 0px;
   color: #031620;
-/* transform: translateY(calc(-100% + calc(-23px + 3px))); */
 }
 
-/* #sidebar .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 24%;
-  margin-left: -5px;
-  border-width: 8px;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
-} */
-
-/* #sidebar .tooltip .tooltiptext::before{ */
 #sidebar .tooltip .tooltiptext::after{
   content: "";
   position: absolute;
