@@ -14,6 +14,7 @@ import manufacturing from '../assets/manufacturing@3x.png'
 import military from '../assets/military@3x.png'
 import tourism from '../assets/tourism@3x.png'
 import tribal from '../assets/tribal nations@3x.png'
+import investing from '../assets/Investing in Our Region@3x.png'
 
 export const iconInfo = {
   fire: { path: fire, file: 'F.I.R.E@3x.png', category: 'F.I.R.E.', width: 42, height: 42 },
@@ -22,7 +23,7 @@ export const iconInfo = {
   transportation: { path: transportation, file: 'Transportation@3x.png', category: 'Transportation', width: 41, height: 31 },
   mobility: { path: transportation, file: 'Transportation@3x.png', category: 'Mobility', width: 41, height: 31 },
   civic: { path: civic, file: 'civic@3x.png', category: 'Civic', width: 34, height: 45, verticalShift: 4 },
-  crossborder: { path: crossborder, file: 'crossborder@3x.png', category: 'CrossBorder', width: 38, height: 38 },
+  crossborder: { path: crossborder, file: 'binational@3x.png', category: 'Binational', width: 38, height: 38 },
   education: { path: education, file: 'education@3x.png', category: 'Education', width: 46, height: 28 },
   global: { path: global, file: 'global@3x.png', category: 'Global', width: 41, height: 41 },
   goodsmovement: { path: goodsmovement, file: 'goods movement@3x.png', category: 'Goods Movement', width: 44, height: 31 },
@@ -32,7 +33,8 @@ export const iconInfo = {
   manufacturing: { path: manufacturing, file: 'manufacturing@3x.png', category: 'Manufacturing', width: 40, height: 40 },
   military: { path: military, file: 'military@3x.png', category: 'Military', width: 48, height: 42, verticalShift: 0 },
   tourism: { path: tourism, file: 'tourism@3x.png', category: 'Tourism', width: 40, height: 35 },
-  tribal: { path: tribal, file: 'tribal nations@3x.png', category: 'Tribal Nations', width: 52, height: 41 }
+  tribal: { path: tribal, file: 'tribal nations@3x.png', category: 'Tribal Nations', width: 52, height: 41 },
+  investing: { path: investing, file: 'Investing in Our Region@3x.png', category: 'Investing in Our Region', width: 41, height: 49, verticalShift: 5 }
 }
 const scale = 0.75
 Object.values(iconInfo).forEach(info => {
