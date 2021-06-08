@@ -40,4 +40,7 @@
 }, {
   "name": "Professional",
   "description": "The San Diego region has a growing professional workforce. Finance, insurance, real estate, and professional sectors currently account for 16.3% of jobs in the region."
+}, {
+  "name": "Investing in Our Region",
+  "description": "People with vision and an eye on the future built our region. Here are highlights of decisions that have made our home, from its military heritage, tourism economy, world class universities, research laboratories, and more. Political leaders, business people, philanthropists, and everyday citizens have all played a role."
 }]
