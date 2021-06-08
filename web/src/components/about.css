@@ -7,12 +7,12 @@
   margin: 0 auto 26px;
 }
 
-button.about {
+/* button.about {
   font: normal normal 600 22px/26px Montserrat;
   letter-spacing: 0px;
   color: #9A2477;
   padding-left: 0;
-}
+} */
 
 .about span {
   position: relative;
@@ -29,23 +29,27 @@ button.about {
 
 .about-container h1 {
   font: normal normal 600 40px/49px Montserrat;
-letter-spacing: 0.72px;
-color: #196AA9;
-text-align: center;
+  letter-spacing: 0.72px;
+  color: #196AA9;
+  text-align: center;
 }
 .about-container h1 span {
   font: normal normal 600 30px/49px Montserrat;
   display: block;
 }
 
-.abt-desc {
+/* .abt-desc {
   position: relative;
-  /* margin-left: 50px; NP */
-  margin-bottom: 38px;
+  margin-left: 50px;
+  margin-bottom: 12px;
   height: 26px;
   margin-top: 12px;
 }
+ */
 
+ .about-container {
+  position: relative;
+}
 
 p.tl-desc {
   position: absolute;
@@ -59,12 +63,14 @@ p.tl-desc {
   overflow-y: auto;
   height: 170px;
   opacity: 0;
+  color: #000000;
   /* transition: all ease-in .3s; */
   /* pointer-events: none; commented out for the overflow description */
   margin-top: 0;
-
+  top: 276px;
+  left: 0;
   /* fix the "categories button not clickable" ?*/
-  z-index: 9;
+  z-index: 0;
 }
 
 p.tl-desc.open {
@@ -76,21 +82,49 @@ p.tl-desc.open {
 .bottom-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  border: #CEE2F0 1px solid;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16); 
+box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
 }
-.download {
+
+.bottom-container a, .about {
+  font: normal normal 600 20px/30px Montserrat;
+  color: #196CAA;
+  text-decoration: none;
+}
+.bottom-container a, .abt-desc {
+  height: 100%;
+  padding: 0 28px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+.bottom-container a:hover, .abt-desc:hover .about, .abt-desc:hover  {
+  background-color: #196CAA;
+  color: #FFFFFF;
+}
+/* .bottom-container a:hover, .about:hover {
+  color: #FFFFFF;
+} */
+/* .download {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
+}  NP */
 
 /* .download button,  */
 .download a {
   text-decoration: underline;
-font: normal normal 600 15px/19px Montserrat;
-letter-spacing: 0px;
-color: #9A2477;
-margin-bottom: 18px;
-position: relative;
+  font: normal normal 600 15px/19px Montserrat;
+  letter-spacing: 0px;
+  color: #9A2477;
+  margin-bottom: 18px;
+  position: relative;
 }
 
 .download a:nth-of-type(1) svg {

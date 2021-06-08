@@ -160,6 +160,7 @@ export const TimelineContextProvider = ({ children }) => {
   }, [])
 
   const toggleShowAbout = () => {
+    console.log('im here');
     setShowAbout(!showAbout);
   }
 
