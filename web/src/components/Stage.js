@@ -807,9 +807,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       }
       <div className='scene-container'>
         <div className='current-era' style={{ color: eraColor }}>
-          <div>{eraTitle}</div>
           <div className='current-era-tooltip-container'>
-            <span>{eraPeriod}</span>
+            <span>{eraTitle}</span>
             {eraTitle &&
               <span className="tooltip">
                 <BsInfoCircle />
@@ -817,6 +816,9 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
                 <span className="tooltiptext">{eraDescription}</span>
               </span>
             }
+          </div>
+          <div>
+            <span>{eraPeriod}</span>
           </div>
         </div>
 
