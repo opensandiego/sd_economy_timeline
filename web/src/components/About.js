@@ -18,13 +18,15 @@ const About = () => {
           <p className="tl-summ">{summaryDescription}</p>
           <div className="bottom-container">
             <div className="abt-desc">
-              <button className="about" onClick={toggleShowAbout}>About {showAbout ? <span><ArrowUp /></span> : <span className="arrow-down"><ArrowDown /></span>}</button>
+              <button className="about" onClick={toggleShowAbout}>About</button>
               <p className={showAbout ? "tl-desc open" : "tl-desc"}>{aboutDescription}</p>
             </div>
-            <div className="download">
-              <a download="all-data-by-date-and-category.csv" href="../all-data-by-date-and-category.csv" target="_blank"><MdFileDownload size={17}/> Download All Data</a>
+            {/* <div className="download"> */}
+            <a download="TimelineStories.pdf" href="/TimelineStories.pdf" target="_blank">Stories</a>
+            <a download="TimelineFunFacts.pdf" href="/TimelineFunFacts.pdf" target="_blank">Fun Facts</a>
+              <a download="all-data-by-date-and-category.csv" href="../all-data-by-date-and-category.csv" target="_blank">Download All Data</a>
               <a href="#">Vea La Versión en Español</a>
-            </div>
+            {/* </div> */}
           </div>
 
         </div>
