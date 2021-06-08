@@ -7,13 +7,6 @@
   margin: 0 auto 26px;
 }
 
-button.about {
-  font: normal normal 600 22px/26px Montserrat;
-  letter-spacing: 0px;
-  color: #9A2477;
-  padding-left: 0;
-}
-
 .about span {
   position: relative;
   margin-left: 10px;
@@ -29,23 +22,18 @@ button.about {
 
 .about-container h1 {
   font: normal normal 600 40px/49px Montserrat;
-letter-spacing: 0.72px;
-color: #196AA9;
-text-align: center;
+  letter-spacing: 0.72px;
+  color: #196AA9;
+  text-align: center;
 }
 .about-container h1 span {
   font: normal normal 600 30px/49px Montserrat;
   display: block;
 }
 
-.abt-desc {
+.about-container {
   position: relative;
-  /* margin-left: 50px; NP */
-  margin-bottom: 38px;
-  height: 26px;
-  margin-top: 12px;
 }
-
 
 p.tl-desc {
   position: absolute;
@@ -59,16 +47,14 @@ p.tl-desc {
   overflow-y: auto;
   height: 170px;
   opacity: 0;
-  /* transition: all ease-in .3s; */
-  /* pointer-events: none; commented out for the overflow description */
+  color: #000000;
   margin-top: 0;
-
-  /* fix the "categories button not clickable" ?*/
-  z-index: 9;
+  top: 276px;
+  left: 0;
+  z-index: 0;
 }
 
 p.tl-desc.open {
-  /* fix the "categories button not clickable" ?*/
   z-index: 11; 
   opacity: 1;
 
@@ -76,21 +62,41 @@ p.tl-desc.open {
 .bottom-container {
   display: flex;
   justify-content: space-between;
-}
-.download {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  height: 50px;
+  border: #CEE2F0 1px solid;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16); 
+box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
 }
 
-/* .download button,  */
+
+.bottom-container a, .about {
+  font: normal normal 600 20px/30px Montserrat;
+  color: #196CAA;
+  text-decoration: none;
+}
+.bottom-container a, .abt-desc {
+  height: 100%;
+  padding: 0 28px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+.bottom-container a:hover, .abt-desc:hover .about, .abt-desc:hover  {
+  background-color: #196CAA;
+  color: #FFFFFF;
+}
+
 .download a {
   text-decoration: underline;
-font: normal normal 600 15px/19px Montserrat;
-letter-spacing: 0px;
-color: #9A2477;
-margin-bottom: 18px;
-position: relative;
+  font: normal normal 600 15px/19px Montserrat;
+  letter-spacing: 0px;
+  color: #9A2477;
+  margin-bottom: 18px;
+  position: relative;
 }
 
 .download a:nth-of-type(1) svg {
@@ -98,7 +104,7 @@ position: relative;
   left: -22px;
   top: 2px;
 }
-/* .download button:hover,  */
+
 .download a:hover {
   color: #196AA9;
 }

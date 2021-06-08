@@ -467,7 +467,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         // Draw the event icon on the tear drop
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
-        contextRef.current.font = `${14 * scaleFactor}px Montserrat`
+        contextRef.current.font = `bold ${14 * scaleFactor}px Montserrat`
         const ones = (`${selectedEvents[i].Year}`.match(/1/g) || []).length
         // const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
         const xNudge = 14 + ones
@@ -484,11 +484,11 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       const centerX = x
       const centerY = y + (20 * scaleFactor)
       const width = 60 * scaleFactor
-      const height = 5 * scaleFactor
+      const height = 3 * scaleFactor
       const radialGradient = contextRef.current.createRadialGradient(x, y + radius + 5, 0, x, y + radius + 5, width)
-      radialGradient.addColorStop(0, 'rgba(51, 51, 51, 0.4)')
-      radialGradient.addColorStop(0.2, 'rgba(51, 51, 51, 0.25)')
-      radialGradient.addColorStop(0.4, 'rgba(51, 51, 51, 0)')
+      radialGradient.addColorStop(0, 'rgba(51, 51, 51, 0.3)')
+      radialGradient.addColorStop(0.2, 'rgba(51, 51, 51, 0.18)')
+      radialGradient.addColorStop(0.3, 'rgba(51, 51, 51, .07)')
       radialGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
       contextRef.current.fillStyle = radialGradient;
 

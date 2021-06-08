@@ -106,7 +106,6 @@ export const TimelineContextProvider = ({ children }) => {
     if (checked) {
       if (selectedSectors.length === 5) {
         // TODO:  shows a message in the UI for this
-        console.log("you can only select 5 sectors at a time");
         return;
       } else {
         setSelectedSectors([...selectedSectors, e.target.value]);
