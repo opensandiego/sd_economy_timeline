@@ -129,7 +129,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
   ctx.fillStyle = categoryFillStyle
   ctx.font = `500 ${categorySize.fontSize}px ${fontFamily}`
   verticalPosition += 10
-  ctx.fillText(`(${Category})`, categorySize.x, categorySize.y + (verticalPosition * multiplier))
+  ctx.fillText(`${Category}`, categorySize.x, categorySize.y + (verticalPosition * multiplier))
   // const png = textCanvas.toDataURL()
   // ctx = null
   // textCanvas.width = 0
