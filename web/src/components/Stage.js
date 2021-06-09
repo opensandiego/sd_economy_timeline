@@ -469,8 +469,9 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
         contextRef.current.font = `bold ${14 * scaleFactor}px Montserrat`
         const ones = (`${selectedEvents[i].Year}`.match(/1/g) || []).length
+        const zeroZeroTwo = (`${selectedEvents[i].Year}`.match(/00[0|2-9]/g) || []).length ? -1 : 0
         // const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
-        const xNudge = 14 + ones
+        const xNudge = 13 + ones - zeroZeroTwo
         // Draw the event's year under the icon
         contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
       }
