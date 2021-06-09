@@ -43,4 +43,7 @@
 }, {
   "name": "Investing in Our Region",
   "description": "People with vision and an eye on the future built our region. Here are highlights of decisions that have made our home, from its military heritage, tourism economy, world class universities, research laboratories, and more. Political leaders, business people, philanthropists, and everyday citizens have all played a role."
+}, {
+  "name": "Population",
+  "description": "In 1850, 798 people called the San Diego region home. In 2020, that number had grown to more than 3.3 million. As our region continues to grow, economic opportunity and prosperity for everyone will depend significantly on enhanced personal mobility, social equity, and a healthy environment."
 }]

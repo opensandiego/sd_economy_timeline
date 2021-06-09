@@ -15,6 +15,7 @@ import military from '../assets/military@3x.png'
 import tourism from '../assets/tourism@3x.png'
 import tribal from '../assets/tribal nations@3x.png'
 import investing from '../assets/Investing in Our Region@3x.png'
+import population from '../assets/population@3x.png'
 
 export const iconInfo = {
   fire: { path: fire, file: 'F.I.R.E@3x.png', category: 'F.I.R.E.', width: 42, height: 42 },
@@ -34,7 +35,8 @@ export const iconInfo = {
   military: { path: military, file: 'military@3x.png', category: 'Military', width: 48, height: 42, verticalShift: 0 },
   tourism: { path: tourism, file: 'tourism@3x.png', category: 'Tourism', width: 40, height: 35 },
   tribal: { path: tribal, file: 'tribal nations@3x.png', category: 'Tribal Nations', width: 52, height: 41 },
-  investing: { path: investing, file: 'Investing in Our Region@3x.png', category: 'Investing in Our Region', width: 41, height: 49, verticalShift: 5 }
+  investing: { path: investing, file: 'Investing in Our Region@3x.png', category: 'Investing in Our Region', width: 41, height: 49, verticalShift: 5 },
+  population: { path: population, file: 'population@3x.png', category: 'Population', width: 51, height: 32 }
 }
 const scale = 0.75
 Object.values(iconInfo).forEach(info => {
