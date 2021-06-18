@@ -47,6 +47,7 @@ let eventTextBuilt = false
 let arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
 let scrollTotal = 0
+let scrollMax = 1000
 let totalDraws = 0
 let yearPositions = {}
 let yearsToTrackScrolling = []
@@ -216,9 +217,14 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position: rect.y
       }
     })
-    // console.log({ rects, yearPositions })
+    if (selectedEvents.length) {
+      const yearMax = +selectedEvents[selectedEvents.length - 1].Year
+      const yearMin = +selectedEvents[0].Year
+      if (yearMax && yearMin) {
+        scrollMax = ((Math.ceil((yearMax - yearMin) / 10)) + 1) * 25
+      }
+    }
   }
-  // console.log('stage updated selectedEvents', selectedEvents)
   if (data && data.length && selectedEvents.length && !eventTextBuilt) {
     data.forEach(event => {
       eventTextElements[makeEventKey(event)] = drawEventText(event, 1, eventTextDimensions, deviceScale)
@@ -602,6 +608,9 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       }
       if (event.detail) {
           delta = -event.detail / 3;
+      }
+      if (scrollTotal + delta < 0 || scrollTotal + delta > scrollMax) {
+        return
       }
       contextRef.current.clearRect(0, 0, width, height)
       drawBoundaries(vanishingPoint)
