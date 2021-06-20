@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import timelineService from "./timelineService";
 import eras from './components/eras'
 
@@ -44,6 +44,12 @@ export const TimelineContextProvider = ({ children }) => {
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
   const [showAbout, setShowAbout] = useState(false);
+
+  const previouslySelectedDecade = useRef(null)
+  useEffect(() => {
+    previouslySelectedDecade.current = selectedDec
+  })
+  const previousDecade = previouslySelectedDecade.current
 
   const buildDecades = events => {
     const numericYears = events.filter(event => +event.Year >= earliestEraStart)
@@ -176,6 +182,7 @@ export const TimelineContextProvider = ({ children }) => {
     showAllSectors,
     selectedSectors,
     allSectors,
+    previousDecade,
     selectedDec,
     decades,
     showYears,

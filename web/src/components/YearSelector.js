@@ -1,4 +1,5 @@
 import React, {
+  useEffect,
   useRef
 } from "react";
 import { BiMinus } from "react-icons/bi";
@@ -18,8 +19,8 @@ const YearSelector = () => {
   }
   return (
     <TimelineContext.Consumer>
-      {({ selectedDec, showYears, handleYearSelector, decades, setSelectedYear, timelineScroll }) => {
-        if (!selectedDec) {
+      {({ previousDecade, selectedDec, showYears, handleYearSelector, decades, setSelectedYear, timelineScroll }) => {
+        if (!selectedDec && !previousDecade) {
           updateTimelineScroll(timelineScroll.fraction)
         }
         return (
