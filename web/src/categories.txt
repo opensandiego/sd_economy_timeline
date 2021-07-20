@@ -11,11 +11,11 @@
   "name": "Innovation",
   "description": "San Diego has a prosperous and a rapidly devolping innovation sector supported by leading educational institues like UCSD, SDSU and USD. The innovation sector currently accounts for 11.3% of jobs in the region."
 }, {
-  "name": "Military",
-  "description": "San Diego's location on the Pacific Ocean is ideal for many military operations in the southwest portion of the country. San Diego's military installations include a variety of sizes and uses, and provide a large base for the region. The military currently accounts for 8.5% of jobs in the region."
-}, {
   "name": "Tribal Nations",
   "description": "The San Diego region is home to 18 Native American reservations represented by 17 tribal governments, the most in any county in the United States. There are more than 73,000 acres of tribal reservation lands in the region. As sovereign domestic nations, tribal governments govern land use on their reservations and land holdings. SANDAG and the regional tribal governments work together to facilitate government-to-government planning and coordination. These tribal nations are a critical part of the San Diego region's history."
+}, {
+  "name": "Military",
+  "description": "San Diego's location on the Pacific Ocean is ideal for many military operations in the southwest portion of the country. San Diego's military installations include a variety of sizes and uses, and provide a large base for the region. The military currently accounts for 8.5% of jobs in the region."
 }, {
   "name": "Binational",
   "description": "The San Diego region’s borders are an important part of the economy with strong ties to its neighboring counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 18 tribal governments."

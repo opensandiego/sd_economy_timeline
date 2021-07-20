@@ -805,7 +805,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
           category={eventForPopup.Category}
           year={eventForPopup.Year}
           description={eventForPopup.Description}
-          image={eventForPopup.['Image File Name']}
+          image={eventForPopup['Image File Name']}
           setEventForPopup={setEventForPopup}
         />
       }
