@@ -43,6 +43,20 @@
   .description {
     margin: 1em 0 0 0;
     width: 100%;
+
+    display: flex;
+
+    img {
+      width: 50%;
+      max-width: 50%;
+      position: relative;
+      flex: 1;
+    }
+
+    span {
+      flex: 1;
+      margin-left: 10px;
+    }
   }
 
 }

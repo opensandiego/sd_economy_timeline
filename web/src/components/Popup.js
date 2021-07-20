@@ -2,7 +2,16 @@ import React from 'react'
 import { VscChromeClose } from 'react-icons/vsc'
 import './popup.scss'
 
-const Popup = ({ category, year, description, setEventForPopup }) => {
+const publicPath = `${process.env.PUBLIC_URL}/photos/`
+
+const Popup = ({ category, year, description, image, setEventForPopup }) => {
+
+  const showImage = () => {
+    const popupImage = image ?
+      <img src={`${publicPath}${image}`} /> :
+      null
+    return popupImage
+  }
 
   return (
     <div className='eventPopupWrapper' onClick={() => setEventForPopup(null)}>
@@ -18,7 +27,10 @@ const Popup = ({ category, year, description, setEventForPopup }) => {
             <VscChromeClose size={18} />
           </button>
         </div>
-        <div className='description'>{description || 'No description available.'}</div>
+        <div className='description'>
+          {showImage()}
+          <span>{description || 'No description available.'}</span>
+        </div>
       </div>
     </div>
   )

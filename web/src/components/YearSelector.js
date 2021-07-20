@@ -35,9 +35,10 @@ const YearSelector = () => {
                       <p
                         style={
                           selectedDec === decade
-                            ? { fontWeight: "bold" }
-                            : { fontWeight: "normal" }
+                            ? { cursor: "pointer", fontWeight: "bold" }
+                            : { cursor: "pointer", fontWeight: "normal" }
                         }
+                        onClick={() => setSelectedYear(decade)}
                       >
                         {decade}s
                       </p>
