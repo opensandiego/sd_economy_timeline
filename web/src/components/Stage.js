@@ -4,7 +4,8 @@ import React, {
   useState
 } from 'react'
 import { BsInfoCircle, BsInfoCircleFill } from 'react-icons/bs'
-import backgroudImagePath from '../assets/Background-kth.png'
+// import backgroudImagePath from '../assets/Background-kth.png'
+import backgroudImagePath from '../assets/TallerBackground_SANDAG@2x.png'
 import eras from './eras'
 import arrowsLeft from '../assets/stage-arrows-left.png'
 import arrowsRight from '../assets/stage-arrows-right.png'
@@ -23,11 +24,11 @@ import Popup from './Popup'
 import BackgroundTooltip from './BackgroundTooltip'
 
 const deviceScale = (window.devicePixelRatio) ? window.devicePixelRatio : 1
-const timelinePaddingExpansion = 1.2
-const endToScreenRatio = 1.1
-const vanishTop = 0.3
+const timelinePaddingExpansion = 1.1
+const endToScreenRatio = 1
+const vanishTop = 0.382
 let width = 600
-let height = 600
+let height = 660
 let maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
 
 const eraTeardrops = createTeardropImages(eras)
@@ -38,7 +39,7 @@ const eraInfo = eras.reduce((all, era) => {
 }, {})
 
 const cardSize = 720
-let timeline3DLength = 4000
+let timeline3DLength = 3000
 let selectedEvents
 let currentHover
 let eventTextElements = {}
@@ -48,7 +49,7 @@ let arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
 let scrollTotal = 0
 let scrollMax = 1000
-let totalDraws = 0
+let totalDraws = -1
 let yearPositions = {}
 let yearsToTrackScrolling = []
 const yIncrement = timeline3DLength / rectCount
@@ -286,28 +287,28 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     // hint to click on background objects
     contextRef.current.font = `12px Montserrat`
     contextRef.current.fillStyle = 'black'
-    contextRef.current.fillText('Tap on objects', 880, 305)
-    contextRef.current.fillText('to learn about', 880, 322)
-    contextRef.current.fillText('iconic sites in', 880, 339)
-    contextRef.current.fillText('the San Diego', 880, 356)
-    contextRef.current.fillText('region!', 880, 373)
-    contextRef.current.drawImage(faHandPointUpImage, 858, 312, 20, 20)
+    contextRef.current.fillText('Tap on objects', 880, 425)
+    contextRef.current.fillText('to learn about', 880, 442)
+    contextRef.current.fillText('iconic sites in', 880, 459)
+    contextRef.current.fillText('the San Diego', 880, 476)
+    contextRef.current.fillText('region!', 880, 493)
+    contextRef.current.drawImage(faHandPointUpImage, 858, 432, 20, 20)
     contextRef.current.strokeStyle = 'white'
     contextRef.current.beginPath()
-    contextRef.current.moveTo(864.5, 309)
-    contextRef.current.lineTo(864.5, 304)
+    contextRef.current.moveTo(864.5, 429)
+    contextRef.current.lineTo(864.5, 424)
     contextRef.current.closePath()
     contextRef.current.stroke()
     const r = 5
     contextRef.current.beginPath()
-    contextRef.current.moveTo(870, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(870 - Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(870, 421 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(870 - Math.cos(65 * Math.PI / 180) * r, 425 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
     contextRef.current.beginPath()
-    contextRef.current.moveTo(859, 301 + Math.sin(65 * Math.PI / 180) * r)
-    contextRef.current.lineTo(859 + Math.cos(65 * Math.PI / 180) * r, 305 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.moveTo(859, 421 + Math.sin(65 * Math.PI / 180) * r)
+    contextRef.current.lineTo(859 + Math.cos(65 * Math.PI / 180) * r, 425 + Math.sin(65 * Math.PI / 180) * r)
     contextRef.current.closePath()
     contextRef.current.stroke()
 
@@ -335,8 +336,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     contextRef.current.moveTo(vanishingPoint.x, vanishingPoint.y)
     contextRef.current.closePath()
     contextRef.current.fill()
-    contextRef.current.drawImage(arrowsLeftImage, 328, 528, 47, 46)
-    contextRef.current.drawImage(arrowsRightImage, 618, 528, 47, 46)
+    contextRef.current.drawImage(arrowsLeftImage, 328, 648, 47, 46)
+    contextRef.current.drawImage(arrowsRightImage, 618, 648, 47, 46)
   }
 
   const eventIsCurrentHover = e => {
@@ -561,7 +562,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       height: sceneHeight
     } = sceneRef.current.getBoundingClientRect()
     width = sceneWidth
-    height = sceneHeight
+    height = sceneHeight + 60
     maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
     // console.log('useEffect...width and height', width, height)
     setSceneSize({
@@ -738,6 +739,20 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     const containerElement = containerRef.current
     const canvasElement = canvasRef.current
 
+    // experimenting with doing small movements to hint that the events on the timeline move
+    // setTimeout(() => {
+    //   console.log('half second timeout')
+    //   contextRef.current.clearRect(0, 0, width, height)
+    //   drawBoundaries(vanishingPoint)
+    //   drawEvents(0.5)
+    // }, 2000)
+    // setTimeout(() => {
+    //   console.log('full second timeout')
+    //   contextRef.current.clearRect(0, 0, width, height)
+    //   drawBoundaries(vanishingPoint)
+    //   drawEvents(-0.5)
+    // }, 4000)
+
     return () => {
       containerElement.removeEventListener('mousewheel', handler, false)
       canvasElement.removeEventListener('mousemove', canvasMouseMoveHandler, false)
@@ -834,7 +849,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         </div>
 
         <img
-          alt='Various landmarks and components of the San Diego region'
+          alt='Various landmarks and attractions in the San Diego region'
           src={backgroudImagePath}
           width={width}
           height={height}
