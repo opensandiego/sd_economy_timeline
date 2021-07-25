@@ -177,13 +177,14 @@ img:nth-of-type(2) {
   padding: 20px 0;
   width: 100%;
   text-align: center;
-
+  pointer-events: none;
 }
 
 .current-era-tooltip-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
 }
 
 .current-era div:first-child {

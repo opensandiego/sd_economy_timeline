@@ -2,16 +2,16 @@
 // x1, y1 is bottom-left corner
 // x2, y2 is top-right corner
 export const regions = {
-  submarine: [10, 350, 155, 320],
-  midway: [10, 300, 240, 270],
-  cabrillo: [15, 200, 60, 110],
-  hoteldel: [200, 220, 270, 140],
-  downtown: [350, 220, 630, 100],
-  fighter: [690, 90, 750, 50],
-  mission: [710, 220, 800, 140],
-  kumeyaay: [860, 250, 970, 200],
-  jet: [275, 70, 340, 40],
-  ship: [275, 220, 325, 160],
+  submarine: [10, 460, 155, 430],
+  midway: [10, 400, 240, 370],
+  cabrillo: [15, 320, 60, 230],
+  hoteldel: [200, 320, 270, 240],
+  downtown: [350, 320, 630, 200],
+  fighter: [840, 110, 900, 60],
+  mission: [710, 320, 800, 240],
+  kumeyaay: [860, 350, 970, 300],
+  jet: [625, 160, 690, 130],
+  ship: [275, 320, 325, 260],
 }
 
 export const descriptions = {
