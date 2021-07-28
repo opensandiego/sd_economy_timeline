@@ -134,7 +134,6 @@ img:nth-of-type(2) {
 /* --------------- Nancy P. stage background -------------- */
 
 .categories {
-  position: fixed;
   width: 149px;
   height: 46px;
   background: transparent
@@ -146,7 +145,6 @@ img:nth-of-type(2) {
   color: white;
   font-size: 18px !important;
   font-weight: 700 !important;
-  margin: 20px 0 0 41px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -248,4 +246,35 @@ img:nth-of-type(2) {
 }
 .current-era .tooltip:hover svg:nth-of-type(2) {
   display: block !important;
+}
+
+.fixed {
+  position: fixed;
+  margin: 20px 0 0 41px;
+  z-index: 10;
+}
+
+.category-quick-look {
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 300;
+  padding-top: 16px;
+  width: 240px;
+}
+
+.category-quick-look .category-quick-look-selected {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-quick-look .category-quick-look-selected div {
+  margin: 10px 10px 10px 0;
+  display: flex;
+  align-content: center;
+  color: #094971;
+}
+
+.category-quick-look .category-quick-look-selected div svg {
+  cursor: pointer;
+  margin: 2px 6px 0 0;
 }
