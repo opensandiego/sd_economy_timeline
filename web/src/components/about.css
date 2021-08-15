@@ -31,34 +31,62 @@
   display: block;
 }
 
-.about-container {
+.bottom-container > div {
   position: relative;
 }
 
-p.tl-desc {
+.bottom-container p {
   position: absolute;
   z-index: 9999;
   background: white;
   box-shadow: 0px 6px 9px #0000004e;
   border-radius: 0px 0px 10px 10px;
-  font: normal normal normal 15px/25px Montserrat;
-  padding: 17px;
-  width: 368px;
-  overflow-y: auto;
-  height: 170px;
+  font: normal normal normal 16px/25px Montserrat;
+  padding: 15px;
+  width: 450px;
   opacity: 0;
   color: #000000;
   margin-top: 0;
-  top: 276px;
+  top: 48px;
   left: 0;
   z-index: 0;
 }
+.bottom-container p a {
+  text-decoration: underline;
+  font: normal normal 600 16px/19px Montserrat;
+  letter-spacing: 0px;
+  color: #196CAA;
+  display: block;
+  margin: 15px 0 5px 0;
+}
+.bottom-container span {
+  font-style: italic;
+  font: italic normal normal 14px/18px Montserrat;
+}
+.bottom-container p svg {
+  margin-bottom: -2px;
+  margin-left: 7px;
+}
+.bottom-container p svg path {
+  fill: #196CAA;
+}
+.bottom-container .abt-desc p {
+  width: 368px;
+  height: 170px;
+  overflow-y: auto;
+  
+}
 
-p.tl-desc.open {
+.bottom-container > div:hover p {
+  z-index: 11; 
+  opacity: 1;
+}
+
+/* p.tl-desc.open {
   z-index: 11; 
   opacity: 1;
 
-}
+} */
 .bottom-container {
   display: flex;
   justify-content: space-between;
@@ -67,44 +95,28 @@ p.tl-desc.open {
   border: #CEE2F0 1px solid;
   border-radius: 5px;
   margin-bottom: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16); 
 box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
 }
 
 
-.bottom-container a, .about {
+.bottom-container button, .about {
   font: normal normal 600 20px/30px Montserrat;
   color: #196CAA;
   text-decoration: none;
 }
-.bottom-container a, .abt-desc {
+.bottom-container > div  {
   height: 100%;
-  padding: 0 28px;
-  flex-grow: 1;
+  padding: 0 23px;
+  /* flex-grow: 1; */
   display: flex;
   align-items: center;
 }
-.bottom-container a:hover, .abt-desc:hover .about, .abt-desc:hover  {
+/* .bottom-container a:hover, .abt-desc:hover .about, .abt-desc:hover   */
+.bottom-container > div:hover {
   background-color: #196CAA;
+}
+.bottom-container > div:hover button {
   color: #FFFFFF;
-}
-
-.download a {
-  text-decoration: underline;
-  font: normal normal 600 15px/19px Montserrat;
-  letter-spacing: 0px;
-  color: #9A2477;
-  margin-bottom: 18px;
-  position: relative;
-}
-
-.download a:nth-of-type(1) svg {
-  position: absolute;
-  left: -22px;
-  top: 2px;
-}
-
-.download a:hover {
-  color: #196AA9;
 }
