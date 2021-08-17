@@ -43,11 +43,11 @@ export const TimelineContextProvider = ({ children }) => {
   });
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
-  const [showAbout, setShowAbout] = useState(false);
-  const [showStories, setShowStories] = useState(false);
-  const [showFunFact, setShowFunFact] = useState(false);
-  const [showDownload, setShowDownload] = useState(false);
-  const [showEspanol, setShowEspanol] = useState(false);
+  // const [showAbout, setShowAbout] = useState(false);
+  // const [showStories, setShowStories] = useState(false);
+  // const [showFunFact, setShowFunFact] = useState(false);
+  // const [showDownload, setShowDownload] = useState(false);
+  // const [showEspanol, setShowEspanol] = useState(false);
 
   const previouslySelectedDecade = useRef(null)
   useEffect(() => {
@@ -175,21 +175,21 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription();
   }, []);
 
-  const toggleShowAbout = () => {
-    setShowAbout(!showAbout);
-  }
-  const toggleShowStories = () => {
-    setShowStories(!showStories);
-  }
-  const toggleFunFacts = () => {
-    setShowFunFact(!showFunFact);
-  }
-  const toggleShowDownload = () => {
-    setShowDownload(!showDownload);
-  }
-  const toggleShowEspanol = () => {
-    setShowEspanol(!showEspanol);
-  }
+  // const toggleShowAbout = () => {
+  //   setShowAbout(!showAbout);
+  // }
+  // const toggleShowStories = () => {
+  //   setShowStories(!showStories);
+  // }
+  // const toggleFunFacts = () => {
+  //   setShowFunFact(!showFunFact);
+  // }
+  // const toggleShowDownload = () => {
+  //   setShowDownload(!showDownload);
+  // }
+  // const toggleShowEspanol = () => {
+  //   setShowEspanol(!showEspanol);
+  // }
   // const handleActiveMenu = (menu) => {
   //   console.log(menu);
 
@@ -213,11 +213,11 @@ export const TimelineContextProvider = ({ children }) => {
     timelineScroll,
     aboutDescription,
     summaryDescription,
-    showAbout,
-    showStories,
-    showFunFact,
-    showDownload,
-    showEspanol,
+    // showAbout,
+    // showStories,
+    // showFunFact,
+    // showDownload,
+    // showEspanol,
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
@@ -229,11 +229,11 @@ export const TimelineContextProvider = ({ children }) => {
     handleYearSelector,
     outsideClickUpdate,
     getAboutDescription,
-    toggleShowAbout,
-    toggleShowStories,
-    toggleFunFacts,
-    toggleShowDownload,
-    toggleShowEspanol
+    // toggleShowAbout,
+    // toggleShowStories,
+    // toggleFunFacts,
+    // toggleShowDownload,
+    // toggleShowEspanol
   };
 
   return (
