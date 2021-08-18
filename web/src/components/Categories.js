@@ -1,7 +1,7 @@
 import React from 'react'
 import { VscChromeClose } from "react-icons/vsc";
-import { FaFilter } from "react-icons/fa"
 import TimelineContext from '../TimelineContext'
+import { ReactComponent as CatIcon } from '../assets/categories_icon.svg'
 
 const Categories = () => {
   return (
@@ -10,8 +10,7 @@ const Categories = () => {
         return (
           <div className="fixed">
             <button className="categories button" onClick={updateShowFilter}>
-              {" "}
-              <FaFilter />
+              <CatIcon />
               Categories
             </button>
             {selectedSectors.length > 0 &&

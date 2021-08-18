@@ -134,7 +134,7 @@ img:nth-of-type(2) {
 /* --------------- Nancy P. stage background -------------- */
 
 .categories {
-  width: 149px;
+  width: 155px;
   height: 46px;
   background: transparent
     linear-gradient(180deg, #fa68a6 0%, #e04d8b 50%, #98345e 100%) 0% 0%
@@ -158,10 +158,12 @@ img:nth-of-type(2) {
   color: #e04d8b;
   border: #e04d8b solid 1px;
 }
-
+.categories:hover svg .a {
+  fill: #e04d8b;
+}
 .categories svg {
-  margin-right: 3px;
-  height: 12px;
+  margin-right: 5px;
+  height: 18px;
 }
 
 .year:last-of-type hr {
