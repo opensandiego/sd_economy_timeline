@@ -2,13 +2,14 @@ import React from 'react'
 import { VscChromeClose } from "react-icons/vsc";
 import TimelineContext from '../TimelineContext'
 import { ReactComponent as CatIcon } from '../assets/categories_icon.svg'
+import './categories.scss'
 
 const Categories = () => {
   return (
     <TimelineContext.Consumer>
       {({selectedSectors, removeSector, updateShowFilter}) => {
         return (
-          <div className="fixed">
+          <div className="fixed background-blur">
             <button className="categories button" onClick={updateShowFilter}>
               <CatIcon />
               Categories
