@@ -1,0 +1,19 @@
+[{
+  "name": "The Region’s First Inhabitants",
+  "description": "Our region's first inhabitants have lived here for at least 10,000 years. Four of the most prominent Native American groups, the Kumeyaay, Cupeño, Cahuilla, and Luiseño, have survived centuries and colonization, displacement, and persecution and today assert sovereign authority over 18 Indian reservations and a $1 billion gaming industry that has created more than 10,000 jobs."
+}, {
+  "name": "The U.S. Navy Drops Anchor In San Diego",
+  "description": "More than 100 years ago, city leaders had the foresight and determination to persuade the U.S. Navy to make San Diego Bay a base of operations. Today, San Diego is the Navy's most strategic port, $33 billion in direct spending is related to defense (as of FY 2020), and the military accounts for nearly one in four jobs in the region."
+}, {
+  "name": "Creating a Vacation Wonderland",
+  "description": "Our region's modern tourism industry arguably began in 1915, when the Panama-Pacific International Exposition attracted people from across the nation. Today our region, with its spectacular coastline, dynamic cities, and numerous family attractions, is a world-class vacation destination."
+}, {
+  "name": "Philanthropy and Civic Investment",
+  "description": "Individuals throughout our region's history have donated their time, energy, and personal resources to make our home a better place to live. Some of our most beloved cultural institutions, hospitals, nature preserves, academic research centers, city parks, and more have been made possible by the generosity of people with an eye on our region's future."
+}, {
+  "name": "Building a Post-War Economy – Education and Tech",
+  "description": "In the wake of World War II, our region's leaders planned for a new post-war economy built on academic opportunity and research & development in science and engineering. The establishment of UC San Diego and its surrounding research community, and other centers of learning and research, have injected billions of dollars into the regional economy and created tens of thousands of jobs in biotechnology, computer science, engineering, and other fields."
+}, {
+  "name": "Environmental Protection",
+  "description": "With rapid economic growth in the second half of the 20th century, new stresses on the region's natural environment demanded action. The 1990s saw new concerted efforts by regional and local governments to protect valuable coastal habitats and natural landscapes inland, and guide development more intelligently."
+}]

@@ -1,10 +1,18 @@
-import React from "react";
-import { VscChromeClose } from "react-icons/vsc";
+import React, {useEffect} from "react";
+import { VscChromeClose, VscChevronUp, VscChevronDown } from "react-icons/vsc";
+import { BsInfoCircle, BsInfoCircleFill } from "react-icons/bs";
+// import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import "./sidebar.css";
 import TimelineContext from "../TimelineContext";
 import ScrollableFilter from "./ScrollableFilter";
 
 const Sidebar = (props) => {
+
+  useEffect(() => {
+    let filterHeight = document.getElementById('selected-sectors').clientHeight;
+  })
+
+
   return (
     <TimelineContext.Consumer>
       {({
@@ -14,6 +22,11 @@ const Sidebar = (props) => {
         removeSector,
         clearSelectedSectors,
         updateShowFilter,
+        showCategories,
+        setShowCategories,
+        showStories,
+        setShowStories,
+        storiesList
       }) => (
         <div
           className={
@@ -32,7 +45,7 @@ const Sidebar = (props) => {
                   </button>
                 </div>
               </div>
-              <div className="selected-sectors">
+              <div className="selected-sectors" id="selected-sectors">
                 {selectedSectors.length === 0 ? (
                   <p className="empty">No sectors selected</p>
                 ) : (
@@ -54,10 +67,52 @@ const Sidebar = (props) => {
 
               <div className="sidebar-label">
                 <p>
-                  Categories<span>(Select 5 Max)</span>
+                  Stories
                 </p>
+                <p style={showStories ? {display: "block"} : {display: "none"}}>(Select 1 Max)</p>
+                <button onClick={e => setShowStories(!showStories)}>
+                  {showStories ? <VscChevronUp /> : <VscChevronDown />}
+                </button>
               </div>
-              {showAllSectors ? <ScrollableFilter /> : null}
+              <div className={showStories ? "stories open" : "stories"} id="stories">
+                {storiesList.map((story, index) => (
+                  <div className="stories-selector" key={index}>
+                  <div className="sector-left">
+                    <input
+                      type="checkbox"
+                      className="checkbox-input"
+                      value={story.name}
+                      // checked={selectedSectors.includes(story.name)}
+                      onChange={(e) => {
+                        console.log(story.name)}}
+                    />
+                    <span className="checkbox-custom"></span>
+                    <span className="story-name">
+                      {story.name}
+                    </span>
+                  </div>
+                  <div className="tooltip">
+                    <BsInfoCircle />
+                    <BsInfoCircleFill />
+                    <span className="tooltiptext" 
+                    // style={{transform: `translateY(calc(-100% + calc(-23px + -${scrollTop}px)))`}}
+                    >{story.description}</span>
+                  </div>
+                </div>
+                ))}
+              </div>
+
+              <div className="sidebar-label">
+                <p>
+                  Categories
+                </p>
+                <p style={showCategories ? {display: "block"} : {display: "none"}}>(Select 5 Max)</p>
+                <button onClick={e => setShowCategories(!showCategories)}>
+                  {showCategories ? <VscChevronUp /> : <VscChevronDown />}
+                </button>
+                
+              </div>
+              <ScrollableFilter />
             </div>
           </div>
         </div>

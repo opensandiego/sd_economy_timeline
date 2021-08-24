@@ -25,8 +25,8 @@ const About = () => {
             <div className="stories-container">
               <button className="about">Stories</button>
               <p>
-                Learn about 6 major stories that helped shape the history of San
-                Diego.
+                Learn about 6 major stories that helped shape the history of the San
+                Diego region.
                 <a href={stories} target="_blank" rel="noopener noreferrer">
                   Timeline Stories
                 </a>
@@ -39,7 +39,7 @@ const About = () => {
             <div className="facts-container">
               <button className="">Fun Facts</button>
               <p>
-                Learn fun facts about different cities in the San Diego region.
+                Discover fun facts about different cities in the San Diego region.
                 <span>
                   <a href={facts} target="_blank" rel="noopener noreferrer">
                     San Diego Fun Facts
