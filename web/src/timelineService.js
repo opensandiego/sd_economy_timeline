@@ -1,7 +1,8 @@
 import * as d3 from "d3";
 import data from "./SD-Regional-Economy-Timeline-Data_V2_6-03-21.csv";
 import categories from "./categories.txt";
-import description from "./description.txt"
+import description from "./description.txt";
+import stories from "./stories.txt"
 
 const TimelineService = {
   async readCSV() {
@@ -38,6 +39,11 @@ const TimelineService = {
 
   async readDescription() {
     const res = await d3.text(description)
+    return JSON.parse(res)
+  },
+
+  async readStories() {
+    const res = await d3.text(stories)
     return JSON.parse(res)
   }
 };

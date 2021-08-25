@@ -1,7 +1,9 @@
 #sidebar{
-  padding: 0 calc(100% - 260px) 20px 15px;
+  /* padding: 0 calc(100% - 260px) 20px 15px; */
+  padding: 0 calc(100% - 366px) 20px 15px;
   position: relative;
-  height: 690px;
+  /* height: 690px; */
+  height: 810px;
   z-index: 0;
   direction: rtl;
 }
@@ -54,14 +56,14 @@
   position: relative;
 }
 
-.sector-filter-tag, .key-sector-selector, .all-sector-selector {
+.sector-filter-tag, .stories-selector, .all-sector-selector {
   font-size: 0.5em;
   height: 1.5em;
   align-items: center;
   display: flex;
 }
 
-.sector-filter-tag svg, .key-sector-selector svg, .all-sector-selector svg {
+.sector-filter-tag svg, .stories-selector svg, .all-sector-selector svg {
   cursor: pointer;
 }
 
@@ -78,12 +80,12 @@
   position: relative;
 }
 
-.all-sector-selector {
+.all-sector-selector, .stories-selector {
   font-size: 0.5em;
   height: 2.5em;
 }
 
-.key-sector-selector-item,
+
 .all-sector-selector-item {
   padding: 0 8px 0 11px;
 }
@@ -106,13 +108,13 @@
   line-height: 23px;
 }
 
-.active-sectors svg, .all-sectors svg {
+#sidebar .tooltip svg {
   color: #9a2577;
   height: 11px;
   width: 11px;
 }
 
-#sidebar span, .sector-filter-tag {
+#sidebar span, .sidebar-label p:nth-of-type(2), .sector-filter-tag {
   font: normal normal normal 16px/19px Montserrat;
 letter-spacing: 0px;
 color: #000000;
@@ -129,9 +131,13 @@ color: #186BA9;
   padding-top: 3px;
 }
 
-.sidebar-label span {
+/* .sidebar-label span {
   font: normal normal normal 16px/19px Montserrat !important;
   padding-left: 10px;
+} */
+.sidebar-label > button svg {
+  height: auto;
+  width: 25px;
 }
 
 /* checkbox */
@@ -183,8 +189,8 @@ span.checkbox-custom {
   margin-top: 30px;
 }
 
-.key-sector-selector, .all-sector-selector {
-  margin: 15px 0px;
+.all-sector-selector, .stories-selector {
+  margin: 30px 0px;
   /* position: relative; */
 }
 
@@ -223,7 +229,7 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   padding: 10px 18px;
   position: absolute;
 
-  margin-left: -45px;
+  margin-left: -80px;
   font: normal normal 400 16px/23px Montserrat !important;
   letter-spacing: 0px;
   color: #031620;
@@ -248,18 +254,23 @@ div#sidebar .sidebar-label:nth-of-type(1) {
 
 .all-sectors {
   overflow-y: auto;
-  height: 470px;
+  height: 0px;
   margin-right: -10px;
+  transition: height 300ms ease-in-out;
 }
 
-.all-sectors .all-sector-selector:nth-of-type(1) {
+.all-sectors.open {
+  height: 470px;
+}
+
+.all-sectors .all-sector-selector:first-of-type, .stories-selector:first-of-type {
   margin-top: 0;
 }
 
 div#bkground {
   height: 100%;
   position: fixed;
-  width: 270px;
+  width: 375px;
   margin-left: -15px;
   margin-top: -20px;
   background: white;
@@ -304,3 +315,42 @@ div#bkground {
 #sidebar .tooltip:hover svg:nth-of-type(2) {
   display: block !important;
 }
+
+/* STORIES */
+.stories {
+  max-height: 0;
+  transition: max-height 300ms ease-in-out;
+  overflow:hidden;
+}
+
+.stories.open {
+  display: block;
+  max-height: 300px;
+}
+.stories .tooltiptext {
+  transform: translateY(calc(-100% + -23px));
+}
+span.story-name {
+  max-width: 262px;
+  padding: 0 10px;
+}
+.stories-selector:nth-of-type(2) .tooltip {
+  margin-left: -20px;
+}
+.stories-selector:nth-of-type(3) .tooltip {
+  margin-left: -80px;
+}
+.stories-selector:nth-of-type(4) .tooltip {
+  margin-left: -55px;
+}
+
+/* .all-sectors {
+  overflow-y: auto;
+  height: 0px;
+  margin-right: -10px;
+  transition: height 300ms ease-in-out;
+}
+
+.all-sectors.open {
+  height: 470px;
+} */

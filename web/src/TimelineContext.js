@@ -21,7 +21,8 @@ const TimelineContext = createContext({
   showFilter: false,
   decades: [],
   showYears: false,
-  aboutDescription: null
+  aboutDescription: null,
+  storiesList: []
 
 });
 export default TimelineContext;
@@ -32,7 +33,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [selectedDec, setSelectedDecade] = useState(null);
   const [selectedSectors, setSelectedSectors] = useState([]);
   const [allSectors, setAllSectors] = useState([]);
-  const [showAllSectors, setShowAllSectors] = useState(true);
+  // const [showAllSectors, setShowAllSectors] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
@@ -43,6 +44,9 @@ export const TimelineContextProvider = ({ children }) => {
   });
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
+  const [showCategories, setShowCategories] = useState(true);
+  const [showStories, setShowStories] = useState(false);
+  const [storiesList, setStoriesList] = useState([]);
   // const [showAbout, setShowAbout] = useState(false);
   // const [showStories, setShowStories] = useState(false);
   // const [showFunFact, setShowFunFact] = useState(false);
@@ -88,7 +92,15 @@ export const TimelineContextProvider = ({ children }) => {
   useEffect(() => {
     getEventData();
   }, []);
+  const getStoriesList = async () => {
+    const res = await timelineService.readStories();
+    console.log("STORIESSSS",res)
+    setStoriesList(res);
 
+  }
+  useEffect(() => {
+    getStoriesList();
+  }, [])
   const getCategoryData = async () => {
     const response = await timelineService.readCategories();
     setSelectedSectors(response.slice(0, 5).map(sector => sector.name))
@@ -133,9 +145,9 @@ export const TimelineContextProvider = ({ children }) => {
     setShowFilter(!showFilter);
   };
 
-  const updateShowAllSectors = () => {
-    setShowAllSectors(!showAllSectors);
-  };
+  // const updateShowAllSectors = () => {
+  //   setShowAllSectors(!showAllSectors);
+  // };
 
   const removeSector = (sector) => {
     let index = selectedSectors.indexOf(sector);
@@ -175,6 +187,10 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription();
   }, []);
 
+  // const toggleCategories = () => {
+  //   setShowCategories(!showCategories);
+  // }
+
   // const toggleShowAbout = () => {
   //   setShowAbout(!showAbout);
   // }
@@ -198,11 +214,12 @@ export const TimelineContextProvider = ({ children }) => {
 
 
 
+
   const value = {
     loading,
     data,
     showFilter,
-    showAllSectors,
+    // showAllSectors,
     selectedSectors,
     allSectors,
     previousDecade,
@@ -213,27 +230,25 @@ export const TimelineContextProvider = ({ children }) => {
     timelineScroll,
     aboutDescription,
     summaryDescription,
-    // showAbout,
-    // showStories,
-    // showFunFact,
-    // showDownload,
-    // showEspanol,
+    showCategories,
+    showStories,
+    storiesList,
+    
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
     removeSector,
     clearSelectedSectors,
     updateShowFilter,
-    updateShowAllSectors,
+    // updateShowAllSectors,
     updateSelectedDecade,
     handleYearSelector,
     outsideClickUpdate,
     getAboutDescription,
-    // toggleShowAbout,
-    // toggleShowStories,
-    // toggleFunFacts,
-    // toggleShowDownload,
-    // toggleShowEspanol
+    setShowCategories,
+    setShowStories
+
+    
   };
 
   return (

@@ -20,7 +20,7 @@
   "name": "Binational",
   "description": "The San Diego region’s borders are an important part of the economy with strong ties to its neighboring counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 18 tribal governments."
 }, {
-  "name": "Protecting Our Environment",
+  "name": "Our Environment",
   "description": "Over the past several decades, the San Diego region has taken concrete steps to protect the environment. These include efforts to protect our invaluable shoreline and natural habitats for plants and animals, replenish sand at our beaches, slow suburban sprawl by concentrating development in urban areas, promote alternative fuels and zero emission vehicles (ZEVs), make communities more resilient to the consequences of climate change, and better control stormwater runoff. "
 }, {
   "name": "Education",

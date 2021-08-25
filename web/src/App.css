@@ -20,7 +20,8 @@
 .content {
   align-items: stretch;
   flex: 1;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  overflow:hidden;
 }
 
 .column {
@@ -35,7 +36,7 @@
 
 .column.fixed-270 {
   /* width: 345px; */
-  width: 270px;
+  width: 375px;
   /* width: 300px; */
   position: absolute;
   z-index: 20;

@@ -19,9 +19,9 @@ export default class ScrollableFilter extends Component {
     const {scrollTop} = this.state;
     return (
       <TimelineContext.Consumer>
-        {({ selectedSectors, allSectors, updateSelectedSectors }) => (
+        {({ selectedSectors, allSectors, updateSelectedSectors, showCategories }) => (
           <div
-            className="all-sectors"
+            className={showCategories ? "all-sectors open" : "all-sectors"}
             ref={this.myRef}
             onScroll={this.onScroll}
           >
