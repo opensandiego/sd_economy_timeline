@@ -575,6 +575,44 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
   }
 
   useEffect(() => {
+    if (!yearsToTrackScrolling) {
+      return
+    }
+    const allPositions = yearsToTrackScrolling.map(o => o.position)
+    const allYears = yearsToTrackScrolling.map(o => o.year)
+    const currentScroll = scrollTotal * 25
+    let distance = 0
+    let position = 0
+    while (distance < currentScroll) {
+      position += 1
+      distance += allPositions[position - 1] - allPositions[position]
+    }
+    position = (position > 1) ? position - 1 : position
+    let currentYear = allYears[position] ?? allYears[0]
+    if (!currentYear) {
+      return
+    }
+    // check if currentYear is a four-digit year
+    // this is required because some events have "8,000+ B.C." as their year
+    if (!currentYear.match(/\d{4}/)) {
+      // convert to four-digit year
+      currentYear = currentYear.replace(/[^0-9]*/g, '')
+    }
+    const stageDecade = `${currentYear.slice(0, 3)}0`
+    // fallback to "negative" year so that we use BC years correctly
+    const nextEra = eraInfo[eraLookupByYear[currentYear]] || eraInfo[eraLookupByYear[`-${currentYear}`]]
+    const nextTitle = nextEra.title
+    const nextPeriod = `(${nextEra.startDisplay || nextEra.start} - ${nextEra.end})`
+    setEraTitle(nextTitle)
+    setEraPeriod(nextPeriod)
+    setEraDescription(nextEra.description)
+    setEraColor(nextEra.color)
+
+  }, [
+    selectedSectors
+  ])
+
+  useEffect(() => {
     const {
       width: sceneWidth,
       height: sceneHeight
