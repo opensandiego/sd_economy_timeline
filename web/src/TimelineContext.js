@@ -94,7 +94,7 @@ export const TimelineContextProvider = ({ children }) => {
   }, []);
   const getStoriesList = async () => {
     const res = await timelineService.readStories();
-    console.log("STORIESSSS",res)
+    console.log("stories",res)
     setStoriesList(res);
 
   }
@@ -233,7 +233,7 @@ export const TimelineContextProvider = ({ children }) => {
     showCategories,
     showStories,
     storiesList,
-    
+
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
@@ -248,7 +248,7 @@ export const TimelineContextProvider = ({ children }) => {
     setShowCategories,
     setShowStories
 
-    
+
   };
 
   return (

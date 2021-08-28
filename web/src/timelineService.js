@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import data from "./SD-Regional-Economy-Timeline-Data_V2_6-03-21.csv";
+import data from "./SD-Regional-Economy-Timeline-Data_V2_8-18-21.csv";
 import categories from "./categories.txt";
 import description from "./description.txt";
 import stories from "./stories.txt"
@@ -29,6 +29,7 @@ const TimelineService = {
       }
       return 0
     })
+    console.log({ rowsWithYear })
     return rowsWithYear
   },
 
