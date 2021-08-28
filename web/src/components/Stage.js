@@ -207,10 +207,10 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     timeline3DLength = rectCount * yIncrement
     rects = initializePositions(selectedEvents)
     yearPositions = rects.reduce((acc, cur) => {
-      return {
-        ...acc,
-        [cur.year]: cur.y
+      if (!acc[cur.year]) {
+        acc[cur.year] = cur.y
       }
+      return acc
     }, {})
     yearsToTrackScrolling = rects.map(rect => {
       return {
@@ -465,7 +465,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         },
         active: true
       }
-      // console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
+      console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
@@ -695,6 +695,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         const m = selectedEvents[c]
         const ma = m.position
         if (!ma || m.searchHidden || m.madeInvisible) {
+          console.log('\tno position')
           continue
         }
         if (ma.active) {
@@ -734,7 +735,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     const canvasClickHandler = clickEvent => {
       const { offsetX: x, offsetY: y } = clickEvent
       const clickedMarker = hitTest(clickEvent)
-      if (y < 320 && clickedMarker) {
+      console.log('canvas click...', y, clickedMarker, '; sel evts?', selectedEvents)
+      if (y < 395 && clickedMarker) {
         setSelectedYear(clickedMarker.Year)
         return
       }
@@ -837,8 +839,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
 
     const selectedYearPosition = yearPositions[selectedYear]
     const currentPosition = Object.values(yearPositions)[0] - (scrollTotal * 25)
-    // the + 3 in the next line moves the selected year slightly closer to the foreground
-    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 1
+    // the + 8 in the next line moves the selected year slightly closer to the foreground
+    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 8
     const direction = (totalChangeNeeded < 0) ? -1 : 1
     const step = 1 * direction
     let steps = 0
