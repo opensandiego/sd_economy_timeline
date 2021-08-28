@@ -175,7 +175,13 @@ export const createTeardropImages = eras => {
 }
 
 export const createEraLookup = eras => {
+  const erasToSkip = ['preColonial']
+  let skippedEras = []
   const yearLookup = eras.reduce((years, era) => {
+    if (erasToSkip.includes(era.name)) {
+      skippedEras.push(era)
+      return years
+    }
     const { start, end, name } = era
     let current = start
     while (current <= end) {
@@ -184,6 +190,13 @@ export const createEraLookup = eras => {
     }
     return years
   }, {})
+
+  if (skippedEras.length) {
+    skippedEras.forEach(era => {
+      yearLookup[era.start] = era.name
+      yearLookup[era.end] = era.name
+    })
+  }
   return yearLookup
 }
 

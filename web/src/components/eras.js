@@ -1,3 +1,5 @@
+import preColonial from '../assets/era-pre-colonial-8000bc-1542@3x.png'
+import colonial from '../assets/era-european-arrival-1542-1780@3x.png'
 import electrification from '../assets/era-electrification-1880-1929@3x.png'
 import industrial from '../assets/era-industrial-revolution-1830-1879@3x.png'
 import life from '../assets/era-life-science-2010-2060@3x.png'
@@ -6,6 +8,23 @@ import transportation from '../assets/era-steel-railway-transportation-1830-1879
 import technology from '../assets/era-technology-1970-2009@3x.png'
 
 const eras = [{
+  name: "preColonial",
+  description: "Pre-Colonial",
+  teardrop: preColonial,
+  startDisplay: "10,000 years ago",
+  start: -8000,
+  end: 1541,
+  title: "Pre-Colonial",
+  color: "#0b466e"
+}, {
+  name: "colonial",
+  description: "European Arrival & Colonization",
+  teardrop: colonial,
+  start: 1542,
+  end: 1879,
+  title: "European Arrival & Colonization",
+  color: "#eb7763"
+}, {
   name: "electrification",
   description: "Electrification accelerated the growth of cities with streetlights bringing nightlife across America, and subways and electrified trolley cars expanding public transportation. In San Diego, this era also saw city leaders persuade the U.S. Navy to establish bases at San Diego Bay, the rise of tourism following the 1915 Panama-California Exposition, and the growth of hospitals, museums, and other civic institutions.",
   teardrop: electrification,

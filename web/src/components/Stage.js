@@ -182,7 +182,6 @@ const earliestEraStart = eras
 
 const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll})=> {
   selectedEvents = data && data
-    .filter(event => selectedSectors.includes(event.Category) && event.Year >= earliestEraStart)
     .map(event => {
       return {
         ...event,
@@ -442,8 +441,12 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       const dx = screenPosition.x - 0.5 * teardropWidth
       const dy = screenPosition.y - teardropHeight - vShift
       // Draw the tear drop
-      const eventYear = selectedEvents[i].Year
-      const eventEra = eraLookupByYear[eventYear]
+      let eventYear = selectedEvents[i].Year
+      // special case handling for "8,000+ B.C." events
+      if (!eventYear.match(/\d{4}/)) {
+        eventYear = eventYear.replace(/[^0-9]*/g, '')
+      }
+      const eventEra = eraLookupByYear[eventYear] || eraLookupByYear[`-${eventYear}`]
       const eraTeardrop = eraTeardrops[eventEra] || eraTeardrops.life // fallback to pink teardrop when none exists
       contextRef.current.drawImage(eraTeardrop, dx, dy, teardropWidth, teardropHeight)
 
@@ -473,14 +476,21 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         const dxIcon = screenPosition.x - 0.5 * iconWidth
         const dyIcon = screenPosition.y - iconHeightAdjust - vShift
         // Draw the event icon on the tear drop
+        const yearFont = `bold ${14 * scaleFactor}px Montserrat`
         contextRef.current.drawImage(eventIcon.image, dxIcon, dyIcon, iconWidth, iconHeight)
-        contextRef.current.font = `bold ${14 * scaleFactor}px Montserrat`
+        contextRef.current.font = yearFont
         const ones = (`${selectedEvents[i].Year}`.match(/1/g) || []).length
         const zeroZeroTwo = (`${selectedEvents[i].Year}`.match(/00[0|2-9]/g) || []).length ? -1 : 0
         // const xNudge = `${selectedEvents[i].Year}`.slice(0,1) === '1' ? 14 : 15
-        const xNudge = 13 + ones - zeroZeroTwo
+        const is8000 = +eventYear === 8000 ? 2 : 0
+        const xNudge = 13 + ones - zeroZeroTwo - is8000
         // Draw the event's year under the icon
-        contextRef.current.fillText(selectedEvents[i].Year, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
+        contextRef.current.fillText(eventYear, dx + (xNudge * scaleFactor), dy + teardropHeight - (32 * scaleFactor))
+        if (is8000) {
+          contextRef.current.font = `bold ${10 * scaleFactor}px Montserrat`
+          contextRef.current.fillText('B.C.', dx + ((xNudge + 8) * scaleFactor), dy + teardropHeight - (20 * scaleFactor))
+          contextRef.current.font = yearFont
+        }
       }
 
       const startPos = {
@@ -541,13 +551,20 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position += 1
         distance += allPositions[position - 1] - allPositions[position]
       }
-      position = (position > 1) ? position - 2 : position - 1
-      const currentYear = allYears[position] ?? allYears[0]
-      const stageDecade = `${currentYear.slice(0,3)}0`
+      position = (position > 1) ? position - 1 : position
+      let currentYear = allYears[position] ?? allYears[0]
+      // check if currentYear is a four-digit year
+      // this is required because some events have "8,000+ B.C." as their year
+      if (!currentYear.match(/\d{4}/)) {
+        // convert to four-digit year
+        currentYear = currentYear.replace(/[^0-9]*/g, '')
+      }
+      const stageDecade = `${currentYear.slice(0, 3)}0`
 
-      const nextEra = eraInfo[eraLookupByYear[stageDecade]]
+      // fallback to "negative" year so that we use BC years correctly
+      const nextEra = eraInfo[eraLookupByYear[currentYear]] || eraInfo[eraLookupByYear[`-${currentYear}`]]
       const nextTitle = nextEra.title
-      const nextPeriod = `(${nextEra.start} - ${nextEra.end})`
+      const nextPeriod = `(${nextEra.startDisplay || nextEra.start} - ${nextEra.end})`
       setEraTitle(nextTitle)
       setEraPeriod(nextPeriod)
       setEraDescription(nextEra.description)
