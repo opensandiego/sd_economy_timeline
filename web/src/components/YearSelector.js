@@ -37,7 +37,7 @@ const YearSelector = () => {
                             ? { cursor: "pointer", fontWeight: "bold" }
                             : { cursor: "pointer", fontWeight: "normal" }
                         }
-                        onClick={() => setSelectedYear(decade)}
+                        onClick={() => setSelectedYear(years[0])}
                       >
                         {decade}s
                       </p>

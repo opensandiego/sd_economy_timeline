@@ -367,7 +367,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     contextRef.current.stroke()
   }
 
-  const drawEvents = (change = 0) => {
+  const drawEvents = (change = 0, force = false) => {
     scrollTotal += change
     // console.log('draw events change', change, scrollTotal)
     // console.log('drawEvent current hover?', currentHover)
@@ -465,7 +465,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         },
         active: true
       }
-      console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
+      // console.log(selectedEvents[i].Category, selectedEvents[i].Year, selectedEvents[i].position.x)
 
       const eventIcon = iconInfo[categoryToIcon[selectedEvents[i].Category]]
       // console.log('eventIcon', selectedEvents[i].Category, eventIcon)
@@ -532,7 +532,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     totalDraws += 1
     rects = nextRects
 
-    if (totalDraws % 10 === 0) {
+    if (totalDraws % 10 === 0 || force) {
       const allPositions = yearsToTrackScrolling.map(o => o.position)
       const start = allPositions[0]
       const end = allPositions[allPositions.length - 1]
@@ -545,6 +545,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
             scrollFraction
 
       const allYears = yearsToTrackScrolling.map(o => o.year)
+      // console.log(allYears)
       const currentScroll = scrollTotal * 25
       let distance = 0
       let position = 0
@@ -552,7 +553,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position += 1
         distance += allPositions[position - 1] - allPositions[position]
       }
-      position = (position > 1) ? position - 1 : position
+      // position = (position > 1) ? position - 1 : position
       let currentYear = allYears[position] ?? allYears[0]
       // check if currentYear is a four-digit year
       // this is required because some events have "8,000+ B.C." as their year
@@ -560,7 +561,10 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         // convert to four-digit year
         currentYear = currentYear.replace(/[^0-9]*/g, '')
       }
-      const stageDecade = `${currentYear.slice(0, 3)}0`
+      let stageDecade = `${currentYear.slice(0, 3)}0`
+      if (force) {
+        stageDecade = `${selectedYear.slice(0, 3)}0`
+      }
 
       // fallback to "negative" year so that we use BC years correctly
       const nextEra = eraInfo[eraLookupByYear[currentYear]] || eraInfo[eraLookupByYear[`-${currentYear}`]]
@@ -735,7 +739,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     const canvasClickHandler = clickEvent => {
       const { offsetX: x, offsetY: y } = clickEvent
       const clickedMarker = hitTest(clickEvent)
-      console.log('canvas click...', y, clickedMarker, '; sel evts?', selectedEvents)
+      // console.log('canvas click...', y, clickedMarker, '; sel evts?', selectedEvents)
       if (y < 395 && clickedMarker) {
         setSelectedYear(clickedMarker.Year)
         return
@@ -838,23 +842,26 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     // - desired position is:  (yearPositions[selectedYear] - current position) / 25
 
     const selectedYearPosition = yearPositions[selectedYear]
-    const currentPosition = Object.values(yearPositions)[0] - (scrollTotal * 25)
-    // the + 8 in the next line moves the selected year slightly closer to the foreground
-    const totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25) + 8
+    const currentPosition = Object.values(yearPositions).sort((a, b) => b - a)[0] - (scrollTotal * 25)
+    let totalChangeNeeded = ((currentPosition - selectedYearPosition) / 25)
     const direction = (totalChangeNeeded < 0) ? -1 : 1
     const step = 1 * direction
     let steps = 0
     const totalAnimationTime = 2000
-    const timePerStep = (totalAnimationTime / totalChangeNeeded > 50) ? 50 : totalAnimationTime / totalChangeNeeded
+    const timePerStep = (Math.abs(totalAnimationTime / totalChangeNeeded) > 50) ? 50 : Math.abs(totalAnimationTime / totalChangeNeeded)
     const interval = setInterval(() => {
       const vanishingPoint = timelineToScreen({ x: 0.5, y: 0 })
       contextRef.current.clearRect(0, 0, width, height)
       drawBoundaries(vanishingPoint)
       drawEvents(step)
-      if (Math.abs(steps * step) < Math.abs(totalChangeNeeded)) {
-        steps += 1
-      } else {
+      steps += 1
+      if (Math.abs(steps * step) >= Math.abs(totalChangeNeeded)) {
         clearInterval(interval)
+        setTimeout(() => {
+          contextRef.current.clearRect(0, 0, width, height)
+          drawBoundaries(vanishingPoint)
+          drawEvents(0, true)
+        }, timePerStep)
       }
     }, timePerStep)
   }, [
