@@ -182,6 +182,7 @@ const earliestEraStart = eras
 
 const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll})=> {
   selectedEvents = data && data
+    .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
       return {
         ...event,
