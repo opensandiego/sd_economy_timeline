@@ -15,16 +15,16 @@ export const regions = {
 }
 
 export const descriptions = {
-  submarine: 'The San Diego region serves as the homeport of the nation’s Pacific Naval Fleet and is home to multiple Naval bases and major Commands.',
-  midway: 'The San Diego region serves as the homeport of the nation’s Pacific Naval Fleet and is home to multiple Naval bases and major Commands.',
-  cabrillo: 'The iconic Old Point Loma Lighthouse was built in 1855 to watch over San Diego Bay, and now serves as a landmark and a museum.',
-  hoteldel: 'The Hotel del Coronado, the second largest wooden structure in the nation, has hosted a great number of notable guests since it opened in 1888.',
-  downtown: 'Downtown San Diego offers a beautiful and scenic urban skyline, showcasing San Diego’s prosperous modern innovation industry.',
-  fighter: 'The San Diego region is home to Naval Air Station North Island, known as the “birthplace of Naval Aviation,” and Marine Corps Air Station Miramar, which served as a training base for Air Force and Marine pilots during World War II.',
-  mission: 'Mission San Diego de Alcalá, built in 1769, known as the “Soul of San Diego” was the first Mission in California.',
-  kumeyaay: 'The e’waa, a traditional dome shaped home of the Kumeyaay, indigenous peoples of the San Diego region, depicts the rich human history that dates back 12,000 years.',
-  jet: 'The San Diego region’s unique geography, prosperous innovation industries, and multicultural talent pool make it a hub for international trade and commerce. In 2019 the region had 35.8 million visitors.',
-  ship: 'The shipped named "Star of India" was built in 1863 and is part of the Maritime Museum of San Diego.'
+  submarine: 'Naval Base San Diego is the principal home port of the U.S. Pacific Fleet, consisting of 46 Navy ships, one Coast Guard cutter, seven Military Sealift Command logistical support platforms, and several research and auxiliary vessels.',
+  midway: 'Naval Base San Diego is the principal home port of the U.S. Pacific Fleet, consisting of 46 Navy ships, one Coast Guard cutter, seven Military Sealift Command logistical support platforms, and several research and auxiliary vessels.',
+  cabrillo: 'The iconic Old Point Loma Lighthouse was built in 1855 to watch over San Diego Bay, and it now serves as a landmark and a museum.',
+  hoteldel: 'The Hotel del Coronado, the second largest wooden structure in the nation, has hosted many notable guests since it opened in 1888.',
+  downtown: 'Downtown San Diego offers a beautiful urban skyline and showcases San Diego\'s modern innovation economy.',
+  fighter: 'Military aviation looms large in the San Diego region: Naval Air Station North Island is known as the "Birthplace of Naval Aviation," and the site of today\'s Marine Corps Air Station Miramar has served as a training base for American aviators for nearly a century.',
+  mission: 'Mission San Diego de Alcalá, built in 1769 and known as the "Soul of San Diego," was the first Mission in California. ',
+  kumeyaay: 'The e\'waa, a traditional dome-shaped home of the indigenous Kumeyaay people, is evocative of 12,000 years of human history of the San Diego region.',
+  jet: 'The San Diego region\'s unique geography, prosperous innovation industries, and multicultural talent pool make it an international center for trade and commerce. Nearly 36 million people visited the region in 2019.  ',
+  ship: 'The Star of India was built in 1863, and the vessel is part of the Maritime Museum of San Diego.'
 }
 
 export const positions = {
