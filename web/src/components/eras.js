@@ -9,7 +9,7 @@ import technology from '../assets/era-technology-1970-2009@3x.png'
 
 const eras = [{
   name: "preColonial",
-  description: "Pre-Colonial",
+  description: "The Pre-Colonial era marked a time when Native American communities thrived. Evidence suggests that humans have lived in the region for at least 10,000 years. The ancestors of present-day Kumeyaay, Cupeño, Cahuilla, and Luiseño Native Americans developed rich communities that harvested food from the sea, managed chaparral on coastal hills, maintained oak groves in inland valleys, and cultivated food and other resources in the region's rugged deserts.",
   teardrop: preColonial,
   startDisplay: "10,000 years ago",
   start: -8000,
@@ -18,7 +18,7 @@ const eras = [{
   color: "#0b466e"
 }, {
   name: "colonial",
-  description: "European Arrival & Colonization",
+  description: "Although Portuguese explorer Juan Rodríguez Cabrillo, sailing under the flag of Spain, was the first European to enter San Diego Bay on September 28, 1542, it would not be until July 16, 1769 that four Franciscan fathers - Junípero Serra among them - would establish San Diego de Alcalá, the first mission of Alta California. The Spanish mission era in Alta California had begun, and over subsequent decades colonization, settlement, and control of the San Diego region shifted from native peoples who had lived there for millennia, to Spain, then to Mexico, and eventually to the United States in 1848.",
   teardrop: colonial,
   start: 1542,
   end: 1879,
