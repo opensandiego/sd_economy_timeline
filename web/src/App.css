@@ -152,6 +152,7 @@ img:nth-of-type(2) {
   align-items: center;
   z-index: 10;
   font: normal normal 600 16px/19px Montserrat;
+  pointer-events: all;
 }
 
 .categories:hover {
@@ -263,6 +264,7 @@ img:nth-of-type(2) {
   font-weight: 300;
   padding-top: 16px;
   width: 240px;
+  pointer-events: all;
 }
 
 .category-quick-look .category-quick-look-selected {
