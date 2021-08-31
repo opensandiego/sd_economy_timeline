@@ -26,7 +26,9 @@ const Sidebar = (props) => {
         setShowCategories,
         showStories,
         setShowStories,
-        storiesList
+        storiesList,
+        updateSelectedStory
+
       }) => (
         <div
           className={
@@ -79,12 +81,12 @@ const Sidebar = (props) => {
                   <div className="stories-selector" key={index}>
                   <div className="sector-left">
                     <input
-                      type="checkbox"
+                      type="radio"
                       className="checkbox-input"
+                      name="story"
                       value={story.name}
-                      // checked={selectedSectors.includes(story.name)}
                       onChange={(e) => {
-                        console.log(story.name)}}
+                        updateSelectedStory(story.name)}}
                     />
                     <span className="checkbox-custom"></span>
                     <span className="story-name">
@@ -95,7 +97,6 @@ const Sidebar = (props) => {
                     <BsInfoCircle />
                     <BsInfoCircleFill />
                     <span className="tooltiptext" 
-                    // style={{transform: `translateY(calc(-100% + calc(-23px + -${scrollTop}px)))`}}
                     >{story.description}</span>
                   </div>
                 </div>

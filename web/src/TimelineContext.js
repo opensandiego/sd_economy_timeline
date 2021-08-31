@@ -22,7 +22,8 @@ const TimelineContext = createContext({
   decades: [],
   showYears: false,
   aboutDescription: null,
-  storiesList: []
+  storiesList: [],
+  selectedStory: null
 
 });
 export default TimelineContext;
@@ -47,6 +48,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [showCategories, setShowCategories] = useState(true);
   const [showStories, setShowStories] = useState(false);
   const [storiesList, setStoriesList] = useState([]);
+  const [selectedStory, setSelectedStory] = useState(null);
   // const [showAbout, setShowAbout] = useState(false);
   // const [showStories, setShowStories] = useState(false);
   // const [showFunFact, setShowFunFact] = useState(false);
@@ -211,7 +213,10 @@ export const TimelineContextProvider = ({ children }) => {
 
   // }
 
-
+  const updateSelectedStory = (val) => {
+    console.log("SELECTED STORY:", val);
+    setSelectedStory(val);
+  }
 
 
 
@@ -233,6 +238,7 @@ export const TimelineContextProvider = ({ children }) => {
     showCategories,
     showStories,
     storiesList,
+    selectedStory,
 
     setTimelineScroll,
     setSelectedYear,
@@ -246,7 +252,8 @@ export const TimelineContextProvider = ({ children }) => {
     outsideClickUpdate,
     getAboutDescription,
     setShowCategories,
-    setShowStories
+    setShowStories,
+    updateSelectedStory
 
 
   };
