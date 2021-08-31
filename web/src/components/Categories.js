@@ -7,14 +7,14 @@ import './categories.scss'
 const Categories = () => {
   return (
     <TimelineContext.Consumer>
-      {({selectedSectors, removeSector, updateShowFilter}) => {
+      {({selectedSectors, removeSector, updateShowFilter, selectedStory, updateSelectedStory}) => {
         return (
           <div className="fixed background-blur">
             <button className="categories button" onClick={updateShowFilter}>
               <CatIcon />
               Categories
             </button>
-            {selectedSectors.length > 0 &&
+            {selectedSectors.length > 0 && !selectedStory &&
               <div className="category-quick-look">
                 <div className="category-quick-look-heading">Filtered by:</div>
                 <div className="category-quick-look-selected">
@@ -29,6 +29,20 @@ const Categories = () => {
                       </div>
                     )
                   })}
+                </div>
+              </div>
+            }
+            {selectedStory &&
+              <div className="category-quick-look">
+                <div className="category-quick-look-heading">Filtered by:</div>
+                <div className="category-quick-look-selected">
+                  <div
+                    key={`category-pill-${selectedStory}`}
+                    onClick={() => updateSelectedStory(null)}
+                  >
+                    <VscChromeClose />
+                    {selectedStory}
+                  </div>
                 </div>
               </div>
             }

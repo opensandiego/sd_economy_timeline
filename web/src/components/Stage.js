@@ -180,7 +180,7 @@ const earliestEraStart = eras
     return current < oldest ? current : oldest
   }, new Date().getFullYear())
 
-const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll})=> {
+const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll, selectedStory})=> {
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -189,6 +189,17 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position: event.position || {}
       }
     })
+  if (selectedStory) {
+    const standardized = selectedStory.replace(/[^a-zA-Z]/g, '').toLowerCase()
+    selectedEvents = data
+      .filter(event => event.StoryStandardized === standardized)
+      .map(event => {
+        return {
+          ...event,
+          position: event.position || {}
+        }
+      })
+  }
   if (selectedEvents && selectedEvents.length) {
     selectedEvents.sort((a, b) => {
       const firstYear = +a.Year

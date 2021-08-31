@@ -15,6 +15,7 @@ const TimelineService = {
         row.Description = `${row.Description} (${row.Year})`
         row.Year = isDecade[1]
       }
+      row.StoryStandardized = row.Story.trim() ? row.Story.replace(/[^a-zA-Z]/g, '').toLowerCase() : ''
     })
     const rowsWithYear = rows.filter(row => !!row.Year)
     // sort data by year

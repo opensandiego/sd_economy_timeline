@@ -35,6 +35,7 @@ function App() {
                   selectedYear,
                   setSelectedYear,
                   setTimelineScroll,
+                  selectedStory
                 }) => (
                   <Stage
                     data={data}
@@ -42,6 +43,7 @@ function App() {
                     selectedYear={selectedYear}
                     setSelectedYear={setSelectedYear}
                     setTimelineScroll={setTimelineScroll}
+                    selectedStory={selectedStory}
                   />
                 )}
               </TimelineContext.Consumer>

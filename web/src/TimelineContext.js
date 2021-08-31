@@ -116,13 +116,20 @@ export const TimelineContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!data) return
-    const eventsForSelectedSectors = data.filter(event => selectedSectors.includes(event.Category))
-    const decades = buildDecades(eventsForSelectedSectors)
+    let eventsForSelected
+    if (selectedStory) {
+      const standardized = selectedStory.replace(/[^a-zA-Z]/g, '').toLowerCase()
+      eventsForSelected = data.filter(event => event.StoryStandardized === standardized)
+    } else {
+      eventsForSelected = data.filter(event => selectedSectors.includes(event.Category))
+    }
+    const decades = buildDecades(eventsForSelected)
     setDecades(decades)
     setTimelineScroll({ fraction: 0, stageDecade: Object.keys(decades)[0] })
   }, [
     data,
-    selectedSectors
+    selectedSectors,
+    selectedStory
   ])
 
   const updateSelectedSectors = (e, sector) => {
@@ -254,8 +261,6 @@ export const TimelineContextProvider = ({ children }) => {
     setShowCategories,
     setShowStories,
     updateSelectedStory
-
-
   };
 
   return (

@@ -27,8 +27,8 @@ const Sidebar = (props) => {
         showStories,
         setShowStories,
         storiesList,
+        selectedStory,
         updateSelectedStory
-
       }) => (
         <div
           className={
@@ -86,7 +86,9 @@ const Sidebar = (props) => {
                       name="story"
                       value={story.name}
                       onChange={(e) => {
-                        updateSelectedStory(story.name)}}
+                        updateSelectedStory(story.name)
+                      }}
+                      checked={story.name === selectedStory}
                     />
                     <span className="checkbox-custom"></span>
                     <span className="story-name">
@@ -96,8 +98,9 @@ const Sidebar = (props) => {
                   <div className="tooltip">
                     <BsInfoCircle />
                     <BsInfoCircleFill />
-                    <span className="tooltiptext" 
-                    >{story.description}</span>
+                    <span className="tooltiptext">
+                      {story.description}
+                    </span>
                   </div>
                 </div>
                 ))}
@@ -111,7 +114,7 @@ const Sidebar = (props) => {
                 <button onClick={e => setShowCategories(!showCategories)}>
                   {showCategories ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
-                
+
               </div>
               <ScrollableFilter />
             </div>
