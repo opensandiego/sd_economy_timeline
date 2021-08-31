@@ -28,6 +28,11 @@
   justify-content: space-between;
   border-radius: 5px;
 
+  &.wide {
+    width: 40em;
+    margin-left: -20em;
+  }
+
   .close {
     width: 34px;
     svg {
@@ -48,14 +53,12 @@
     display: flex;
 
     img {
-      width: 50%;
-      max-width: 50%;
+      width: 70%;
+      max-width: 70%;
       position: relative;
-      flex: 1;
     }
 
     span {
-      flex: 1;
       margin-left: 10px;
     }
   }

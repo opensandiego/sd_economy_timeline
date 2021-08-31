@@ -15,7 +15,7 @@ const Popup = ({ category, year, description, image, setEventForPopup }) => {
 
   return (
     <div className='eventPopupWrapper' onClick={() => setEventForPopup(null)}>
-      <div className='eventPopup'>
+      <div className={`eventPopup ${image ? 'wide' : ''}`}>
         <div className='title'>
           <span className='year'>{year}:  </span>
           <span className='category'>{category}</span>
