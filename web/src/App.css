@@ -191,6 +191,10 @@ img:nth-of-type(2) {
   pointer-events: auto;
 }
 
+.current-era-tooltip-container .tooltip {
+  z-index: 1;
+}
+
 .current-era div:first-child {
   font-weight: bold
 }
