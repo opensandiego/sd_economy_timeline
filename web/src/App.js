@@ -60,7 +60,7 @@ function App() {
               className="tooltiptext"
               // style={{transform: `translateY(calc(-100% + calc(-23px + -${scrollTop}px)))`}}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              SANDAG has used reasonable efforts to ensure that the data used in this tool is complete, accurate, and useful. However, because SANDAG does not create these data, we cannot be liable for omissions or inaccuracies.
             </span>
           </div>
         </div>

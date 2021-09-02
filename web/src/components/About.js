@@ -10,7 +10,7 @@ import "./about.css";
 const About = () => {
   return (
     <TimelineContext.Consumer>
-      {({ summaryDescription, aboutDescription }) => (
+      {({ summaryDescription, aboutDescription, openMenuItem, updateOpenMenuItem }) => (
         <div className="about-container">
           <h1>
             The San Diego Region{" "}
@@ -19,11 +19,11 @@ const About = () => {
           <p className="tl-summ">{summaryDescription}</p>
           <div className="bottom-container">
             <div className="abt-desc">
-              <button className="about">About</button>
+              <button className={openMenuItem === "about" ? "open" : ""} onClick={(e) => updateOpenMenuItem("about")}>About</button>
               <p>{aboutDescription}</p>
             </div>
             <div className="stories-container">
-              <button className="about">Stories</button>
+              <button className={openMenuItem === "stories" ? "open" : ""} onClick={(e) => updateOpenMenuItem("stories")}>Stories</button>
               <p>
                 Learn about 6 major stories that helped shape the history of the San
                 Diego region.
@@ -37,7 +37,7 @@ const About = () => {
               </p>
             </div>
             <div className="facts-container">
-              <button className="">Fun Facts</button>
+              <button className={openMenuItem === "facts" ? "open" : ""} onClick={(e) => updateOpenMenuItem("facts")}>Fun Facts</button>
               <p>
                 Discover fun facts about different cities in the San Diego region.
                 <span>
@@ -52,7 +52,7 @@ const About = () => {
               </p>
             </div>
             <div className="download-container">
-              <button className="">Download All Data</button>
+              <button className={openMenuItem === "download" ? "open" : ""} onClick={(e) => updateOpenMenuItem("download")}>Download All Data</button>
               <p>
                 Download all timeline data to an excel file
                 <a
@@ -67,7 +67,7 @@ const About = () => {
               </p>
             </div>
             <div className="espanol-container">
-              <button className="">Vea La Versión en Español</button>
+              <button className={openMenuItem === "espanol" ? "open" : ""} onClick={(e) => updateOpenMenuItem("espanol")}>Vea La Versión en Español</button>
               <p>
                 Vea la información de esta línea de tiempo en español.
                 <a href="#" target="_blank" rel="noopener noreferrer">

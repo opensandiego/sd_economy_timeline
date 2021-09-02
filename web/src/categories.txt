@@ -1,27 +1,27 @@
 [{
   "name": "Civic",
-  "description": "This category represents information about the 18 cities and county government that make up the San Diego region."
+  "description": "This category tracks civic milestones among 18 municipalities and the county government in the San Diego region."
 }, {
   "name": "Transportation",
   "description": "A historic look at the evolution of transportation in the San Diego region."
 }, {
   "name": "Tourism",
-  "description": "The San Diego region's scenic geography, along with its cultural history makes it one of the best tourist destinations on the West Coast of the nation. The tourism sector currently accounts for 10% of jobs in the region."
+  "description": "The San Diego region's scenic geography and cultural history make it one of the most popular tourist destinations in the world. About 10% of the jobs in our region are tied to tourism."
 }, {
   "name": "Innovation",
-  "description": "San Diego has a prosperous and a rapidly devolping innovation sector supported by leading educational institues like UCSD, SDSU and USD. The innovation sector currently accounts for 11.3% of jobs in the region."
+  "description": "San Diego's successful innovation economy is supported by UC San Diego, San Diego State University, the University of San Diego, and other institutions. More than 11% of the jobs in our region support the region's innovation economy."
 }, {
   "name": "Tribal Nations",
-  "description": "The San Diego region is home to 18 Native American reservations represented by 17 tribal governments, the most in any county in the United States. There are more than 73,000 acres of tribal reservation lands in the region. As sovereign domestic nations, tribal governments govern land use on their reservations and land holdings. SANDAG and the regional tribal governments work together to facilitate government-to-government planning and coordination. These tribal nations are a critical part of the San Diego region's history."
+  "description": "The San Diego region is home to 18 Native American reservations represented by 17 tribal governments, the most in any county in the United States. There are more than 73,000 acres of tribal reservation lands in the region. As sovereign nations, tribal governments govern land use on their reservations and other land holdings. SANDAG and regional tribal governments work together to facilitate government-to-government planning and coordination on a variety of issues. Our region's tribal nations are a vital part of its history."
 }, {
   "name": "Military",
-  "description": "San Diego's location on the Pacific Ocean is ideal for many military operations in the southwest portion of the country. San Diego's military installations include a variety of sizes and uses, and provide a large base for the region. The military currently accounts for 8.5% of jobs in the region."
+  "description": "San Diego’s location on the Pacific Ocean supports many military operations around the world. The region's military installations, which range in size and purpose, support 8.5% of the jobs in the region."
 }, {
   "name": "Binational",
-  "description": "The San Diego region’s borders are an important part of the economy with strong ties to its neighboring counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 18 tribal governments."
+  "description": "The San Diego region has strong ties with adjacent counties (Imperial County, Orange County, and Riverside County), the Republic of Mexico, and the 17 tribal governments. The region's neighbors are important contributors to the regional economy."
 }, {
   "name": "Our Environment",
-  "description": "Over the past several decades, the San Diego region has taken concrete steps to protect the environment. These include efforts to protect our invaluable shoreline and natural habitats for plants and animals, replenish sand at our beaches, slow suburban sprawl by concentrating development in urban areas, promote alternative fuels and zero emission vehicles (ZEVs), make communities more resilient to the consequences of climate change, and better control stormwater runoff. "
+  "description": "Over the past several decades, the San Diego region has taken concrete steps to protect the environment. These include efforts to protect our invaluable shoreline and natural habitats for plants and animals, replenish sand at our beaches, slow suburban sprawl by concentrating development in urban areas, promote alternative fuels and zero emission vehicles (ZEVs), make communities more resilient to the consequences of climate change, and better control stormwater runoff."
 }, {
   "name": "Education",
   "description": "The San Diego region has invested significantly in world-class institutions of higher learning, which have become engines of economic growth and centers of culture. The education sector currently accounts for 8.6% of jobs in the region."
@@ -42,7 +42,7 @@
   "description": "The San Diego region has a growing professional workforce. Finance, insurance, real estate, and professional sectors currently account for 16.3% of jobs in the region."
 }, {
   "name": "Investing in Our Region",
-  "description": "People with vision and an eye on the future built our region. Here are highlights of decisions that have made our home, from its military heritage, tourism economy, world class universities, research laboratories, and more. Political leaders, business people, philanthropists, and everyday citizens have all played a role."
+  "description": "People with vision built our region. Here are highlights of key decisions related to our region's military heritage, tourism economy, world class universities, research laboratories, and more. Political leaders, business people, philanthropists, and everyday citizens have all contributed to our region's prosperity."
 }, {
   "name": "Population",
   "description": "In 1850, 798 people called the San Diego region home. In 2020, that number had grown to more than 3.3 million. As our region continues to grow, economic opportunity and prosperity for everyone will depend significantly on enhanced personal mobility, social equity, and a healthy environment."
