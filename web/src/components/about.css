@@ -83,7 +83,7 @@
   
 }
 
-.bottom-container > div:hover p {
+.bottom-container > div button.open + p {
   z-index: 11; 
   opacity: 1;
 }

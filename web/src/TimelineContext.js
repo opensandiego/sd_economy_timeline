@@ -23,7 +23,8 @@ const TimelineContext = createContext({
   showYears: false,
   aboutDescription: null,
   storiesList: [],
-  selectedStory: null
+  selectedStory: null,
+  openMenuItem: ""
 
 });
 export default TimelineContext;
@@ -54,6 +55,7 @@ export const TimelineContextProvider = ({ children }) => {
   // const [showFunFact, setShowFunFact] = useState(false);
   // const [showDownload, setShowDownload] = useState(false);
   // const [showEspanol, setShowEspanol] = useState(false);
+  const [openMenuItem, setOpenMenuItem] = useState("");
 
   const previouslySelectedDecade = useRef(null)
   useEffect(() => {
@@ -96,7 +98,6 @@ export const TimelineContextProvider = ({ children }) => {
   }, []);
   const getStoriesList = async () => {
     const res = await timelineService.readStories();
-    console.log("stories",res)
     setStoriesList(res);
 
   }
@@ -221,10 +222,15 @@ export const TimelineContextProvider = ({ children }) => {
   // }
 
   const updateSelectedStory = (val) => {
-    console.log("SELECTED STORY:", val);
     setSelectedStory(val);
   }
 
+  const updateOpenMenuItem = (item) => {
+    if (item === openMenuItem) {
+      setOpenMenuItem("")
+    } else setOpenMenuItem(item);
+    
+  }
 
 
   const value = {
@@ -246,7 +252,7 @@ export const TimelineContextProvider = ({ children }) => {
     showStories,
     storiesList,
     selectedStory,
-
+    openMenuItem,
     setTimelineScroll,
     setSelectedYear,
     updateSelectedSectors,
@@ -260,7 +266,8 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription,
     setShowCategories,
     setShowStories,
-    updateSelectedStory
+    updateSelectedStory,
+    updateOpenMenuItem
   };
 
   return (
