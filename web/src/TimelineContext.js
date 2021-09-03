@@ -35,7 +35,6 @@ export const TimelineContextProvider = ({ children }) => {
   const [selectedDec, setSelectedDecade] = useState(null);
   const [selectedSectors, setSelectedSectors] = useState([]);
   const [allSectors, setAllSectors] = useState([]);
-  // const [showAllSectors, setShowAllSectors] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
@@ -50,11 +49,6 @@ export const TimelineContextProvider = ({ children }) => {
   const [showStories, setShowStories] = useState(false);
   const [storiesList, setStoriesList] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
-  // const [showAbout, setShowAbout] = useState(false);
-  // const [showStories, setShowStories] = useState(false);
-  // const [showFunFact, setShowFunFact] = useState(false);
-  // const [showDownload, setShowDownload] = useState(false);
-  // const [showEspanol, setShowEspanol] = useState(false);
   const [openMenuItem, setOpenMenuItem] = useState("");
 
   const previouslySelectedDecade = useRef(null)
@@ -155,9 +149,6 @@ export const TimelineContextProvider = ({ children }) => {
     setShowFilter(!showFilter);
   };
 
-  // const updateShowAllSectors = () => {
-  //   setShowAllSectors(!showAllSectors);
-  // };
 
   const removeSector = (sector) => {
     let index = selectedSectors.indexOf(sector);
@@ -197,30 +188,6 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription();
   }, []);
 
-  // const toggleCategories = () => {
-  //   setShowCategories(!showCategories);
-  // }
-
-  // const toggleShowAbout = () => {
-  //   setShowAbout(!showAbout);
-  // }
-  // const toggleShowStories = () => {
-  //   setShowStories(!showStories);
-  // }
-  // const toggleFunFacts = () => {
-  //   setShowFunFact(!showFunFact);
-  // }
-  // const toggleShowDownload = () => {
-  //   setShowDownload(!showDownload);
-  // }
-  // const toggleShowEspanol = () => {
-  //   setShowEspanol(!showEspanol);
-  // }
-  // const handleActiveMenu = (menu) => {
-  //   console.log(menu);
-
-  // }
-
   const updateSelectedStory = (val) => {
     setSelectedStory(val);
   }
@@ -237,7 +204,6 @@ export const TimelineContextProvider = ({ children }) => {
     loading,
     data,
     showFilter,
-    // showAllSectors,
     selectedSectors,
     allSectors,
     previousDecade,
@@ -259,7 +225,6 @@ export const TimelineContextProvider = ({ children }) => {
     removeSector,
     clearSelectedSectors,
     updateShowFilter,
-    // updateShowAllSectors,
     updateSelectedDecade,
     handleYearSelector,
     outsideClickUpdate,

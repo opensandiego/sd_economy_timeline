@@ -69,14 +69,16 @@ const About = () => {
             <div className="espanol-container">
               <button className={openMenuItem === "espanol" ? "open" : ""} onClick={(e) => updateOpenMenuItem("espanol")}>Vea La Versión en Español</button>
               <p>
-                Vea la información de esta línea de tiempo en español.
+              Coming Soon
+                {/* Vea la información de esta línea de tiempo en español.
                 <a href="#" target="_blank" rel="noopener noreferrer">
                   Vea La Versión en Español
                 </a>
                 <span>
                   Este documento se abre en una nueva pestaña
                   <BsBoxArrowUpRight />
-                </span>
+                </span> */}
+                
               </p>
             </div>
           </div>
