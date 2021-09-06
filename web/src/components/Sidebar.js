@@ -81,7 +81,7 @@ const Sidebar = (props) => {
                   <div className="stories-selector" key={index}>
                   <div className="sector-left">
                     <input
-                      type="radio"
+                      type="checkbox"
                       className="checkbox-input"
                       name="story"
                       value={story.name}

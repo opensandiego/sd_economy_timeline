@@ -189,7 +189,9 @@ export const TimelineContextProvider = ({ children }) => {
   }, []);
 
   const updateSelectedStory = (val) => {
-    setSelectedStory(val);
+    if(val === selectedStory) {
+      setSelectedStory(null);
+    } else setSelectedStory(val);
   }
 
   const updateOpenMenuItem = (item) => {
