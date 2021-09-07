@@ -322,7 +322,8 @@ div#bkground {
   display: block !important;
 }
 
-/* STORIES */
+/* STORIES SELECTOR
+------------------------------  */
 .stories {
   max-height: 0;
   transition: max-height 300ms ease-in-out;
@@ -361,3 +362,8 @@ span.story-name {
 .all-sectors.open {
   height: 470px;
 } */
+
+.stories div:first-of-type .tooltip .tooltiptext {
+  max-height: 200px;
+  overflow: auto;
+}

@@ -45,8 +45,7 @@ export const TimelineContextProvider = ({ children }) => {
   });
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
-  const [showCategories, setShowCategories] = useState(true);
-  const [showStories, setShowStories] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("categories");
   const [storiesList, setStoriesList] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
   const [openMenuItem, setOpenMenuItem] = useState("");
@@ -131,7 +130,6 @@ export const TimelineContextProvider = ({ children }) => {
     const { checked } = e.target;
     if (checked) {
       if (selectedSectors.length === 5) {
-        // TODO:  shows a message in the UI for this
         return;
       } else {
         setSelectedSectors([...selectedSectors, e.target.value]);
@@ -201,6 +199,13 @@ export const TimelineContextProvider = ({ children }) => {
     
   }
 
+  // handle stories and categories filter toggle
+  const handleFilterToggle = (filter) => {
+    if (filter === activeFilter) {
+      setActiveFilter("");
+    } else setActiveFilter(filter);
+  }
+
 
   const value = {
     loading,
@@ -216,8 +221,7 @@ export const TimelineContextProvider = ({ children }) => {
     timelineScroll,
     aboutDescription,
     summaryDescription,
-    showCategories,
-    showStories,
+    activeFilter,
     storiesList,
     selectedStory,
     openMenuItem,
@@ -231,10 +235,9 @@ export const TimelineContextProvider = ({ children }) => {
     handleYearSelector,
     outsideClickUpdate,
     getAboutDescription,
-    setShowCategories,
-    setShowStories,
     updateSelectedStory,
-    updateOpenMenuItem
+    updateOpenMenuItem,
+    handleFilterToggle
   };
 
   return (
