@@ -31,10 +31,6 @@
   display: block;
 }
 
-.bottom-container > div {
-  position: relative;
-}
-
 .bottom-container p {
   position: absolute;
   z-index: 9999;
@@ -80,16 +76,16 @@
   /* width: 368px; */
   height: 170px;
   overflow-y: auto;
-  
+
 }
 
 .bottom-container > div button.open + p {
-  z-index: 11; 
+  z-index: 11;
   opacity: 1;
 }
 
 /* p.tl-desc.open {
-  z-index: 11; 
+  z-index: 11;
   opacity: 1;
 
 } */
@@ -101,9 +97,10 @@
   border: #CEE2F0 1px solid;
   border-radius: 5px;
   margin-bottom: 20px;
-  /* overflow: hidden; */
-  -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16); 
-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
+  box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
 }
 
 
@@ -112,7 +109,8 @@ box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
   color: #196CAA;
   text-decoration: none;
 }
-.bottom-container > div  {
+.bottom-container > div {
+  position: relative;
   height: 100%;
   padding: 0 23px;
   /* flex-grow: 1; */
@@ -125,4 +123,11 @@ box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.16);
 }
 .bottom-container > div:hover button {
   color: #FFFFFF;
+}
+
+/* put nav bar items (About, Stories, etc.) on a single line on small screens */
+@media only screen and (max-width: 760px) {
+  .bottom-container > div {
+    flex-shrink: 0;
+  }
 }

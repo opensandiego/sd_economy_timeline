@@ -49,6 +49,7 @@ export const TimelineContextProvider = ({ children }) => {
   const [storiesList, setStoriesList] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
   const [openMenuItem, setOpenMenuItem] = useState("");
+  const [smallScreen, setSmallScreen] = useState(false)
 
   const previouslySelectedDecade = useRef(null)
   useEffect(() => {
@@ -196,7 +197,7 @@ export const TimelineContextProvider = ({ children }) => {
     if (item === openMenuItem) {
       setOpenMenuItem("")
     } else setOpenMenuItem(item);
-    
+
   }
 
   // handle stories and categories filter toggle
@@ -237,7 +238,10 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription,
     updateSelectedStory,
     updateOpenMenuItem,
-    handleFilterToggle
+    handleFilterToggle,
+
+    smallScreen,
+    setSmallScreen
   };
 
   return (

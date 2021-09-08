@@ -275,7 +275,8 @@ $menu-items-loop-offset: $menu-items - 1;
 
 
 .years {
-  max-width: 1000px;
+  // max-width: 1000px;
+  // overflow: auto;
 }
 
 .year {

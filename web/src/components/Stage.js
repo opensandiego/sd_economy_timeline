@@ -180,7 +180,7 @@ const earliestEraStart = eras
     return current < oldest ? current : oldest
   }, new Date().getFullYear())
 
-const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll, selectedStory})=> {
+const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelineScroll, selectedStory, smallScreen, setSmallScreen })=> {
   selectedEvents = data && data
     .filter(event => selectedSectors.includes(event.Category))
     .map(event => {
@@ -237,14 +237,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       }
     }
   }
-  if (data && data.length && selectedEvents.length && !eventTextBuilt) {
-    data.forEach(event => {
-      eventTextElements[makeEventKey(event)] = drawEventText(event, 1, eventTextDimensions, deviceScale)
-      eventTextElements[`${makeEventKey(event)}-high-res`] = drawEventText(event, 2, eventTextDimensions, deviceScale)
-    })
-    eventTextBuilt = true
-    // console.log(eventTextElements)
-  }
+
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const canvasRef = useRef(null)
@@ -260,6 +253,15 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
   const [eraPeriod, setEraPeriod] = useState(null)
   const [eraDescription, setEraDescription] = useState(null)
   const [eraColor, setEraColor] = useState(null)
+
+  if (data && data.length && selectedEvents.length && !eventTextBuilt && sceneSizeEstablished) {
+    data.forEach(event => {
+      eventTextElements[makeEventKey(event)] = drawEventText(event, 1, eventTextDimensions, deviceScale)
+      eventTextElements[`${makeEventKey(event)}-high-res`] = drawEventText(event, 2, eventTextDimensions, deviceScale)
+    })
+    eventTextBuilt = true
+    // console.log(eventTextElements)
+  }
 
   const timelineToScreen = position => {
     // console.log('timelineToScreen', width)
@@ -628,6 +630,19 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
   ])
 
   useEffect(() => {
+    const isMobileUserAgent = navigator.userAgent.match(/Mobi/)
+    // const isMobileUserAgent = navigator.userAgent.match(/Chrome/)
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
+    // const isTouch = true
+    console.log('mobile and touch?', isMobileUserAgent, isTouch)
+    if (isMobileUserAgent && isTouch) {
+    // if (isMobileUserAgent && isTouch) {
+      setSmallScreen(true)
+      console.log('...set small screen to TRUE, width?', width, containerRef.current.parentElement.parentElement)
+      containerRef.current.parentElement.parentElement.style.overflow = 'hidden'
+      return
+    }
+
     const {
       width: sceneWidth,
       height: sceneHeight
@@ -635,12 +650,13 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     width = sceneWidth
     height = sceneHeight + 60
     maxTimelineWidth = width * endToScreenRatio * timelinePaddingExpansion
-    // console.log('useEffect...width and height', width, height)
+    console.log('useEffect...width and height', width, height)
     setSceneSize({
       width,
       height
     })
     setSceneSizeEstablished(true)
+
     arrowsLeftImage = createImage(arrowsLeft, 47, 46)
     arrowsRightImage = createImage(arrowsRight, 47, 46)
     faHandPointUpImage = createImage(faHandPointUp, 20, 20)
@@ -651,7 +667,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
   }, [])
 
   useEffect(() => {
-    if (!sceneSizeEstablished) return
+    if (!sceneSizeEstablished || smallScreen) return
     contextRef.current = canvasRef.current.getContext('2d')
     contextRef.current.scale(deviceScale, deviceScale)
 
@@ -663,7 +679,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
 
     // Reach up to the .row element and set a height so
     // that the timeline sits flush with the stage
-    // ...there's probably a better way to do this but as a quick fix this work
+    // ...there's probably a better way to do this but this work
     containerRef.current.parentElement.style.height = `${height}px`
     containerRef.current.parentElement.style.overflow = 'hidden'
     containerRef.current.parentElement.style.flex = 'none'
@@ -889,8 +905,12 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     selectedSectors
   ])
 
+  const smallScreenStyle = smallScreen ?
+    { height: '300px' } :
+    {}
+
   return (
-    <div className='stage' ref={containerRef}>
+    <div className='stage' ref={containerRef} style={smallScreenStyle}>
       {eventForPopup &&
         <Popup
           category={eventForPopup.Category}
@@ -930,7 +950,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
           width={width}
           height={height}
         />
-        <div className='scene' ref={sceneRef}>
+        {!smallScreen && <div className='scene' ref={sceneRef}>
           <canvas
             ref={canvasRef}
             style={{
@@ -940,7 +960,14 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
             width={`${sceneSize.width * deviceScale}`}
             height={`${sceneSize.height * deviceScale}`}
           ></canvas>
-        </div>
+        </div>}
+        {smallScreen && <div className='unsupported'>
+          <div className='unsupported-message'>
+            <p>Unfortunately, our timeline isn't yet available on your device.</p>
+            <p>We're adding support for more devices, please check back soon.</p>
+            <p>In the meantime, use the download link above to explore the data.</p>
+          </div>
+        </div>}
       </div>
     </div>
   )

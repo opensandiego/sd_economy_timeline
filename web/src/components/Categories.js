@@ -7,7 +7,8 @@ import './categories.scss'
 const Categories = () => {
   return (
     <TimelineContext.Consumer>
-      {({selectedSectors, removeSector, updateShowFilter, selectedStory, updateSelectedStory}) => {
+      {({selectedSectors, removeSector, updateShowFilter, selectedStory, updateSelectedStory, smallScreen}) => {
+        if (smallScreen) return <></>
         return (
           <div className="fixed background-blur">
             <button className="categories button" onClick={updateShowFilter}>
