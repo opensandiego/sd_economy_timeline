@@ -1,6 +1,6 @@
 #sidebar{
   /* padding: 0 calc(100% - 260px) 20px 15px; */
-  padding: 0 calc(100% - 366px) 20px 15px;
+  padding: 0 30px 20px 30px;
   position: relative;
   /* height: 690px; */
   height: 810px;
@@ -22,7 +22,7 @@
 .sidebar-label .close{
   height: 18px;
   position: fixed;
-  right: 15px;
+  right: 20px;
 }
 
 .close svg {
@@ -35,16 +35,22 @@
   font-size: 0.8em;
   font-weight: bold;
 }
-
 .sidebar-label {
   color: #1869a9;
   font-size: 0.5em;
   font-weight: bold;
-  margin: 20px 0 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+.container-sidebar > .sidebar-label {
+  margin: 20px 0;
+}
+.container-sidebar > .sidebar-label ~ .sidebar-label {
+  margin: 15px 0;
+}
+
 
 .sidebar-label p {
   margin: 0;
@@ -121,7 +127,7 @@ color: #000000;
 }
 
 .sidebar-label > p {
-  font: normal normal 500 16px/20px Montserrat;
+  font: normal normal 600 18px/22px Montserrat;
 letter-spacing: 0px;
 color: #186BA9;
 }
@@ -129,12 +135,9 @@ color: #186BA9;
 .sidebar-label > button {
   color: #186BA9;
   padding-top: 3px;
+  margin-right: -10px;
 }
 
-/* .sidebar-label span {
-  font: normal normal normal 16px/19px Montserrat !important;
-  padding-left: 10px;
-} */
 .sidebar-label > button svg {
   height: auto;
   width: 25px;
@@ -184,8 +187,8 @@ span.checkbox-custom {
 
 .selected-sectors:after {
   content: "";
-  width: calc(100% - 16px);
-  border-bottom: 1px solid #2B2B2B66;
+  width: 100%;
+  border-bottom: 1px solid #E5E5E5;
   margin-top: 30px;
 }
 
@@ -255,12 +258,15 @@ div#sidebar .sidebar-label:nth-of-type(1) {
 .all-sectors {
   overflow-y: auto;
   height: 0px;
-  margin-right: -8px;
+  /* margin-right: -30px; */
   transition: height 300ms ease-in-out;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 .all-sectors.open {
   height: 470px;
+  margin-right: -30px;
+  border-bottom: none;
 }
 
 .all-sectors .all-sector-selector:first-of-type, .stories-selector:first-of-type {
@@ -271,7 +277,7 @@ div#bkground {
   height: 100%;
   position: fixed;
   width: 375px;
-  margin-left: -15px;
+  margin-left: -30px;
   margin-top: -20px;
   background: white;
   z-index: -1;
@@ -316,11 +322,13 @@ div#bkground {
   display: block !important;
 }
 
-/* STORIES */
+/* STORIES SELECTOR
+------------------------------  */
 .stories {
   max-height: 0;
   transition: max-height 300ms ease-in-out;
   overflow:hidden;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 .stories.open {
@@ -354,3 +362,8 @@ span.story-name {
 .all-sectors.open {
   height: 470px;
 } */
+
+.stories div:first-of-type .tooltip .tooltiptext {
+  max-height: 200px;
+  overflow: auto;
+}

@@ -8,9 +8,7 @@ import ScrollableFilter from "./ScrollableFilter";
 
 const Sidebar = (props) => {
 
-  useEffect(() => {
-    let filterHeight = document.getElementById('selected-sectors').clientHeight;
-  })
+
 
 
   return (
@@ -28,7 +26,9 @@ const Sidebar = (props) => {
         setShowStories,
         storiesList,
         selectedStory,
-        updateSelectedStory
+        updateSelectedStory,
+        handleFilterToggle,
+        activeFilter
       }) => (
         <div
           className={
@@ -71,17 +71,17 @@ const Sidebar = (props) => {
                 <p>
                   Stories
                 </p>
-                <p style={showStories ? {display: "block"} : {display: "none"}}>(Select 1 Max)</p>
-                <button onClick={e => setShowStories(!showStories)}>
-                  {showStories ? <VscChevronUp /> : <VscChevronDown />}
+                <p style={activeFilter === "stories" ? {display: "block"} : {display: "none"}}>(Select 1 Max)</p>
+                <button onClick={e => handleFilterToggle("stories")}>
+                  {activeFilter === "stories" ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
               </div>
-              <div className={showStories ? "stories open" : "stories"} id="stories">
+              <div className={activeFilter === "stories" ? "stories open" : "stories"} id="stories">
                 {storiesList.map((story, index) => (
                   <div className="stories-selector" key={index}>
                   <div className="sector-left">
                     <input
-                      type="radio"
+                      type="checkbox"
                       className="checkbox-input"
                       name="story"
                       value={story.name}
@@ -110,9 +110,9 @@ const Sidebar = (props) => {
                 <p>
                   Categories
                 </p>
-                <p style={showCategories ? {display: "block"} : {display: "none"}}>(Select 5 Max)</p>
-                <button onClick={e => setShowCategories(!showCategories)}>
-                  {showCategories ? <VscChevronUp /> : <VscChevronDown />}
+                <p style={activeFilter === "categories" ? {display: "block"} : {display: "none"}}>(Select 5 Max)</p>
+                <button onClick={e => handleFilterToggle("categories")}>
+                  {activeFilter === "categories" ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
 
               </div>

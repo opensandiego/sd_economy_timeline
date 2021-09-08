@@ -35,7 +35,6 @@ export const TimelineContextProvider = ({ children }) => {
   const [selectedDec, setSelectedDecade] = useState(null);
   const [selectedSectors, setSelectedSectors] = useState([]);
   const [allSectors, setAllSectors] = useState([]);
-  // const [showAllSectors, setShowAllSectors] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
   const [decades, setDecades] = useState(decadesDefault);
   const [showYears, setShowYears] = useState(false);
@@ -46,15 +45,9 @@ export const TimelineContextProvider = ({ children }) => {
   });
   const [summaryDescription, setSummaryDescription] = useState(null);
   const [aboutDescription, setAboutDescription] = useState(null);
-  const [showCategories, setShowCategories] = useState(true);
-  const [showStories, setShowStories] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("categories");
   const [storiesList, setStoriesList] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
-  // const [showAbout, setShowAbout] = useState(false);
-  // const [showStories, setShowStories] = useState(false);
-  // const [showFunFact, setShowFunFact] = useState(false);
-  // const [showDownload, setShowDownload] = useState(false);
-  // const [showEspanol, setShowEspanol] = useState(false);
   const [openMenuItem, setOpenMenuItem] = useState("");
 
   const previouslySelectedDecade = useRef(null)
@@ -137,7 +130,6 @@ export const TimelineContextProvider = ({ children }) => {
     const { checked } = e.target;
     if (checked) {
       if (selectedSectors.length === 5) {
-        // TODO:  shows a message in the UI for this
         return;
       } else {
         setSelectedSectors([...selectedSectors, e.target.value]);
@@ -155,9 +147,6 @@ export const TimelineContextProvider = ({ children }) => {
     setShowFilter(!showFilter);
   };
 
-  // const updateShowAllSectors = () => {
-  //   setShowAllSectors(!showAllSectors);
-  // };
 
   const removeSector = (sector) => {
     let index = selectedSectors.indexOf(sector);
@@ -197,32 +186,10 @@ export const TimelineContextProvider = ({ children }) => {
     getAboutDescription();
   }, []);
 
-  // const toggleCategories = () => {
-  //   setShowCategories(!showCategories);
-  // }
-
-  // const toggleShowAbout = () => {
-  //   setShowAbout(!showAbout);
-  // }
-  // const toggleShowStories = () => {
-  //   setShowStories(!showStories);
-  // }
-  // const toggleFunFacts = () => {
-  //   setShowFunFact(!showFunFact);
-  // }
-  // const toggleShowDownload = () => {
-  //   setShowDownload(!showDownload);
-  // }
-  // const toggleShowEspanol = () => {
-  //   setShowEspanol(!showEspanol);
-  // }
-  // const handleActiveMenu = (menu) => {
-  //   console.log(menu);
-
-  // }
-
   const updateSelectedStory = (val) => {
-    setSelectedStory(val);
+    if(val === selectedStory) {
+      setSelectedStory(null);
+    } else setSelectedStory(val);
   }
 
   const updateOpenMenuItem = (item) => {
@@ -232,12 +199,18 @@ export const TimelineContextProvider = ({ children }) => {
     
   }
 
+  // handle stories and categories filter toggle
+  const handleFilterToggle = (filter) => {
+    if (filter === activeFilter) {
+      setActiveFilter("");
+    } else setActiveFilter(filter);
+  }
+
 
   const value = {
     loading,
     data,
     showFilter,
-    // showAllSectors,
     selectedSectors,
     allSectors,
     previousDecade,
@@ -248,8 +221,7 @@ export const TimelineContextProvider = ({ children }) => {
     timelineScroll,
     aboutDescription,
     summaryDescription,
-    showCategories,
-    showStories,
+    activeFilter,
     storiesList,
     selectedStory,
     openMenuItem,
@@ -259,15 +231,13 @@ export const TimelineContextProvider = ({ children }) => {
     removeSector,
     clearSelectedSectors,
     updateShowFilter,
-    // updateShowAllSectors,
     updateSelectedDecade,
     handleYearSelector,
     outsideClickUpdate,
     getAboutDescription,
-    setShowCategories,
-    setShowStories,
     updateSelectedStory,
-    updateOpenMenuItem
+    updateOpenMenuItem,
+    handleFilterToggle
   };
 
   return (
