@@ -202,6 +202,7 @@ img:nth-of-type(2) {
 }
 
 .current-era-tooltip-container .tooltip {
+  font-size: 18px;
   z-index: 1;
 }
 
