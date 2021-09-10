@@ -251,6 +251,13 @@ div#sidebar .sidebar-label:nth-of-type(1) {
   box-shadow: 1.5px 1.5px 2px #00000029;
 }
 
+#sidebar .tooltip.wide .tooltiptext {
+  width: 450px;
+}
+
+#sidebar .tooltip.wide .tooltiptext::after{
+  left: 18%;
+}
 #sidebar .tooltip:hover .tooltiptext {
   visibility: visible;
 }

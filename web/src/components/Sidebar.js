@@ -93,33 +93,39 @@ const Sidebar = (props) => {
                 </button>
               </div>
               <div className={activeFilter === "stories" ? "stories open" : "stories"} id="stories">
-                {storiesList.map((story, index) => (
-                  <div className="stories-selector" key={index}>
-                  <div className="sector-left">
-                    <input
-                      type="checkbox"
-                      className="checkbox-input"
-                      name="story"
-                      value={story.name}
-                      onChange={(e) => {
-                        updateSelectedStory(story.name)
-                      }}
-                      checked={story.name === selectedStory}
-                    />
-                    <span className="checkbox-custom"></span>
-                    <span className="story-name">
-                      {story.name}
-                    </span>
-                  </div>
-                  <div className="tooltip">
-                    <BsInfoCircle />
-                    <BsInfoCircleFill />
-                    <span className="tooltiptext">
-                      {story.description}
-                    </span>
-                  </div>
-                </div>
-                ))}
+                {storiesList.map((story, index) => {
+                  let wide = ''
+                  if (story.name.includes('First Inhabitants')) {
+                    wide = 'wide'
+                  }
+                  return (
+                    <div className="stories-selector" key={index}>
+                      <div className="sector-left">
+                        <input
+                          type="checkbox"
+                          className="checkbox-input"
+                          name="story"
+                          value={story.name}
+                          onChange={(e) => {
+                            updateSelectedStory(story.name)
+                          }}
+                          checked={story.name === selectedStory}
+                        />
+                        <span className="checkbox-custom"></span>
+                        <span className="story-name">
+                          {story.name}
+                        </span>
+                      </div>
+                      <div className={`tooltip ${wide}`}>
+                        <BsInfoCircle />
+                        <BsInfoCircleFill />
+                        <span className="tooltiptext">
+                          {story.description}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
 
               <div className="sidebar-label">
