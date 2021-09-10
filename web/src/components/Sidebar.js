@@ -43,6 +43,8 @@ const Sidebar = (props) => {
     )
   }
 
+  const defaults = 'column fixed-270 overflow-x-unset'
+
   return (
     <TimelineContext.Consumer>
       {({
@@ -64,7 +66,7 @@ const Sidebar = (props) => {
       }) => (
         <div
           className={
-            showFilter ? "column fixed-270 show" : "column fixed-270 hide"
+            showFilter ? `${defaults} show` : `${defaults} hide`
           }
         >
           <div id="sidebar">

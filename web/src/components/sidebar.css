@@ -367,3 +367,7 @@ span.story-name {
   max-height: 200px;
   overflow: auto;
 }
+
+.overflow-x-unset {
+  overflow-x: unset;
+}
