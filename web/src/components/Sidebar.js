@@ -7,9 +7,41 @@ import TimelineContext from "../TimelineContext";
 import ScrollableFilter from "./ScrollableFilter";
 
 const Sidebar = (props) => {
-
-
-
+  const getFilteredBy = (selectedSectors, clearSelectedSectors, removeSector, selectedStory, updateSelectedStory) => {
+    if (selectedStory) {
+      return (
+        <div className="selected-sectors" id="selected-sectors">
+          <div className="sector-filter-tag">
+            <button onClick={(e) => updateSelectedStory(null)}>
+              <VscChromeClose />
+            </button>
+            {selectedStory}
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className="selected-sectors" id="selected-sectors">
+        {selectedSectors.length === 0 ? (
+          <p className="empty">No sectors selected</p>
+        ) : (
+          <>
+            {selectedSectors.map((sector) => (
+              <div className="sector-filter-tag" key={sector}>
+                <button onClick={(e) => removeSector(sector)}>
+                  <VscChromeClose />
+                </button>
+                {sector}
+              </div>
+            ))}
+          </>
+        )}
+        <button className="clear" onClick={clearSelectedSectors}>
+          Clear all
+        </button>
+      </div>
+    )
+  }
 
   return (
     <TimelineContext.Consumer>
@@ -47,25 +79,7 @@ const Sidebar = (props) => {
                   </button>
                 </div>
               </div>
-              <div className="selected-sectors" id="selected-sectors">
-                {selectedSectors.length === 0 ? (
-                  <p className="empty">No sectors selected</p>
-                ) : (
-                  <>
-                    {selectedSectors.map((sector) => (
-                      <div className="sector-filter-tag" key={sector}>
-                        <button onClick={(e) => removeSector(sector)}>
-                          <VscChromeClose />
-                        </button>
-                        {sector}
-                      </div>
-                    ))}
-                  </>
-                )}
-                <button className="clear" onClick={clearSelectedSectors}>
-                  Clear all
-                </button>
-              </div>
+              {getFilteredBy(selectedSectors, clearSelectedSectors, removeSector, selectedStory, updateSelectedStory)}
 
               <div className="sidebar-label">
                 <p>
