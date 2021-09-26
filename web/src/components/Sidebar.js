@@ -136,8 +136,8 @@ const Sidebar = (props) => {
                 <button onClick={e => handleFilterToggle("categories")}>
                   {activeFilter === "categories" ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
-
               </div>
+
               <ScrollableFilter />
             </div>
           </div>

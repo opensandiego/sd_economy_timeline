@@ -19,12 +19,13 @@ export default class ScrollableFilter extends Component {
     const {scrollTop} = this.state;
     return (
       <TimelineContext.Consumer>
-        {({ selectedSectors, allSectors, updateSelectedSectors, showCategories, activeFilter }) => (
+        {({ selectedSectors, allSectors, updateSelectedSectors, showCategories, activeFilter, selectedStory }) => (
           <div
             className={activeFilter === "categories" ? "all-sectors open" : "all-sectors"}
             ref={this.myRef}
             onScroll={this.onScroll}
           >
+            {selectedStory && <div>Deselect the current story to enable category selection</div>}
             {allSectors.map((sector, index) => (
               <div className="all-sector-selector" key={index}>
                 <div className="sector-left">
@@ -32,7 +33,7 @@ export default class ScrollableFilter extends Component {
                     type="checkbox"
                     className="checkbox-input"
                     value={sector.name}
-                    checked={selectedSectors.includes(sector.name)}
+                    checked={!selectedStory && selectedSectors.includes(sector.name)}
                     onChange={(e) => {
                       updateSelectedSectors(e, sector);
                     }}
