@@ -46,9 +46,12 @@
 
 .container-sidebar > .sidebar-label {
   margin: 20px 0;
+  padding-top: 10px;
 }
+
 .container-sidebar > .sidebar-label ~ .sidebar-label {
   margin: 15px 0;
+  padding-top: 0;
 }
 
 
