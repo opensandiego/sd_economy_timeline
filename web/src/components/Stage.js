@@ -218,8 +218,12 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     timeline3DLength = rectCount * yIncrement
     rects = initializePositions(selectedEvents)
     yearPositions = rects.reduce((acc, cur) => {
-      if (!acc[cur.year]) {
-        acc[cur.year] = cur.y
+      let year
+      if (cur && cur.year) {
+        year = +cur.year.replace(/[^0-9]*/g, '')
+      }
+      if (!acc[year]) {
+        acc[year] = cur.y
       }
       return acc
     }, {})

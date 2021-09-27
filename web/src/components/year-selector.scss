@@ -97,12 +97,23 @@ button.decade {
   border-top: 1px solid #e04d8b;
 }
 
+.year.wide .right.collapsed-1 .dash,
+.year.wide .right.collapsed-1 + .solid {
+  left: 110px;
+}
+
 .year .left {
   padding: 0;
 }
 .years .year {
   display: flex;
   flex-direction: row;
+}
+
+.year.wide {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .year .right {

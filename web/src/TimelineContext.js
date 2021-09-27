@@ -58,12 +58,25 @@ export const TimelineContextProvider = ({ children }) => {
   const previousDecade = previouslySelectedDecade.current
 
   const buildDecades = events => {
-    const numericYears = events.filter(event => +event.Year >= earliestEraStart)
+    // console.log('building...', events)
+    const numericYears = events.filter(event => {
+      let one = 1
+      if (event.Year.includes('B.C.')) {
+        one = -1
+      }
+      const year = +(event.Year.replace(/[^0-9]*/g, '')) * one
+      return year >= earliestEraStart
+    })
+    // console.log('earliestEraStart', earliestEraStart, numericYears)
     let decades = {}
     if (numericYears.length) {
       numericYears.forEach(event => {
-        const year = event.Year
-        const decadeStart = `${year.slice(0, 3)}0`
+        let one = ''
+        if (event.Year.includes('B.C.')) {
+          one = '-'
+        }
+        const year = event.Year.replace(/[^0-9]*/g, '')
+        const decadeStart = `${one}${year.slice(0, 3)}0`
         if (!Object.keys(decades).includes(decadeStart)) {
           decades[decadeStart] = [year]
         }

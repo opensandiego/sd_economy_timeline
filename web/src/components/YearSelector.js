@@ -5,7 +5,10 @@ import { BiMinus } from "react-icons/bi";
 import TimelineContext from "../TimelineContext";
 import "./year-selector.scss";
 import { ReactComponent as Plussign } from '../assets/plusSignwcircle.svg';
+import eras from './eras'
 
+const erasWithGenericLabel = eras.filter(era => era.genericYearSelectorLabel)
+const FUTURE = 3000
 
 const YearSelector = () => {
   const containerRef = useRef(null)
@@ -22,12 +25,59 @@ const YearSelector = () => {
         if (!selectedDec && !previousDecade) {
           updateTimelineScroll(timelineScroll.fraction)
         }
+        // Integrate the labels for pre-colonial and colonization
+        const decadesWithGenericLabels = Object.entries(decades)
+          // order the decades correctly
+          .sort((a, b) => {
+            const aYears = a[1]
+            const bYears = b[1]
+            if (!aYears.length || !bYears.length) return
+
+            let aFirstYear = aYears[0]
+            let bFirstYear = bYears[0]
+            if (aFirstYear > FUTURE) {
+              aFirstYear *= -1
+            }
+            if (bFirstYear > FUTURE) {
+              bFirstYear *= -1
+            }
+            return aFirstYear - bFirstYear
+          })
+          // update decade labels with the required labels
+          .map(([decade, years]) => {
+            let updatedDecadeLabel = decade
+            let lastYearInDecade = +years[years.length - 1]
+            if (lastYearInDecade > FUTURE) {
+              lastYearInDecade *= -1
+            }
+            erasWithGenericLabel.forEach(era => {
+              if (lastYearInDecade >= era.start && lastYearInDecade < era.end) {
+                updatedDecadeLabel = era.title
+              }
+            })
+            return [updatedDecadeLabel, years]
+          })
+          // combine labeled decades and retain all years
+          .reduce((acc, cur) => {
+            let [decade, years] = cur
+            const existingDecade = acc.find(([label, existingYears]) => label === decade)
+            if (existingDecade) {
+              existingDecade[1] = [ ...existingDecade[1], ...years ]
+            } else {
+              acc.push([decade, years])
+            }
+            return acc
+          }, [])
+
         return (
           <div className="row fixed-100" ref={containerRef}>
             <div className="years">
-              {Object.entries(decades).map(([decade, years], index) => {
+              {decadesWithGenericLabels.map(([decade, years], index) => {
                 const scrolledDecade = timelineScroll.stageDecade === decade ? 'selected' : ''
-                const classes = selectedDec === decade ? `year active counts-${years.length} ${scrolledDecade}`: `year ${scrolledDecade}`
+                const wide = +decade ? '' : 'wide' // allow text labels to take the required space on a single line
+                const classes = selectedDec === decade ?
+                  `year active counts-${years.length} ${scrolledDecade} ${wide}`:
+                  `year ${scrolledDecade} ${wide}`
                 return (
                   <div key={index} className={classes}>
                     <div className="left">
@@ -39,7 +89,7 @@ const YearSelector = () => {
                         }
                         onClick={() => setSelectedYear(years[0])}
                       >
-                        {decade}s
+                        {+decade ? `${decade}s` : decade}
                       </p>
                       <button
                         className={
@@ -70,7 +120,7 @@ const YearSelector = () => {
                       //     : { display: "none" }
                       // }
                     >
-                      {decades && selectedDec && decades[selectedDec].map((year, index) => {
+                      {decades && selectedDec && years.map((year, index) => {
                         if (selectedDec === decade && showYears)
                           return (
                             <div

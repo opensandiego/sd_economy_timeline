@@ -15,7 +15,8 @@ const eras = [{
   start: -8000,
   end: 1541,
   title: "Pre-Colonial",
-  color: "#0b466e"
+  color: "#0b466e",
+  genericYearSelectorLabel: true
 }, {
   name: "colonial",
   description: "Although Portuguese explorer Juan Rodríguez Cabrillo, sailing under the flag of Spain, was the first European to enter San Diego Bay on September 28, 1542, it would not be until July 16, 1769 that four Franciscan fathers - Junípero Serra among them - would establish San Diego de Alcalá, the first mission of Alta California. The Spanish mission era in Alta California had begun, and over subsequent decades colonization, settlement, and control of the San Diego region shifted from native peoples who had lived there for millennia, to Spain, then to Mexico, and eventually to the United States in 1848.",
@@ -23,7 +24,8 @@ const eras = [{
   start: 1542,
   end: 1779,
   title: "European Arrival & Colonization",
-  color: "#eb7763"
+  color: "#eb7763",
+  genericYearSelectorLabel: true
 }, {
   name: "electrification",
   description: "Electrification accelerated the growth of cities with streetlights bringing nightlife across America, and subways and electrified trolley cars expanding public transportation. In San Diego, this era also saw city leaders persuade the U.S. Navy to establish bases at San Diego Bay, the rise of tourism following the 1915 Panama-California Exposition, and the growth of hospitals, museums, and other civic institutions.",
