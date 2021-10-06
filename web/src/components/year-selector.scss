@@ -300,11 +300,13 @@ $menu-items-loop-offset: $menu-items - 1;
       // transition: #{$transition-speed} ease;
       border: 12px solid transparent;
       border-top-color: #e04d8b;
-      width: 0;
-      height: 0;
-      top: 0;
-      left: 68px;
-      margin-left: -3px;
+    }
+  }
+
+  .left {
+    &::before {
+      width: 24px;
+      height: 24px;
     }
   }
 }

@@ -25,6 +25,9 @@ const YearSelector = () => {
         if (!selectedDec && !previousDecade) {
           updateTimelineScroll(timelineScroll.fraction)
         }
+        // Look-up for decade to label for year selector entries like pre-colonial and euro arrival
+        // used to know when to place the pink triangle over one of those labels
+        const decadeToLabel = {}
         // Integrate the labels for pre-colonial and colonization
         const decadesWithGenericLabels = Object.entries(decades)
           // order the decades correctly
@@ -50,9 +53,13 @@ const YearSelector = () => {
             if (lastYearInDecade > FUTURE) {
               lastYearInDecade *= -1
             }
+            decadeToLabel[decade] = updatedDecadeLabel
             erasWithGenericLabel.forEach(era => {
               if (lastYearInDecade >= era.start && lastYearInDecade < era.end) {
                 updatedDecadeLabel = era.title
+              }
+              if (+decade >= era.start && +decade < era.end) {
+                decadeToLabel[decade] = era.title
               }
             })
             return [updatedDecadeLabel, years]
@@ -73,7 +80,13 @@ const YearSelector = () => {
           <div className="row fixed-100" ref={containerRef}>
             <div className="years">
               {decadesWithGenericLabels.map(([decade, years], index) => {
-                const scrolledDecade = timelineScroll.stageDecade === decade ? 'selected' : ''
+                let scrolledDecade = timelineScroll.stageDecade === decade ? 'selected' : ''
+                if (!scrolledDecade) {
+                  const decadeLabel = decadeToLabel[timelineScroll.stageDecade] || decadeToLabel[timelineScroll.stageDecade * -1]
+                  if (decadeLabel === decade) {
+                    scrolledDecade = 'selected'
+                  }
+                }
                 const wide = +decade ? '' : 'wide' // allow text labels to take the required space on a single line
                 const classes = selectedDec === decade ?
                   `year active counts-${years.length} ${scrolledDecade} ${wide}`:
