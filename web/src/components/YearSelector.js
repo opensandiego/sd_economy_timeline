@@ -12,22 +12,34 @@ const FUTURE = 3000
 
 const YearSelector = () => {
   const containerRef = useRef(null)
+  const selectedRef = useRef(null)
+  const previousSelectedRef = useRef(null)
 
-  const updateTimelineScroll = (scroll) => {
-    if (!containerRef.current) return
-    const containerWidth = containerRef.current.getBoundingClientRect().width
-    const xScroll = scroll * containerWidth
-    containerRef.current.scroll(xScroll, 0)
+  const updateTimelineScroll = () => {
+    if (!containerRef.current || !selectedRef.current) return
+    if (previousSelectedRef.current !== selectedRef.current) {
+      const rect = selectedRef.current.getBoundingClientRect()
+      const { width: selectedWidth, x: selectedX } = rect
+      const { x: containerX, left } = containerRef.current.getBoundingClientRect()
+      const currentScroll = containerRef.current.scrollLeft
+      // subtract 100 to keep selected decade from being all the way on the left edge
+      let nextX = selectedX - containerX + currentScroll - 100
+      // use zero if next scroll ends up being a negative number
+      nextX = nextX < 0 ? 0 : nextX
+      containerRef.current.scroll(nextX, 0)
+      previousSelectedRef.current = selectedRef.current
+    }
   }
   return (
     <TimelineContext.Consumer>
       {({ previousDecade, selectedDec, showYears, handleYearSelector, decades, setSelectedYear, timelineScroll }) => {
         if (!selectedDec && !previousDecade) {
-          updateTimelineScroll(timelineScroll.fraction)
+          updateTimelineScroll()
         }
         // Look-up for decade to label for year selector entries like pre-colonial and euro arrival
         // used to know when to place the pink triangle over one of those labels
         const decadeToLabel = {}
+
         // Integrate the labels for pre-colonial and colonization
         const decadesWithGenericLabels = Object.entries(decades)
           // order the decades correctly
@@ -91,8 +103,9 @@ const YearSelector = () => {
                 const classes = selectedDec === decade ?
                   `year active counts-${years.length} ${scrolledDecade} ${wide}`:
                   `year ${scrolledDecade} ${wide}`
+                const isSelected = classes.includes('selected') ? selectedRef : null
                 return (
-                  <div key={index} className={classes}>
+                  <div key={index} className={classes} ref={isSelected}>
                     <div className="left">
                       <p
                         style={
