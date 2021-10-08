@@ -98,8 +98,20 @@ button.decade {
 }
 
 .year.wide .right.collapsed-1 .dash,
+.year.wide .right.open-1 .dash,
 .year.wide .right.collapsed-1 + .solid {
-  left: 110px;
+  left: 100px;
+  width: 72%;
+}
+
+.year.wide .right.open-1 .dash {
+  width: 84%;
+}
+
+.year.wide .right.collapsed-2 + .solid,
+.year.wide .right.open-2 .dash {
+  left: 54px;
+  width: 102%;
 }
 
 .year .left {
