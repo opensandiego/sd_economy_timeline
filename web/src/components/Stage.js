@@ -235,9 +235,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
     })
     if (selectedEvents.length) {
       const yearMax = +selectedEvents[selectedEvents.length - 1].Year
-      const yearMin = +selectedEvents[0].Year
-      if (yearMax && yearMin) {
-        scrollMax = ((Math.ceil((yearMax - yearMin) / 10)) + 1) * 25
+      if (yearMax && yearPositions && yearPositions[yearMax]) {
+        scrollMax = (yearPositions[yearMax] / 25) * 0.92 // prevent scrolling past the end of the timeline
       }
     }
   }
@@ -571,7 +570,10 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         distance += allPositions[position - 1] - allPositions[position]
       }
       // position = (position > 1) ? position - 1 : position
-      let currentYear = allYears[position] ?? allYears[0]
+      let currentYear = allYears[position]
+      if (!currentYear) {
+        return
+      }
       // check if currentYear is a four-digit year
       // this is required because some events have "8,000+ B.C." as their year
       if (!currentYear.match(/\d{4}/)) {
