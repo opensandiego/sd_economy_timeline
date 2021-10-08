@@ -83,12 +83,12 @@ const Sidebar = (props) => {
               </div>
               {getFilteredBy(selectedSectors, clearSelectedSectors, removeSector, selectedStory, updateSelectedStory)}
 
-              <div className="sidebar-label">
+              <div className="sidebar-label" onClick={e => handleFilterToggle("stories")}>
                 <p>
                   Stories
                 </p>
                 <p style={activeFilter === "stories" ? {display: "block"} : {display: "none"}}>(Select 1 Max)</p>
-                <button onClick={e => handleFilterToggle("stories")}>
+                <button>
                   {activeFilter === "stories" ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
               </div>
@@ -128,12 +128,12 @@ const Sidebar = (props) => {
                 })}
               </div>
 
-              <div className="sidebar-label">
+              <div className="sidebar-label" onClick={e => handleFilterToggle("categories")}>
                 <p>
                   Categories
                 </p>
                 <p style={activeFilter === "categories" ? {display: "block"} : {display: "none"}}>(Select 5 Max)</p>
-                <button onClick={e => handleFilterToggle("categories")}>
+                <button>
                   {activeFilter === "categories" ? <VscChevronUp /> : <VscChevronDown />}
                 </button>
               </div>
