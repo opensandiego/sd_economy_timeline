@@ -125,6 +125,15 @@
   color: #FFFFFF;
 }
 
+.bottom-container div:first-child:hover {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.bottom-container div:last-child:hover {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 /* put nav bar items (About, Stories, etc.) on a single line on small screens */
 @media only screen and (max-width: 760px) {
   .bottom-container > div {
