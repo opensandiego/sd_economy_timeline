@@ -908,7 +908,8 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       setTimelineScroll({ fraction: 0, stageDecade: resetDecade })
     }
   }, [
-    selectedSectors
+    selectedSectors,
+    selectedStory
   ])
 
   const smallScreenStyle = smallScreen ?
