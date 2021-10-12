@@ -29,7 +29,7 @@ export const iconInfo = {
   global: { path: global, file: 'global@3x.png', category: 'Global', width: 41, height: 41 },
   goodsmovement: { path: goodsmovement, file: 'goods movement@3x.png', category: 'Goods Movement', width: 44, height: 31 },
   healthcare: { path: healthcare, file: 'healthcare@3x.png', category: 'Healthcare', width: 34, height: 34 },
-  landuse: { path: landuse, file: 'historic land use@3x.png', category: 'Protecting Our Environment', width: 50, height: 26 },
+  landuse: { path: landuse, file: 'historic land use@3x.png', category: 'Our Environment', width: 50, height: 26 },
   innovation: { path: innovation, file: 'innovation@3x.png', category: 'Innovation', width: 40, height: 42, verticalShift: 5 },
   manufacturing: { path: manufacturing, file: 'manufacturing@3x.png', category: 'Manufacturing', width: 40, height: 40 },
   military: { path: military, file: 'military@3x.png', category: 'Military', width: 48, height: 42, verticalShift: 0 },
