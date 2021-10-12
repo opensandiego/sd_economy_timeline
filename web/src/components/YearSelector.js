@@ -9,6 +9,7 @@ import eras from './eras'
 
 const erasWithGenericLabel = eras.filter(era => era.genericYearSelectorLabel)
 const FUTURE = 3000
+const isFourDigitYear = decade => decade.match(/\d{4}/)
 
 const YearSelector = () => {
   const containerRef = useRef(null)
@@ -104,6 +105,7 @@ const YearSelector = () => {
                   `year active counts-${years.length} ${scrolledDecade} ${wide}`:
                   `year ${scrolledDecade} ${wide}`
                 const isSelected = classes.includes('selected') ? selectedRef : null
+                const showConnectingLines = isFourDigitYear(decade)
                 return (
                   <div key={index} className={classes} ref={isSelected}>
                     <div className="left">
@@ -155,18 +157,18 @@ const YearSelector = () => {
                               onClick={() => setSelectedYear(year)}
                             >
                               <button>{year}</button>
-                              <div className="vl"></div>
+                              {showConnectingLines && <div className="vl"></div>}
                             </div>
                           );
                       })}
-                      <hr className="dash" />
+                      {showConnectingLines && <hr className="dash" />}
                     </div>
 
-                    <hr
+                    {showConnectingLines && <hr
                       className={
                         selectedDec === decade && showYears ? "solid hide" : "solid show"
                       }
-                    ></hr>
+                    ></hr>}
                   </div>
                 )}
               )}
