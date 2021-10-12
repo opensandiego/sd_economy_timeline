@@ -299,6 +299,12 @@ div#bkground {
   height: 100%;
 }
 
+.selected-story-info {
+  color: #9A2477;
+  font-style: italic;
+  padding-top: 20px;
+}
+
 /* width */
 .all-sectors::-webkit-scrollbar {
   width: 5px;

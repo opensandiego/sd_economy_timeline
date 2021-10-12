@@ -139,6 +139,7 @@ const Sidebar = (props) => {
               </div>
 
               <ScrollableFilter />
+              {selectedStory && <div className="selected-story-info">Deselect the current story to enable category selection</div>}
             </div>
           </div>
         </div>

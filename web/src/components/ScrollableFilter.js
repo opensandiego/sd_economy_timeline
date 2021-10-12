@@ -25,7 +25,6 @@ export default class ScrollableFilter extends Component {
             ref={this.myRef}
             onScroll={this.onScroll}
           >
-            {selectedStory && <div>Deselect the current story to enable category selection</div>}
             {allSectors.map((sector, index) => (
               <div className="all-sector-selector" key={index}>
                 <div className="sector-left">
