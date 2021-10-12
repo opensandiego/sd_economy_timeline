@@ -48,9 +48,9 @@ let eventTextBuilt = false
 let arrowsLeftImage, arrowsRightImage, faHandPointUpImage
 let rectCount = 30
 let scrollTotal = 0
-let scrollMax = 1000
 let totalDraws = -1
 let yearPositions = {}
+let timelineCurrentYear
 let yearsToTrackScrolling = []
 const yIncrement = timeline3DLength / rectCount
 const initializePositions = (events = []) => {
@@ -233,12 +233,6 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         position: rect.y
       }
     })
-    if (selectedEvents.length) {
-      const yearMax = +selectedEvents[selectedEvents.length - 1].Year
-      if (yearMax && yearPositions && yearPositions[yearMax]) {
-        scrollMax = (yearPositions[yearMax] / 25) * 0.92 // prevent scrolling past the end of the timeline
-      }
-    }
   }
 
   const containerRef = useRef(null)
@@ -571,6 +565,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       }
       // position = (position > 1) ? position - 1 : position
       let currentYear = allYears[position]
+      timelineCurrentYear = currentYear
       if (!currentYear) {
         return
       }
@@ -703,7 +698,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
       if (event.detail) {
           delta = -event.detail / 3;
       }
-      if (scrollTotal + delta < 0 || scrollTotal + delta > scrollMax) {
+      if (scrollTotal + delta < 0 || (delta > 0 && !timelineCurrentYear)) {
         return
       }
       contextRef.current.clearRect(0, 0, width, height)
@@ -867,7 +862,6 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
 
   useEffect(() => {
     if (!contextRef || !contextRef.current) return
-    // console.log('year selected', selectedYear, '; position', yearPositions[selectedYear])
     // calculate total change needed:
     // - have existing scroll position --> scrollTotal
     // - starting position is Object.values(yearSelector)[0]
@@ -903,6 +897,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
 
   useEffect(() => {
     if (yearsToTrackScrolling.length) {
+      timelineCurrentYear = yearsToTrackScrolling[0].year
       scrollTotal = 0
       const resetDecade = `${yearsToTrackScrolling[0].year}0`
       setTimelineScroll({ fraction: 0, stageDecade: resetDecade })
