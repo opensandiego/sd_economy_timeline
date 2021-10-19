@@ -74,6 +74,10 @@ const YearSelector = () => {
               if (+decade >= era.start && +decade < era.end) {
                 decadeToLabel[decade] = era.title
               }
+              // hard-coded because of cross-decade era boundary for pre-colonial and euro arrival
+              if (decade === '1540') {
+                decadeToLabel[decade] = 'European Arrival & Colonization'
+              }
             })
             return [updatedDecadeLabel, years]
           })

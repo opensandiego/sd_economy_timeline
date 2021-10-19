@@ -133,7 +133,7 @@ export const TimelineContextProvider = ({ children }) => {
     }
     const decades = buildDecades(eventsForSelected)
     setDecades(decades)
-    setTimelineScroll({ fraction: 0, stageDecade: Object.keys(decades)[0] })
+    setTimelineScroll({ fraction: 0, stageDecade: Object.keys(decades).sort()[0] })
   }, [
     data,
     selectedSectors,
