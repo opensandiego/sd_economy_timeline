@@ -6,7 +6,6 @@ import civic from '../assets/civic@3x.png'
 import crossborder from '../assets/crossborder@3x.png'
 import education from '../assets/education@3x.png'
 import global from '../assets/global@3x.png'
-import goodsmovement from '../assets/goods movement@3x.png'
 import healthcare from '../assets/healthcare@3x.png'
 import landuse from '../assets/historic land use@3x.png'
 import innovation from '../assets/innovation@3x.png'
@@ -27,7 +26,6 @@ export const iconInfo = {
   crossborder: { path: crossborder, file: 'binational@3x.png', category: 'Binational', width: 38, height: 38 },
   education: { path: education, file: 'education@3x.png', category: 'Education', width: 46, height: 28 },
   global: { path: global, file: 'global@3x.png', category: 'Global', width: 41, height: 41 },
-  goodsmovement: { path: goodsmovement, file: 'goods movement@3x.png', category: 'Goods Movement', width: 44, height: 31 },
   healthcare: { path: healthcare, file: 'healthcare@3x.png', category: 'Healthcare', width: 34, height: 34 },
   landuse: { path: landuse, file: 'historic land use@3x.png', category: 'Our Environment', width: 50, height: 26 },
   innovation: { path: innovation, file: 'innovation@3x.png', category: 'Innovation', width: 40, height: 42, verticalShift: 5 },

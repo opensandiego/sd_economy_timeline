@@ -35,9 +35,6 @@
   "name": "Manufacturing",
   "description": "Manufacturing has always played a significant role in our regional economy. During World War II, the region was a major player in aircraft manufacturing. In more recent years, defense, telecommunications, and biotechnology have been centers of manufacturing. Today, the sector accounts for 3.6% of jobs in the region."
 }, {
-  "name": "Goods Movement",
-  "description": "The movement of freight to and from the San Diego region and the transport of goods throughout it is vital for continued economic development."
-}, {
   "name": "Professional",
   "description": "The San Diego region has a growing professional workforce. Finance, insurance, real estate, and professional sectors currently account for 16.3% of jobs in the region."
 }, {
