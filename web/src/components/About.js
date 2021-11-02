@@ -57,7 +57,7 @@ const About = () => {
                 Download all timeline data to an excel file
                 <a
                   download="all-data-by-date-and-category.csv"
-                  href="../all-data-by-date-and-category.csv"
+                  href={`${process.env.PUBLIC_URL}/all-data-by-date-and-category.csv`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -69,15 +69,14 @@ const About = () => {
             <div className="espanol-container">
               <button className={openMenuItem === "espanol" ? "open" : ""} onClick={(e) => updateOpenMenuItem("espanol")}>Vea La Versión en Español</button>
               <p>
-                Próximamente
-                {/* Vea la información de esta línea de tiempo en español.
-                <a href="#" target="_blank" rel="noopener noreferrer">
+                Vea la información de esta línea de tiempo en español.
+                <a href={`${process.env.PUBLIC_URL}/Fun Facts Spanish.pdf`} target="_blank" rel="noopener noreferrer">
                   Vea La Versión en Español
                 </a>
                 <span>
                   Este documento se abre en una nueva pestaña
                   <BsBoxArrowUpRight />
-                </span> */}
+                </span>
 
               </p>
             </div>
