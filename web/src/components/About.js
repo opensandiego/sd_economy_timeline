@@ -73,11 +73,13 @@ const About = () => {
                 <a href={`${process.env.PUBLIC_URL}/Fun Facts Spanish.pdf`} target="_blank" rel="noopener noreferrer">
                   Vea La Versión en Español
                 </a>
+                <a href={`${process.env.PUBLIC_URL}/RegionalPlan-TIMELINE-STORIES-OCT-SPANISH-21-2021_r2.pdf`} target="_blank" rel="noopener noreferrer">
+                  Historias de la línea de tiempo en español
+                </a>
                 <span>
                   Este documento se abre en una nueva pestaña
                   <BsBoxArrowUpRight />
                 </span>
-
               </p>
             </div>
           </div>
