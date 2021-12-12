@@ -83,6 +83,7 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     document.body.removeChild(span)
     document.body.removeChild(spanCategory)
     // span = null
+    // spanCategory = null
     // }
     // console.log(firstLine, eventTextDimensions[textDimensionsKey])
   }
@@ -127,6 +128,8 @@ export const drawEventText = (info, multiplier, eventTextDimensions, deviceScale
     ctx.fillText(secondLine, textSize.x, textSize.y + (verticalPosition * multiplier))
   }
   ctx.fillStyle = categoryFillStyle
+  // the font-weight used below needs to correspond to something used by a DOM element
+  // otherwise, the category text will render with the default serif font insteda of montserrat
   ctx.font = `500 ${categorySize.fontSize}px ${fontFamily}`
   verticalPosition += 10
   ctx.fillText(`${Category}`, categorySize.x, categorySize.y + (verticalPosition * multiplier))
