@@ -7,10 +7,27 @@ import stories from "../TimelineStories.pdf";
 
 import "./about.css";
 
+const MenuTooltip = ({ aboutDescription, summaryDescription, openMenuItem }) => {
+  if (!openMenuItem) return <></>
+
+  switch (openMenuItem) {
+    case 'about':
+      return (
+        <p className='mobile-menu-tooltip'>{aboutDescription}</p>
+      )
+    default:
+      return (
+        <div className='mobile-menu-tooltip'>
+          this is a tooltippppp !!!!
+        </div>
+      )
+  }
+}
+
 const About = () => {
   return (
     <TimelineContext.Consumer>
-      {({ summaryDescription, aboutDescription, openMenuItem, updateOpenMenuItem }) => (
+      {({ summaryDescription, aboutDescription, openMenuItem, updateOpenMenuItem, smallScreen }) => (
         <div className="about-container">
           <h1>
             The San Diego Region{" "}
@@ -20,7 +37,7 @@ const About = () => {
           <div className="bottom-container">
             <div className="abt-desc">
               <button className={openMenuItem === "about" ? "open" : ""} onClick={(e) => updateOpenMenuItem("about")}>About</button>
-              <p>{aboutDescription}</p>
+              {!smallScreen && <p>{aboutDescription}</p>}
             </div>
             <div className="stories-container">
               <button className={openMenuItem === "stories" ? "open" : ""} onClick={(e) => updateOpenMenuItem("stories")}>Stories</button>
@@ -83,6 +100,13 @@ const About = () => {
               </p>
             </div>
           </div>
+          {smallScreen &&
+            <MenuTooltip
+              aboutDescription={aboutDescription}
+              summaryDescription={summaryDescription}
+              openMenuItem={openMenuItem}
+            />
+          }
         </div>
       )}
     </TimelineContext.Consumer>

@@ -1,4 +1,4 @@
-.tl-summ {
+.tl-summ, .mobile-menu-tooltip {
   font: normal normal normal 20px/24px Montserrat;
   letter-spacing: 0px;
   color: #000000;
@@ -136,7 +136,33 @@
 
 /* put nav bar items (About, Stories, etc.) on a single line on small screens */
 @media only screen and (max-width: 760px) {
+  .bottom-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
   .bottom-container > div {
     flex-shrink: 0;
+  }
+
+  .bottom-container p {
+    width: 350px;
+  }
+
+  /* .bottom-container.overflow-y-visible {
+    overflow-y: visible;
+  } */
+
+  .mobile-menu-tooltip {
+    position: absolute;
+    text-align: left;
+    z-index: 9999;
+    max-height: 300px;
+    height: 200px;
+    overflow: auto;
+    text-align: left;
+    padding: 10px;
+    background: white;
+    box-shadow: 0px 6px 9px #0000004e;
+    border-radius: 0px 0px 10px 10px;
   }
 }
