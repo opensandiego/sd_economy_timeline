@@ -383,3 +383,9 @@ img:nth-of-type(2) {
 .unsupported .unsupported-message {
   padding: 0 10%;
 }
+
+@media screen and (max-width: 760px) {
+  .disclaimer .tooltip .tooltiptext {
+    width: 200px;
+  }
+}

@@ -965,7 +965,7 @@ const Stage = ({data, selectedSectors, selectedYear, setSelectedYear, setTimelin
         </div>}
         {smallScreen && <div className='unsupported'>
           <div className='unsupported-message'>
-            <p>Unfortunately, our timeline isn't yet available on your device.</p>
+            <p>Unfortunately, our timeline isn't available on your device.</p>
             <p>We're adding support for more devices, please check back soon.</p>
             <p>In the meantime, use the download link above to explore the data.</p>
           </div>

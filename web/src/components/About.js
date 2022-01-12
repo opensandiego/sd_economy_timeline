@@ -15,12 +15,68 @@ const MenuTooltip = ({ aboutDescription, summaryDescription, openMenuItem }) => 
       return (
         <p className='mobile-menu-tooltip'>{aboutDescription}</p>
       )
-    default:
+    case 'stories':
       return (
-        <div className='mobile-menu-tooltip'>
-          this is a tooltippppp !!!!
-        </div>
+        <p className='mobile-menu-tooltip'>
+          Learn about 6 major stories that helped shape the history of the San
+          Diego region.
+          <a href={stories} target="_blank" rel="noopener noreferrer">
+            Timeline Stories
+          </a>
+          <span>
+            This document opens in a new tab
+            <BsBoxArrowUpRight />
+          </span>
+        </p>
       )
+    case 'facts':
+      return (
+        <p className='mobile-menu-tooltip'>
+          Discover fun facts about different cities in the San Diego region.
+          <span>
+            <a href={facts} target="_blank" rel="noopener noreferrer">
+              San Diego Fun Facts
+            </a>
+          </span>
+          <span>
+            This document opens in a new tab
+            <BsBoxArrowUpRight />
+          </span>
+        </p>
+      )
+    case 'download':
+      return (
+        <p className='mobile-menu-tooltip'>
+          Download all timeline data to an excel file
+          <a
+            download="all-data-by-date-and-category.csv"
+            href={`${process.env.PUBLIC_URL}/all-data-by-date-and-category.csv`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download All Data
+            <FaDownload />
+          </a>
+        </p>
+      )
+    case 'espanol':
+      return (
+        <p className='mobile-menu-tooltip'>
+          Vea la información de esta línea de tiempo en español.
+          <a href={`${process.env.PUBLIC_URL}/Fun Facts Spanish.pdf`} target="_blank" rel="noopener noreferrer">
+            Vea La Versión en Español
+          </a>
+          <a href={`${process.env.PUBLIC_URL}/RegionalPlan-TIMELINE-STORIES-OCT-SPANISH-21-2021_r2.pdf`} target="_blank" rel="noopener noreferrer">
+            Historias de la línea de tiempo en español
+          </a>
+          <span>
+            Este documento se abre en una nueva pestaña
+            <BsBoxArrowUpRight />
+          </span>
+        </p>
+      )
+    default:
+      return <></>
   }
 }
 
